@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Free Peptide Calculator App | PROTOKOL X</title>
-  <meta name="description" content="PROTOKOL X peptide calculator app with saved compounds, calculation history, notes, and JSON import/export.">
+  <meta name="description" content="PROTOKOL X peptide calculator app with saved compounds, calculation history, notes, PDF reports, and JSON import/export.">
   <meta name="theme-color" content="#060A14" id="themeColor">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -137,7 +137,7 @@
           <span class="brand-title">PROTOKOL X</span>
         </a>
         <div class="tools">
-          <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme">☀</button>
+          <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme">Light</button>
         </div>
       </div>
     </header>
@@ -146,7 +146,7 @@
       <section class="hero">
         <div class="eyebrow">Free Peptide Calculator App</div>
         <h1>Calculator</h1>
-        <p class="lead">Estimate concentration, draw volume, syringe units, and servings. Save compounds, notes, and calculations locally, then export or import JSON backups when needed.</p>
+        <p class="lead">Estimate concentration, draw volume, syringe units, and servings. Save compounds, notes, and calculations locally, then export JSON backups or PDF reports when needed.</p>
       </section>
 
       <nav class="tabs" aria-label="Calculator app tabs">
@@ -241,11 +241,14 @@
 
       <section class="view" id="view-backup">
         <section class="card">
-          <h2>JSON Backup</h2>
-          <p class="lead">Export saved compounds, notes, calculations, and theme. Import the JSON file later on a new phone or browser.</p>
+          <h2>Backup & Reports</h2>
+          <p class="lead">Export JSON to restore your data later on a new phone or browser. Export PDF for a readable report of saved compounds, notes, and calculations.</p>
           <div class="two">
             <button class="primary-btn" onclick="exportData()">Export JSON</button>
             <button class="secondary-btn" onclick="shareData()">Share JSON</button>
+          </div>
+          <div class="field" style="margin-top:12px">
+            <button class="secondary-btn" onclick="exportPdf()">Export PDF Report</button>
           </div>
           <div class="field" style="margin-top:12px">
             <button class="secondary-btn" onclick="document.getElementById('importFile').click()">Import JSON</button>
@@ -385,8 +388,8 @@
           <div class="compound-head">
             <div>
               <div class="compound-name">${escapeHtml(item.name)}</div>
-              <div class="compound-meta">${format(c.drawMl,4)} mL · ${format(c.units,2)} units · ${format(c.concentrationMcgPerMl,2)} mcg/mL</div>
-              <div class="compound-meta">${format(c.doseInput,3)} ${c.doseUnit || ''}${item.frequency ? ` · ${escapeHtml(item.frequency)}` : ''}</div>
+              <div class="compound-meta">${format(c.drawMl,4)} mL - ${format(c.units,2)} units - ${format(c.concentrationMcgPerMl,2)} mcg/mL</div>
+              <div class="compound-meta">${format(c.doseInput,3)} ${c.doseUnit || ''}${item.frequency ? ` - ${escapeHtml(item.frequency)}` : ''}</div>
             </div>
           </div>
           ${item.notes ? `<div class="note">${escapeHtml(item.notes)}</div>` : ''}
@@ -403,6 +406,9 @@
     function filename() {
       return `protokolx-calculator-backup-${new Date().toISOString().slice(0,10)}.json`;
     }
+    function pdfFilename() {
+      return `protokolx-calculator-report-${new Date().toISOString().slice(0,10)}.pdf`;
+    }
     function exportData() {
       const blob = new Blob([JSON.stringify(payload(), null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -417,6 +423,57 @@
         catch (err) { if (err?.name === 'AbortError') return; }
       }
       exportData(); $('backupStatus').textContent = 'Sharing unavailable, so backup was downloaded.';
+    }
+    function exportPdf() {
+      const opened = window.open('', '_blank');
+      if (!opened) {
+        $('backupStatus').textContent = 'Allow popups to create the PDF report.';
+        return;
+      }
+      opened.document.write(reportHtml());
+      opened.document.close();
+      opened.focus();
+      setTimeout(() => {
+        opened.document.title = pdfFilename();
+        opened.print();
+      }, 250);
+      $('backupStatus').textContent = 'PDF report opened. Choose Save as PDF in the print window.';
+    }
+    function reportHtml() {
+      const exportedAt = new Date().toLocaleString();
+      const rows = state.compounds.length ? state.compounds.map(item => {
+        const c = item.calculation || {};
+        return `<section class="item">
+          <h2>${escapeHtml(item.name)}</h2>
+          <div class="meta">${escapeHtml(item.frequency || 'No frequency saved')} | Saved ${escapeHtml(new Date(item.createdAt || Date.now()).toLocaleDateString())}</div>
+          <table>
+            <tr><th>Vial</th><td>${format(c.vialMg,3)} mg</td><th>BAC Water</th><td>${format(c.waterMl,3)} mL</td></tr>
+            <tr><th>Dose</th><td>${format(c.doseInput,3)} ${escapeHtml(c.doseUnit || '')}</td><th>Concentration</th><td>${format(c.concentrationMcgPerMl,2)} mcg/mL</td></tr>
+            <tr><th>Draw</th><td>${format(c.drawMl,4)} mL</td><th>Syringe Units</th><td>${format(c.units,2)} units</td></tr>
+            <tr><th>Syringe</th><td>${format(c.syringeVolume,2)} mL / ${format(c.syringeUnits,0)}u</td><th>Servings</th><td>${format(c.servings,2)}</td></tr>
+          </table>
+          ${item.notes ? `<h3>Notes</h3><p>${escapeHtml(item.notes)}</p>` : ''}
+        </section>`;
+      }).join('') : '<section class="item"><h2>No saved compounds</h2><p>Save compounds before exporting a full report.</p></section>';
+      return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${pdfFilename()}</title>
+        <style>
+          body{font-family:Arial,sans-serif;color:#111827;margin:32px;line-height:1.45}
+          header{border-bottom:3px solid #00a8ff;margin-bottom:22px;padding-bottom:14px}
+          h1{font-size:30px;margin:0;text-transform:uppercase;letter-spacing:.08em}
+          h2{font-size:21px;margin:0 0 4px;text-transform:uppercase}
+          h3{font-size:13px;margin:14px 0 4px;text-transform:uppercase;letter-spacing:.08em}
+          .meta{color:#526173;font-size:12px;margin-bottom:12px}
+          .item{break-inside:avoid;border:1px solid #cbd5e1;margin:0 0 16px;padding:14px}
+          table{width:100%;border-collapse:collapse;margin-top:10px}
+          th,td{border:1px solid #d7dee8;text-align:left;padding:8px;font-size:12px}
+          th{background:#eef3f8;text-transform:uppercase;letter-spacing:.06em}
+          p{white-space:pre-wrap;margin:0;font-size:13px}
+          .disclaimer{font-size:11px;color:#526173;margin-top:20px}
+        </style></head><body>
+        <header><h1>PROTOKOL X Calculator Report</h1><div class="meta">Exported ${escapeHtml(exportedAt)}</div></header>
+        ${rows}
+        <div class="disclaimer">This report is for arithmetic and personal record keeping only. It does not provide medical advice, dosing guidance, treatment recommendations, sterility verification, or safety instructions.</div>
+      </body></html>`;
     }
     function importData(file) {
       if (!file) return;
