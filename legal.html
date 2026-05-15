@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal, Privacy, Affiliate & Cookie Disclosure | PROTOKOL X</title>
+  <meta name="description" content="PROTOKOL X legal disclaimer, medical disclaimer, affiliate disclosure, transparency statement, privacy policy, cookie disclosure, and Google Analytics disclosure." />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#00a8ff" />
+  <link rel="canonical" href="https://www.protokolx.com/legal.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #020406;
+      --panel: #071018;
+      --panel2: #0b1722;
+      --border: #162638;
+      --blue: #00a8ff;
+      --blue2: #67caff;
+      --gold: #ffaa00;
+      --text: #b8ccd8;
+      --dim: #7893a3;
+      --hi: #eef8ff;
+      --mono: "Share Tech Mono", monospace;
+      --cond: "Barlow Condensed", sans-serif;
+      --body: "Barlow", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 16% 4%, rgba(0, 168, 255, 0.18), transparent 34%),
+        radial-gradient(circle at 78% 20%, rgba(255, 170, 0, 0.08), transparent 30%),
+        linear-gradient(180deg, #020406 0%, #071018 52%, #020406 100%);
+      color: var(--text);
+      font-family: var(--body);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0, 168, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 168, 255, 0.04) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black 0%, transparent 86%);
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 28px 0 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 0 56px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(7, 16, 24, 0.82);
+      color: var(--blue2);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-decoration: none;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand:hover {
+      color: var(--gold);
+      border-color: rgba(255, 170, 0, 0.55);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 13px;
+      border: 1px solid rgba(103, 202, 255, 0.18);
+      border-radius: 8px;
+      background: rgba(7, 16, 24, 0.58);
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav a:hover {
+      color: var(--hi);
+      border-color: rgba(0, 168, 255, 0.54);
+    }
+
+    .hero {
+      max-width: 880px;
+      padding-bottom: 34px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--blue2);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--hi);
+      font-family: var(--cond);
+      font-size: clamp(54px, 9vw, 104px);
+      font-weight: 900;
+      line-height: 0.88;
+      text-transform: uppercase;
+    }
+
+    .accent {
+      background: linear-gradient(135deg, var(--blue), var(--blue2) 48%, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 24px 0 0;
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .notice {
+      margin: 28px 0 0;
+      display: inline-flex;
+      max-width: 760px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255, 170, 0, 0.32);
+      border-radius: 8px;
+      background: rgba(255, 170, 0, 0.08);
+      color: var(--gold);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      line-height: 1.6;
+      text-transform: uppercase;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 24px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(7, 16, 24, 0.84);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+      overflow: hidden;
+    }
+
+    .toc-title {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+      color: var(--blue2);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .toc a {
+      display: block;
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(22, 38, 56, 0.72);
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+
+    .toc a:last-child { border-bottom: 0; }
+
+    .toc a:hover {
+      color: var(--hi);
+      background: rgba(0, 168, 255, 0.06);
+    }
+
+    .content {
+      display: grid;
+      gap: 18px;
+    }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(7, 16, 24, 0.92);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+      overflow: hidden;
+    }
+
+    section h2 {
+      margin: 0;
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--border);
+      color: var(--hi);
+      font-family: var(--cond);
+      font-size: 34px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .section-body {
+      padding: 22px 24px 26px;
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.72;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      margin: 4px 0 18px;
+      padding-left: 20px;
+      color: var(--text);
+    }
+
+    li {
+      margin: 9px 0;
+      line-height: 1.62;
+    }
+
+    .short {
+      border-color: rgba(255, 170, 0, 0.34);
+      background: color-mix(in srgb, var(--gold) 7%, var(--panel));
+    }
+
+    .short h2 { color: var(--gold); }
+
+    .footer {
+      padding: 36px 0 0;
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 840px) {
+      .shell {
+        width: min(100% - 28px, 1120px);
+        padding-top: 16px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        padding-bottom: 42px;
+      }
+
+      .nav { display: none; }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .toc {
+        position: static;
+      }
+
+      .hero { padding-bottom: 24px; }
+
+      .intro {
+        font-size: 16px;
+      }
+
+      section h2 {
+        font-size: 28px;
+        padding: 20px;
+      }
+
+      .section-body {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Back to PROTOKOL X home">PROTOKOL X</a>
+      <nav class="nav" aria-label="Legal page navigation">
+        <a href="#legal">Legal</a>
+        <a href="#medical">Medical</a>
+        <a href="#affiliate">Affiliate</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#cookies">Cookies</a>
+      </nav>
+    </header>
+
+    <div class="hero">
+      <p class="eyebrow">// disclosure packet</p>
+      <h1>Legal, Privacy,<br><span class="accent">Affiliate & Cookie</span></h1>
+      <p class="intro">Protokol X is an independent educational and analytical platform focused on systems-based organization within the peptide, wellness, performance, recovery, cognition, and longevity space.</p>
+      <div class="notice">Educational and informational purposes only. Not medical advice. Affiliate disclosure applies.</div>
+    </div>
+
+    <div class="layout">
+      <aside class="toc" aria-label="Disclosure sections">
+        <div class="toc-title">Disclosure Index</div>
+        <a href="#about">About Protokol X</a>
+        <a href="#legal">Legal Disclaimer</a>
+        <a href="#medical">Medical Disclaimer</a>
+        <a href="#affiliate">Affiliate Disclosure</a>
+        <a href="#transparency">Transparency Statement</a>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#cookies">Cookies & Tracking Disclosure</a>
+        <a href="#analytics">Google Analytics Disclosure</a>
+        <a href="#education">Educational Use Notice</a>
+        <a href="#footer-short">Footer Short Version</a>
+      </aside>
+
+      <div class="content">
+        <section id="about">
+          <h2>About Protokol X</h2>
+          <div class="section-body">
+            <p>Protokol X is an independent educational and analytical platform focused on systems-based organization within the peptide, wellness, performance, recovery, cognition, and longevity space.</p>
+            <p>The purpose of the platform is to organize information, encourage analytical transparency, promote critical thinking, and provide structured educational resources regarding compounds, systems, methodologies, and vendor transparency practices.</p>
+            <p>Protokol X does not operate as a medical provider, pharmaceutical company, telehealth service, compounding pharmacy, laboratory, or regulatory authority.</p>
+            <p>All information presented on this website is intended strictly for educational, informational, and research discussion purposes.</p>
+          </div>
+        </section>
+
+        <section id="legal">
+          <h2>Legal Disclaimer</h2>
+          <div class="section-body">
+            <p>The content provided on Protokol X is for informational and educational purposes only.</p>
+            <p>Nothing contained on this website constitutes medical advice, diagnosis, treatment recommendations, legal advice, regulatory certification, or professional healthcare guidance.</p>
+            <p>References to peptides, research compounds, supplements, protocols, vendors, analytical testing, wellness systems, recovery systems, performance systems, longevity systems, or cognitive systems are presented solely for informational and educational discussion.</p>
+            <p>Protokol X does not manufacture, prescribe, compound, distribute, or sell pharmaceutical products.</p>
+            <p>Any decisions made based on information presented on this website are done solely at the user's own discretion and risk.</p>
+            <p>Users are responsible for ensuring compliance with all laws and regulations applicable within their own jurisdiction.</p>
+            <p>Protokol X makes no guarantees regarding safety, effectiveness, purity, outcomes, regulatory status, availability, accuracy of third-party information, or vendor performance or reliability.</p>
+            <p>All content is provided "as is" without warranties of any kind, express or implied.</p>
+          </div>
+        </section>
+
+        <section id="medical">
+          <h2>Medical Disclaimer</h2>
+          <div class="section-body">
+            <p>The information presented on Protokol X is not intended to diagnose, treat, cure, or prevent any disease or medical condition.</p>
+            <p>Nothing on this website should be interpreted as medical advice or as a substitute for consultation with a qualified physician or licensed healthcare professional.</p>
+            <p>Research compounds, peptides, supplements, longevity compounds, and wellness-related materials discussed on this site may involve risks, side effects, contraindications, unknown interactions, or regulatory limitations.</p>
+            <p>Individual responses may vary significantly.</p>
+            <p>Always consult a qualified healthcare professional before making decisions involving medications, supplements, experimental compounds, wellness protocols, fitness regimens, longevity practices, or cognitive enhancement compounds.</p>
+            <p>If you believe you are experiencing a medical emergency, contact emergency medical services immediately.</p>
+          </div>
+        </section>
+
+        <section id="affiliate">
+          <h2>Affiliate Disclosure</h2>
+          <div class="section-body">
+            <p>Protokol X participates in affiliate marketing programs and may receive commissions from qualifying purchases made through links on this website.</p>
+            <p>These commissions help support website operations, research efforts, content development, hosting infrastructure, platform maintenance, and educational resource creation.</p>
+            <p>Vendor listings, analytical reviews, trust scoring systems, transparency classifications, and educational content are developed independently using Protokol X methodologies, publicly available information, transparency analysis, and subjective evaluation criteria.</p>
+            <p>Affiliate relationships do not guarantee favorable rankings, preferred placement, positive reviews, endorsements, certifications, or verification status.</p>
+            <p>Users should always conduct their own independent research and due diligence before purchasing from any vendor or using any product or service referenced on this website.</p>
+          </div>
+        </section>
+
+        <section id="transparency">
+          <h2>Transparency Statement</h2>
+          <div class="section-body">
+            <p>Protokol X utilizes independently developed analytical frameworks and verification methodologies intended to encourage transparency, organization, and informed discussion within the research and wellness community.</p>
+            <p>Trust scores, verification classifications, transparency indexes, analytical rankings, and vendor assessments represent subjective informational analysis only.</p>
+            <p>These assessments should not be interpreted as regulatory approvals, medical endorsements, pharmaceutical certifications, safety guarantees, quality guarantees, or legal certifications.</p>
+            <p>Analytical transparency scoring is designed solely as an informational framework to assist users in conducting their own independent evaluation and research.</p>
+          </div>
+        </section>
+
+        <section id="privacy">
+          <h2>Privacy Policy</h2>
+          <div class="section-body">
+            <p>Protokol X respects user privacy and is committed to maintaining a transparent and minimal-data operational philosophy.</p>
+            <p>The website may collect limited non-personally identifiable information automatically through analytics, performance tools, browser cookies, server logs, or security monitoring systems.</p>
+            <p>Information collected may include:</p>
+            <ul>
+              <li>Browser type</li>
+              <li>Device information</li>
+              <li>General geographic region</li>
+              <li>Pages visited</li>
+              <li>Referral sources</li>
+              <li>Session duration</li>
+              <li>Site interaction metrics</li>
+            </ul>
+            <p>This information is used solely for:</p>
+            <ul>
+              <li>Website performance optimization</li>
+              <li>Security monitoring</li>
+              <li>Traffic analytics</li>
+              <li>User experience improvements</li>
+              <li>Content effectiveness evaluation</li>
+            </ul>
+            <p>Protokol X does not knowingly sell personal data to third parties.</p>
+            <p>Users may voluntarily submit information through contact forms, newsletter subscriptions, or direct communication. Submitted information is used only for operational communication purposes and is not intentionally shared outside of necessary service infrastructure.</p>
+          </div>
+        </section>
+
+        <section id="cookies">
+          <h2>Cookies & Tracking Disclosure</h2>
+          <div class="section-body">
+            <p>This website uses cookies and similar technologies to improve functionality, analyze website traffic, monitor performance, and enhance user experience.</p>
+            <p>Cookies may be used for:</p>
+            <ul>
+              <li>Basic website functionality</li>
+              <li>Analytics tracking</li>
+              <li>Session management</li>
+              <li>Traffic measurement</li>
+              <li>Security and fraud prevention</li>
+              <li>Preference retention</li>
+            </ul>
+            <p>By continuing to use this website, users acknowledge and consent to the use of cookies and related technologies as described in this disclosure.</p>
+            <p>Users may disable cookies through their browser settings; however, some portions of the website may not function properly if cookies are disabled.</p>
+          </div>
+        </section>
+
+        <section id="analytics">
+          <h2>Google Analytics Disclosure</h2>
+          <div class="section-body">
+            <p>Protokol X uses Google Analytics 4 (GA4), a web analytics service provided by Google, to better understand website traffic patterns and improve site performance.</p>
+            <p>Google Analytics may collect information such as:</p>
+            <ul>
+              <li>Pages visited</li>
+              <li>Time spent on pages</li>
+              <li>Device and browser information</li>
+              <li>Approximate geographic region</li>
+              <li>Referral traffic sources</li>
+              <li>General interaction behavior</li>
+            </ul>
+            <p>This information is aggregated and used solely for analytical and operational purposes.</p>
+            <p>Google may process this information in accordance with its own privacy policies and data handling practices.</p>
+            <p>Users who wish to opt out of Google Analytics tracking may utilize browser privacy settings or official Google opt-out tools where available.</p>
+          </div>
+        </section>
+
+        <section id="education">
+          <h2>Educational Use Notice</h2>
+          <div class="section-body">
+            <p>This website is intended for educational and informational audiences interested in systems analysis, wellness research, analytical transparency, and organizational frameworks related to performance, recovery, cognition, and longevity topics.</p>
+            <p>Content on this website is not directed toward minors.</p>
+            <p>Users are expected to exercise personal responsibility, independent judgment, and appropriate professional consultation when reviewing any information presented on this platform.</p>
+          </div>
+        </section>
+
+        <section id="footer-short" class="short">
+          <h2>Recommended Footer Short Version</h2>
+          <div class="section-body">
+            <p>Educational & informational purposes only. Not medical advice. Affiliate disclosure applies. Independent analytical platform focused on transparency and systems organization.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div>PROTOKOL X | Legal, Privacy, Affiliate & Cookie Disclosure</div>
+      <div>Educational & informational purposes only. Not medical advice.</div>
+    </footer>
+  </main>
+</body>
+</html>
