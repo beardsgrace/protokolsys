@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -83,7 +83,7 @@
     .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none}.brand-mark{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--blue);color:var(--hi);font-family:var(--cond);font-weight:900;font-size:24px;box-shadow:0 0 18px rgba(0,168,255,.28);background:rgba(0,168,255,.08)}.brand-name{font-family:var(--cond);font-weight:900;color:var(--hi);letter-spacing:.18em;font-size:22px;text-transform:uppercase;white-space:nowrap}.brand-name span{color:var(--blue)}
     .tabs{display:flex;gap:8px;align-items:center;overflow-x:auto;scrollbar-width:none;padding:5px 0}.tabs::-webkit-scrollbar{display:none}.tab{flex:0 0 auto;padding:8px 10px;border:1px solid rgba(0,168,255,.22);color:var(--text);text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:rgba(0,168,255,.045)}.tab:hover,.tab:focus-visible{border-color:var(--blue);color:var(--hi);outline:none}
     .status{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid rgba(255,170,0,.35);color:var(--gold);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;background:rgba(255,170,0,.05)}.status:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px rgba(255,170,0,.8)}
-    main{position:relative;z-index:1;width:min(1440px,100%);margin:0 auto;padding:clamp(14px,2vw,28px)}.top-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:16px}
+    main{position:relative;z-index:1;width:min(1440px,100%);margin:0 auto;padding:clamp(14px,2vw,28px)}.top-tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:16px}
     .tool-card{min-height:118px;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:18px;border:1px solid rgba(0,168,255,.28);background:linear-gradient(135deg,rgba(0,168,255,.12),rgba(5,10,16,.92));text-decoration:none;overflow:hidden;position:relative}.tool-card:hover,.tool-card:focus-visible{border-color:var(--gold);box-shadow:0 0 28px rgba(255,170,0,.16);outline:none}.tool-card strong,.pathway-title,.hero-title,h2{font-family:var(--cond);color:var(--hi);text-transform:uppercase;letter-spacing:.06em}.tool-card strong{font-size:clamp(24px,4vw,44px);line-height:.95}.tool-card span{color:var(--dim);font-size:14px;max-width:440px}.tool-card b{color:var(--blue);font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
     .vendor-layout{display:grid;grid-template-columns:minmax(245px,300px) minmax(0,1fr) minmax(245px,300px);gap:16px;align-items:start}.vendor-rail{display:grid;gap:12px}
     .hero{min-height:clamp(360px,52vw,620px);display:grid;place-items:center;text-align:center;padding:clamp(28px,5vw,70px) clamp(18px,4vw,50px);border:1px solid rgba(0,168,255,.22);background:radial-gradient(circle at 50% 42%,rgba(0,168,255,.15),transparent 26%),linear-gradient(180deg,rgba(5,10,15,.86),rgba(2,4,6,.96));position:relative;overflow:hidden}.hero:before,.pathway:before,.vendor-card:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.14) 1px,transparent 1.5px);background-size:7px 7px;opacity:.1;mix-blend-mode:screen}
@@ -106,7 +106,7 @@
     <div class="header-inner">
       <a class="brand" href="/" aria-label="PROTOKOL X home"><span class="brand-mark">X</span><span class="brand-name">PROTOKOL <span>X</span></span></a>
       <nav class="tabs" aria-label="Primary navigation">
-        <a class="tab" href="/">Home</a><a class="tab" href="#vendors">Vendors</a><a class="tab" href="/trust-index.html">Trust Index</a><a class="tab" href="/systems.html">Systems</a><a class="tab" href="#research-pathway">Research Pathway</a><a class="tab" href="/calculator.html">Calculator</a><a class="tab" href="/supplies.html">Supplies</a><a class="tab" href="/education.html">Education</a><a class="tab" href="/about.html">About</a><a class="tab" href="/legal.html">Legal</a>
+        <a class="tab" href="/">Home</a><a class="tab" href="#vendors">Vendors</a><a class="tab" href="https://protokolx-tracker2.netlify.app/" target="_blank" rel="noopener">Tracker</a><a class="tab" href="/trust-index.html">Trust Index</a><a class="tab" href="/systems.html">Systems</a><a class="tab" href="#research-pathway">Research Pathway</a><a class="tab" href="/calculator.html">Calculator</a><a class="tab" href="/supplies.html">Supplies</a><a class="tab" href="/education.html">Education</a><a class="tab" href="/about.html">About</a><a class="tab" href="/legal.html">Legal</a>
       </nav>
       <div class="status">Deals Live</div>
     </div>
@@ -115,6 +115,7 @@
   <main>
     <section class="top-tools" aria-label="Featured PROTOKOL X tools">
       <a class="tool-card" href="https://pillarsv6.netlify.app/" target="_blank" rel="noopener"><span><strong>Peptide Pillars</strong><br />Explore the peptide education map and terminology hub.</span><b>Open</b></a>
+      <a class="tool-card" href="https://protokolx-tracker2.netlify.app/" target="_blank" rel="noopener"><span><strong>PROTOKOL Tracker</strong><br />Log protocols, dose frequency, monthly metrics, supplies, labs, and JSON backups from your phone.</span><b>Launch</b></a>
       <a class="tool-card" href="/calculator.html"><span><strong>Peptide Calculator</strong><br />Use the visual syringe calculator for research math and unit planning.</span><b>Launch</b></a>
     </section>
 
@@ -126,7 +127,7 @@
       </div>
 
       <section class="hero" aria-label="PROTOKOL X overview">
-        <div><div class="hero-kicker">Peptide & Wellness Savings</div><h1 class="hero-title">PROTOKOL <span>X</span></h1><p class="hero-subtitle">Vetted vendor profiles, real discount paths, lab supply links, and research tools, organized into one mobile-first command center.</p><div class="hero-actions"><button class="button primary" type="button" data-open-finder>Research Pathway</button></div></div>
+        <div><div class="hero-kicker">Peptide & Wellness Savings</div><h1 class="hero-title">PROTOKOL <span>X</span></h1><p class="hero-subtitle">Vetted vendor profiles, real discount paths, lab supply links, and research tools, organized into one mobile-first command center.</p><div class="hero-actions"><a class="button primary" href="https://protokolx-tracker2.netlify.app/" target="_blank" rel="noopener">Launch Tracker</a><button class="button" type="button" data-open-finder>Research Pathway</button></div></div>
       </section>
 
       <div class="vendor-rail">
