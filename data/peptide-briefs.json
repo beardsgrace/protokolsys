@@ -1,0 +1,29 @@
+{
+  "updatedAt": "2026-05-17T16:07:48.275Z",
+  "updatedLabel": "Updated May 17, 2026",
+  "source": "PubMed",
+  "query": "peptide[Title] OR peptides[Title] OR GLP-1[Title] OR tirzepatide[Title] OR retatrutide[Title] OR semaglutide[Title]",
+  "items": [
+    {
+      "pmid": "42141999",
+      "title": "Magnetic nanohydroxyapatite-peptide silk fibroin hydrogel induces osteogenesis in canine periodontal ligament stem cells revealed by proteomic analysis",
+      "source": "The veterinary quarterly",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42141999/"
+    },
+    {
+      "pmid": "42092775",
+      "title": "A novel bile salt hydrolase-producing Ligilactobacillus salivarius prevents diet-induced obesity via regulation of bile acid metabolism and glucagon-like peptide 1 restoration",
+      "source": "Gut microbes",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42092775/"
+    },
+    {
+      "pmid": "42033239",
+      "title": "EB1010, a putative Christensenellaceae-derived microbial peptide, exhibits anti-inflammatory activity and therapeutic potential in ulcerative colitis",
+      "source": "Gut microbes",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42033239/"
+    }
+  ]
+}
