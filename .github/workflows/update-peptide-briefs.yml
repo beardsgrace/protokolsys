@@ -1,0 +1,36 @@
+name: Update Peptide Briefs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 13 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-briefs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Fetch latest PubMed briefs
+        run: node scripts/update-peptide-briefs.js
+
+      - name: Commit updated briefs
+        run: |
+          if git diff --quiet -- data/peptide-briefs.json; then
+            echo "No PubMed brief changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/peptide-briefs.json
+          git commit -m "Update peptide research briefs"
+          git push
