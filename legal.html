@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -283,6 +283,15 @@
       text-transform: uppercase;
     }
 
+    .contact-link {
+      color: var(--blue2);
+      text-decoration: none;
+    }
+
+    .contact-link:hover {
+      color: var(--gold);
+    }
+
     @media (max-width: 840px) {
       .shell {
         width: min(100% - 28px, 1120px);
@@ -325,7 +334,7 @@
   <main class="shell">
     <header class="topbar">
       <a class="brand" href="/" aria-label="Back to PROTOKOL X home">PROTOKOL X</a>
-      <nav class="nav" aria-label="Primary navigation"><a href="/">Home</a><a href="/#vendors">Vendors</a><a href="/trust-index.html">Trust Index</a><a href="/systems.html">Systems</a><a href="/calculator.html">Calculator</a><a href="/supplies.html">Supplies</a><a href="/education.html">Education</a><a href="/about.html">About</a><a href="/legal.html">Legal</a></nav>
+      <nav class="nav" aria-label="Primary navigation"><a href="/">Home</a><a href="/#vendors">Vendors</a><a href="/trust-index.html">Trust Index</a><a href="/systems.html">Systems</a><a href="/calculator.html">Calculator</a><a href="/supplies.html">Supplies</a><a href="/education.html">Education</a><a href="/about.html">About</a><a href="mailto:info@protokolx.com">Contact</a><a href="/legal.html">Legal</a></nav>
     </header>
 
     <div class="hero">
@@ -347,6 +356,7 @@
         <a href="#cookies">Cookies & Tracking Disclosure</a>
         <a href="#analytics">Google Analytics Disclosure</a>
         <a href="#education">Educational Use Notice</a>
+        <a href="#contact">Contact</a>
       </aside>
 
       <div class="content">
@@ -481,14 +491,21 @@
           </div>
         </section>
 
+        <section id="contact">
+          <h2>Contact</h2>
+          <div class="section-body">
+            <p>For PROTOKOL X questions, website notices, privacy inquiries, affiliate disclosure questions, or legal/disclosure related communication, contact <a class="contact-link" href="mailto:info@protokolx.com">info@protokolx.com</a>.</p>
+          </div>
+        </section>
+
       </div>
     </div>
 
     <footer class="footer">
       <div>PROTOKOL X | Legal, Privacy, Affiliate & Cookie Disclosure</div>
       <div>Educational & informational purposes only. Not medical advice.</div>
+      <div>Contact: <a class="contact-link" href="mailto:info@protokolx.com">info@protokolx.com</a></div>
     </footer>
   </main>
 </body>
 </html>
-
