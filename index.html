@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -35,6 +35,7 @@
         "name": "PROTOKOL X",
         "url": "https://www.protokolx.com/",
         "description": "Curated peptide vendor trust profiles, referral savings, lab supply resources, peptide education tools, and research navigation.",
+        "email": "info@protokolx.com",
         "founder": { "@type": "Person", "name": "Mikey B" }
       },
       {
@@ -99,6 +100,8 @@
     .modal{position:fixed;inset:0;z-index:100;display:none;padding:16px;background:rgba(2,4,6,.82);backdrop-filter:blur(12px);overflow:auto}.modal[open]{display:grid;place-items:center}.modal-panel{width:min(820px,100%);border:1px solid rgba(0,168,255,.42);background:linear-gradient(180deg,rgba(7,16,24,.98),rgba(2,4,6,.98));box-shadow:0 0 60px rgba(0,168,255,.2);padding:clamp(16px,3vw,28px)}.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:start;margin-bottom:14px}.modal h2{margin:0;font-size:clamp(34px,6vw,64px);line-height:.9}.close-button{width:42px;height:42px;border:1px solid rgba(0,168,255,.35);color:var(--hi);background:transparent;font-size:24px;cursor:pointer}
     .finder-grid{display:grid;gap:16px}.finder-step{border:1px solid rgba(0,168,255,.18);padding:14px;background:rgba(0,168,255,.04)}.finder-step h3{margin:0 0 10px;color:var(--blue2);font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase}.checks{display:flex;flex-wrap:wrap;gap:8px}.checks label{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:8px 10px;border:1px solid rgba(255,255,255,.15);color:var(--text);font-size:13px;cursor:pointer;background:rgba(2,4,6,.42)}.checks input{accent-color:var(--blue)}.finder-result{min-height:92px;border:1px solid rgba(255,170,0,.32);background:rgba(255,170,0,.06);padding:14px;color:var(--text)}.result-name{color:var(--gold);font-family:var(--cond);font-size:30px;text-transform:uppercase;letter-spacing:.06em;margin:0}
     footer{width:min(1440px,100%);margin:0 auto;padding:28px;color:var(--dim);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;text-align:center}
+    footer a{color:var(--blue2);text-decoration:none}
+    footer a:hover,footer a:focus-visible{color:var(--gold);outline:none}
     @media (max-width:1100px){.header-inner{grid-template-columns:1fr auto}.tabs{grid-column:1/-1;order:3}.vendor-layout{grid-template-columns:minmax(0,1fr)}.vendor-rail{grid-template-columns:repeat(3,minmax(0,1fr))}.center-stack{order:-1}.hero{order:-1}}
     @media (max-width:760px){.header-inner{gap:8px;padding:8px 10px}.brand-mark{width:32px;height:32px;font-size:21px}.brand-name{font-size:18px;letter-spacing:.12em}.status{display:none}main{padding:10px}.top-tools,.info-grid,.pathway{grid-template-columns:1fr}.tool-card{min-height:96px;padding:14px}.vendor-rail{grid-template-columns:1fr}.vendor-card{grid-template-rows:150px auto}.vendor-card:before{height:150px}.vendor-card img{height:150px}.hero{min-height:360px;padding:30px 14px}.hero-title{font-size:clamp(58px,18vw,92px)}.hero-subtitle{font-size:16px}.pathway .button{width:100%}.vendor-actions{grid-template-columns:1fr}.tab{font-size:10px;padding:8px}.modal{padding:8px}.checks label{width:100%}}
   </style>
@@ -108,7 +111,7 @@
     <div class="header-inner">
       <a class="brand" href="/" aria-label="PROTOKOL X home"><span class="brand-mark">X</span><span class="brand-name">PROTOKOL <span>X</span></span></a>
       <nav class="tabs" aria-label="Primary navigation">
-        <a class="tab" href="/">Home</a><a class="tab" href="#vendors">Vendors</a><a class="tab" href="https://protokolx-tracker2.netlify.app/" target="_blank" rel="noopener">Tracker</a><a class="tab" href="/trust-index.html">Trust Index</a><a class="tab" href="/systems.html">Systems</a><a class="tab" href="#research-pathway">Research Pathway</a><a class="tab" href="/calculator.html">Calculator</a><a class="tab" href="/supplies.html">Supplies</a><a class="tab" href="/education.html">Education</a><a class="tab" href="/about.html">About</a><a class="tab" href="/legal.html">Legal</a>
+        <a class="tab" href="/">Home</a><a class="tab" href="#vendors">Vendors</a><a class="tab" href="https://protokolx-tracker2.netlify.app/" target="_blank" rel="noopener">Tracker</a><a class="tab" href="/trust-index.html">Trust Index</a><a class="tab" href="/systems.html">Systems</a><a class="tab" href="#research-pathway">Research Pathway</a><a class="tab" href="/calculator.html">Calculator</a><a class="tab" href="/supplies.html">Supplies</a><a class="tab" href="/education.html">Education</a><a class="tab" href="/about.html">About</a><a class="tab" href="mailto:info@protokolx.com">Contact</a><a class="tab" href="/legal.html">Legal</a>
       </nav>
       <div class="status">Deals Live</div>
     </div>
@@ -166,7 +169,7 @@
     </div>
   </div>
 
-  <footer>PROTOKOL X - Building a higher standard in research navigation - Updated May 9, 2026</footer>
+  <footer>PROTOKOL X - Building a higher standard in research navigation - <a href="mailto:info@protokolx.com">info@protokolx.com</a> - Updated May 9, 2026</footer>
   <script>
     async function loadPeptideBriefs(){
       const list=document.getElementById('briefsList'),updated=document.getElementById('briefsUpdated');
@@ -193,5 +196,3 @@
   </script>
 </body>
 </html>
-
-
