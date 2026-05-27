@@ -1,9 +1,16 @@
 {
-  "updatedAt": "2026-05-26T16:53:15.290Z",
-  "updatedLabel": "Updated May 26, 2026",
+  "updatedAt": "2026-05-27T16:47:04.095Z",
+  "updatedLabel": "Updated May 27, 2026",
   "source": "PubMed",
   "query": "peptide[Title] OR peptides[Title] OR GLP-1[Title] OR tirzepatide[Title] OR retatrutide[Title] OR semaglutide[Title]",
   "items": [
+    {
+      "pmid": "42189047",
+      "title": "Self-assembled non-steroidal anti-inflammatory drug-peptide hydrogel to effectively mitigate ocular inflammation",
+      "source": "Drug delivery",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42189047/"
+    },
     {
       "pmid": "42141999",
       "title": "Magnetic nanohydroxyapatite-peptide silk fibroin hydrogel induces osteogenesis in canine periodontal ligament stem cells revealed by proteomic analysis",
@@ -17,13 +24,6 @@
       "source": "Gut microbes",
       "date": "2026 Dec 31",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42092775/"
-    },
-    {
-      "pmid": "42033239",
-      "title": "EB1010, a putative Christensenellaceae-derived microbial peptide, exhibits anti-inflammatory activity and therapeutic potential in ulcerative colitis",
-      "source": "Gut microbes",
-      "date": "2026 Dec 31",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42033239/"
     }
   ]
 }
