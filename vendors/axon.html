@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AXON Vendor Intelligence Profile | PROTOKOL X</title>
+  <meta name="description" content="Protocol X vendor intelligence profile for AXON Peptide, including verification architecture, trust snapshot, documentation signals, and research vendor assessment." />
+  <style>
+    :root{
+      --bg:#02070d;
+      --panel:#04111d;
+      --panel2:#071827;
+      --line:rgba(0,174,255,.34);
+      --line2:rgba(146,209,255,.24);
+      --blue:#00aeff;
+      --blue2:#5dd6ff;
+      --gold:#f6aa28;
+      --text:#dcebf7;
+      --muted:#92a7b8;
+      --white:#f7fbff;
+      --cond:"Arial Narrow","Roboto Condensed","Impact",sans-serif;
+      --mono:"Consolas","Courier New",monospace;
+      --body:Inter,Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.55}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% -10%,rgba(0,174,255,.16),transparent 38%),linear-gradient(180deg,#03111c 0%,#02070d 54%,#010409 100%)}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,174,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(0,174,255,.055) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.8),transparent 72%);opacity:.55}
+    a{color:inherit}
+    .site-header{position:sticky;top:0;z-index:5;border-bottom:1px solid rgba(0,174,255,.22);background:rgba(2,7,13,.88);backdrop-filter:blur(14px)}
+    .header-inner,.wrap{width:min(1440px,100%);margin:0 auto}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px clamp(14px,2vw,28px)}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .brand-mark{display:grid;place-items:center;width:38px;height:38px;border:1px solid rgba(0,174,255,.54);color:var(--gold);font-family:var(--cond);font-size:26px;font-weight:900}
+    .brand-name{font-family:var(--cond);font-size:24px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--white)}
+    .brand-name span{color:var(--gold)}
+    .nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .nav a{padding:8px 11px;border:1px solid rgba(0,174,255,.18);color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none}
+    .nav a:hover,.nav a:focus-visible{border-color:var(--blue);color:var(--blue);outline:none}
+    main{position:relative;z-index:1}
+    .wrap{padding:clamp(16px,2.2vw,32px)}
+    .hero-image{display:block;width:100%;height:auto;border:1px solid rgba(0,174,255,.42);box-shadow:0 0 42px rgba(0,174,255,.13);background:#020b12}
+    .intro{margin:22px 0 0;padding:24px;border:1px solid rgba(0,174,255,.28);background:linear-gradient(135deg,rgba(0,174,255,.11),rgba(2,10,18,.82))}
+    h1,h2,h3{margin:0;color:var(--white);font-family:var(--cond);letter-spacing:.08em;text-transform:uppercase;line-height:1.05}
+    h1{font-size:clamp(34px,5vw,72px)}
+    h2{font-size:clamp(25px,3vw,42px);margin-bottom:16px}
+    h3{font-size:20px;margin-bottom:10px}
+    p{margin:0;color:var(--muted);font-size:clamp(15px,1.5vw,18px)}
+    .intro p{max-width:980px;margin-top:12px}
+    .section{margin-top:22px;padding:24px;border:1px solid rgba(0,174,255,.22);background:linear-gradient(180deg,rgba(5,16,27,.82),rgba(2,7,13,.92));position:relative;overflow:hidden}
+    .section:before,.card:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.16) 1px,transparent 1.5px);background-size:7px 7px;opacity:.07;mix-blend-mode:screen}
+    .section>*{position:relative;z-index:1}
+    .brief-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:14px}
+    .card{position:relative;padding:18px;border:1px solid var(--line2);background:linear-gradient(135deg,rgba(0,174,255,.09),rgba(5,12,20,.92))}
+    .card strong,.label{display:block;color:var(--blue2);font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+    .card p,.card li{font-size:15px}
+    ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+    li+li{margin-top:6px}
+    .workflow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:14px}
+    .workflow .card{min-height:116px}
+    .step{display:inline-grid;place-items:center;width:28px;height:28px;margin-bottom:12px;border:1px solid var(--blue);color:var(--blue);font-family:var(--mono);font-size:12px}
+    .doc-grid,.snapshot-grid,.category-grid,.info-grid{display:grid;gap:12px}
+    .doc-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .snapshot-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+    .category-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+    .info-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+    .metric{margin-top:8px;color:var(--white);font-family:var(--cond);font-size:clamp(28px,3.4vw,46px);letter-spacing:.04em;text-transform:uppercase;line-height:1}
+    .small-metric{font-size:24px;line-height:1.08}
+    .cta{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:22px;padding:24px;border:1px solid rgba(246,170,40,.42);background:linear-gradient(135deg,rgba(246,170,40,.12),rgba(2,10,18,.92))}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 18px;border:1px solid rgba(238,248,255,.42);color:var(--white);font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;background:rgba(255,255,255,.03)}
+    .button.primary{border-color:var(--blue);color:var(--blue);background:rgba(0,174,255,.1)}
+    .button:hover,.button:focus-visible{border-color:var(--gold);color:var(--gold);outline:none}
+    footer{width:min(1440px,100%);margin:0 auto;padding:28px;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;text-align:center}
+    @media (max-width:1100px){.brief-grid{grid-template-columns:1fr}.workflow,.doc-grid,.snapshot-grid,.category-grid,.info-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.header-inner{align-items:flex-start;flex-direction:column}.nav{justify-content:flex-start}}
+    @media (max-width:640px){.wrap{padding:12px}.intro,.section,.cta{padding:16px}.workflow,.doc-grid,.snapshot-grid,.category-grid,.info-grid{grid-template-columns:1fr}.actions,.button{width:100%}.brand-name{font-size:20px}.nav a{font-size:10px;padding:7px 9px}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark">X</span>
+        <span class="brand-name">PROTOKOL <span>X</span></span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/trust-index.html">Trust Index</a>
+        <a href="/vendors/">Vendors</a>
+        <a href="/systems.html">Systems</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <img class="hero-image" src="../assets/vendors/axon-prime.png" alt="AXON Peptide Tier 1 vendor profile with verification workflow, trust score, discount code, and documentation signals" />
+
+      <section class="intro" aria-labelledby="profile-title">
+        <h1 id="profile-title">AXON Vendor Intelligence Profile</h1>
+        <p>AXON is a physician-led research vendor focused on documentation, verification architecture, analytical transparency, and batch-level traceability.</p>
+        <p>This profile summarizes publicly observable verification signals and applies the Protocol X assessment framework.</p>
+      </section>
+
+      <section class="section" aria-labelledby="brief-title">
+        <h2 id="brief-title">Vendor Intelligence Brief</h2>
+        <div class="brief-grid">
+          <article class="card">
+            <h3>BLUF</h3>
+            <p>AXON is a documentation-forward research vendor emphasizing verification systems, traceability, and analytical transparency. The strongest observable signals are its public verification architecture, batch documentation practices, and extensive testing disclosures.</p>
+          </article>
+          <article class="card">
+            <h3>Strengths</h3>
+            <ul>
+              <li>Documentation-first approach</li>
+              <li>Public verification repository</li>
+              <li>Analytical transparency emphasis</li>
+              <li>Batch traceability architecture</li>
+              <li>Physician-led positioning</li>
+              <li>Strong verification infrastructure</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Considerations</h3>
+            <ul>
+              <li>Premium pricing compared to some competitors</li>
+              <li>Growing public track record</li>
+              <li>Ongoing monitoring remains appropriate</li>
+            </ul>
+            <h3 style="margin-top:18px">Best Fit</h3>
+            <p>Researchers who prioritize documentation quality, verification systems, and transparency over lowest-cost purchasing options.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="architecture-title">
+        <h2 id="architecture-title">Verification Architecture</h2>
+        <p>The Protocol X review process prioritizes objective documentation signals over marketing claims. Verification begins with analytical documentation and proceeds through identity, purity, traceability, and consistency review before final assessment.</p>
+        <div class="workflow">
+          <article class="card"><span class="step">01</span><h3>COA Review</h3><p>Analytical documentation is reviewed first.</p></article>
+          <article class="card"><span class="step">02</span><h3>Identity Verification</h3><p>Identity signals are assessed against available records.</p></article>
+          <article class="card"><span class="step">03</span><h3>Purity Assessment</h3><p>Purity disclosures are evaluated for clarity and consistency.</p></article>
+          <article class="card"><span class="step">04</span><h3>Batch Verification</h3><p>Batch-level traceability is checked for continuity.</p></article>
+          <article class="card"><span class="step">05</span><h3>Documentation Review</h3><p>Repository depth and accessibility are considered.</p></article>
+          <article class="card"><span class="step">06</span><h3>Trust Assessment</h3><p>Signals are consolidated into the final assessment.</p></article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="documentation-title">
+        <h2 id="documentation-title">Verification &amp; Documentation</h2>
+        <div class="doc-grid">
+          <article class="card"><strong>Testing Signal</strong><h3>HPLC Testing</h3></article>
+          <article class="card"><strong>Identity Signal</strong><h3>LC-MS Identity Confirmation</h3></article>
+          <article class="card"><strong>Screening Signal</strong><h3>Sterility Testing</h3></article>
+          <article class="card"><strong>Screening Signal</strong><h3>Endotoxin Testing</h3></article>
+          <article class="card"><strong>Screening Signal</strong><h3>Heavy Metals Testing</h3></article>
+          <article class="card"><strong>Traceability</strong><h3>Batch Traceability</h3></article>
+          <article class="card"><strong>Records</strong><h3>Chain of Custody Documentation</h3></article>
+          <article class="card"><strong>Repository</strong><h3>Verification Repository</h3></article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="snapshot-title">
+        <h2 id="snapshot-title">Trust Snapshot</h2>
+        <div class="snapshot-grid">
+          <article class="card"><span class="label">Protocol X Trust Score</span><div class="metric">8.8 / 10</div></article>
+          <article class="card"><span class="label">PX Verification Level</span><div class="metric small-metric">PX-3 Advanced Analytical</div></article>
+          <article class="card"><span class="label">Vendor Category</span><div class="metric small-metric">Research Vendor</div></article>
+          <article class="card"><span class="label">Location</span><div class="metric small-metric">Atlanta, Georgia</div></article>
+          <article class="card"><span class="label">Last Reviewed</span><div class="metric small-metric">May 2026</div></article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="categories-title">
+        <h2 id="categories-title">Featured Research Categories</h2>
+        <div class="category-grid">
+          <article class="card"><h3>GHK-Cu</h3></article>
+          <article class="card"><h3>NAD+</h3></article>
+          <article class="card"><h3>Semaglutide</h3></article>
+          <article class="card"><h3>Semax</h3></article>
+          <article class="card"><h3>BPC-157</h3></article>
+          <article class="card"><h3>Retatrutide</h3></article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="assessment-title">
+        <h2 id="assessment-title">Protocol X Assessment</h2>
+        <p>AXON currently demonstrates one of the stronger documentation and verification architectures observed within the Protocol X review framework. Public verification resources, batch traceability practices, and analytical transparency contribute positively to its assessment profile.</p>
+        <p style="margin-top:12px">The strongest observable signals are documentation depth, testing visibility, and verification structure. AXON appears positioned toward users who prioritize transparency and traceability over budget-focused purchasing decisions.</p>
+      </section>
+
+      <section class="section" aria-labelledby="info-title">
+        <h2 id="info-title">Vendor Information</h2>
+        <div class="info-grid">
+          <article class="card"><span class="label">Vendor Type</span><div class="metric small-metric">Research Vendor</div></article>
+          <article class="card"><span class="label">Business Model</span><div class="metric small-metric">Documentation-Forward</div></article>
+          <article class="card"><span class="label">Verification Repository</span><div class="metric small-metric">AxonVerified</div></article>
+          <article class="card"><span class="label">Focus</span><div class="metric small-metric">Analytical Transparency</div></article>
+          <article class="card"><span class="label">Location</span><div class="metric small-metric">Atlanta, Georgia</div></article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="disclosure-title">
+        <h2 id="disclosure-title">Disclosure</h2>
+        <p>Protocol X may receive affiliate compensation when visitors access vendor websites through links on this page.</p>
+        <p style="margin-top:12px">Affiliate relationships do not influence Protocol X assessments, verification levels, rankings, or intelligence briefs.</p>
+        <p style="margin-top:12px">Information is provided for educational and research purposes only.</p>
+      </section>
+
+      <section class="cta" aria-label="AXON actions">
+        <div>
+          <h2>AXON Vendor Profile</h2>
+          <p>Continue to the vendor website or return to the Protocol X vendor index.</p>
+        </div>
+        <div class="actions">
+          <a class="button primary" href="https://www.axonpeptide.com/?sca_ref=11311207.TWZhDavjKf" target="_blank" rel="noopener noreferrer" aria-label="Visit AXON Peptide">Visit AXON</a>
+          <a class="button" href="/" aria-label="Back to vendor index">Back to Vendor Index</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>PROTOKOL X Vendor Intelligence Network / AXON profile / Research-use-only vendor intelligence</footer>
+</body>
+</html>
