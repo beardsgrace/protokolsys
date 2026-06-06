@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO -->
+  <title>The PROTOKOL X Tracker | Documentation Over Memory</title>
+  <meta name="description" content="The PROTOKOL X Tracker is a mobile-first documentation tool built for peptide researchers. Record protocols, sessions, observations, and generate professional PDF reports &mdash; your data, your control." />
+  <meta name="keywords" content="peptide protocol tracker, peptide documentation tool, peptide research log, protocol tracking app, peptide cycle tracker, biohacking tracker app" />
+  <meta name="author" content="PROTOKOL X" />
+  <link rel="canonical" href="https://protokolx.com/blog/protocol-tracker.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="The PROTOKOL X Tracker &mdash; Documentation Over Memory" />
+  <meta property="og:description" content="Most people believe they will remember the protocol, the change, the result. Until they don't. The Tracker was built to close that gap." />
+  <meta property="og:url" content="https://protokolx.com/blog/protocol-tracker.html" />
+  <meta property="og:site_name" content="PROTOKOL X" />
+  <meta property="og:image" content="https://protokolx.com/assets/og-default.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="article:published_time" content="2026-06-06T00:00:00-07:00" />
+  <meta property="article:author" content="PROTOKOL X" />
+  <meta property="article:section" content="Tools &amp; Frameworks" />
+  <meta property="article:tag" content="peptides" />
+  <meta property="article:tag" content="protocol tracker" />
+  <meta property="article:tag" content="documentation" />
+  <meta property="article:tag" content="research tools" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The PROTOKOL X Tracker &mdash; Documentation Over Memory" />
+  <meta name="twitter:description" content="Most people believe they will remember the protocol, the change, the result. Until they don't. The Tracker was built to close that gap." />
+  <meta name="twitter:image" content="https://protokolx.com/assets/og-default.png" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "The PROTOKOL X Tracker — Documentation Over Memory",
+    "description": "The PROTOKOL X Tracker is a mobile-first documentation tool built for peptide researchers. Record protocols, sessions, observations, and generate professional PDF reports.",
+    "author": {
+      "@type": "Organization",
+      "name": "PROTOKOL X",
+      "url": "https://protokolx.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "PROTOKOL X",
+      "url": "https://protokolx.com"
+    },
+    "datePublished": "2026-06-06",
+    "url": "https://protokolx.com/blog/protocol-tracker.html"
+  }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&family=Share+Tech+Mono&display=swap');
+
+    :root {
+      --bg: #02060a;
+      --panel: rgba(4, 16, 26, 0.86);
+      --panel-strong: rgba(5, 22, 36, 0.96);
+      --line: rgba(0, 174, 255, 0.24);
+      --line-strong: rgba(0, 174, 255, 0.48);
+      --blue: #00aeff;
+      --blue-soft: #67caff;
+      --gold: #ffaa00;
+      --text: #c8d8e8;
+      --muted: #8ca5bb;
+      --dim: #5f7890;
+      --white: #f5fbff;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+      --mono: 'Share Tech Mono', Consolas, monospace;
+      --cond: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+      --sans: Barlow, 'Segoe UI', Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 76% 12%, rgba(0, 174, 255, 0.17), transparent 28%),
+        radial-gradient(circle at 8% 42%, rgba(255, 170, 0, 0.08), transparent 24%),
+        linear-gradient(180deg, #03111c 0%, var(--bg) 48%, #010306 100%);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0, 174, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 174, 255, 0.04) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.82), transparent 78%);
+    }
+    a { color: var(--blue-soft); text-decoration: none; }
+    a:hover, a:focus-visible { color: var(--gold); outline: none; }
+    p { margin: 0; }
+    ul, ol { margin: 0; padding-left: 1.2rem; }
+    li + li { margin-top: 8px; }
+    strong { color: var(--white); font-weight: 700; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(0, 174, 255, 0.22);
+      background: rgba(2, 8, 13, 0.88);
+      backdrop-filter: blur(14px);
+    }
+    .header-inner {
+      width: min(1180px, calc(100% - 32px));
+      min-height: 66px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--white);
+      font-family: var(--cond);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(0, 174, 255, 0.52);
+      color: var(--blue);
+      background: rgba(0, 174, 255, 0.08);
+      box-shadow: 0 0 24px rgba(0, 174, 255, 0.18);
+      font-family: var(--mono);
+      font-size: 18px;
+    }
+    .status {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .article-shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 86px;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 78% 22%, rgba(0, 174, 255, 0.2), transparent 30%),
+        linear-gradient(135deg, rgba(0, 174, 255, 0.1), rgba(5, 10, 16, 0.92) 52%, rgba(2, 4, 6, 0.98));
+      box-shadow: var(--shadow);
+      padding: clamp(26px, 5vw, 58px);
+    }
+    .hero::before,
+    .content-card::before,
+    .visual-card::before,
+    .brief-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.13) 1px, transparent 1.5px);
+      background-size: 7px 7px;
+      opacity: 0.08;
+      mix-blend-mode: screen;
+    }
+    .article-meta {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+      color: var(--blue-soft);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 {
+      margin: 0;
+      color: var(--white);
+      font-family: var(--cond);
+      font-weight: 800;
+      line-height: 0.94;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 900px;
+      font-size: clamp(46px, 8vw, 92px);
+    }
+    .lead {
+      max-width: 770px;
+      margin-top: 20px;
+      color: var(--text);
+      font-size: clamp(18px, 2.4vw, 24px);
+      line-height: 1.45;
+    }
+    .lead strong { color: var(--blue-soft); }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
+      gap: 22px;
+      align-items: end;
+      margin-top: 34px;
+    }
+    .brief-header {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0, 174, 255, 0.34);
+      background: rgba(2, 12, 20, 0.72);
+      padding: 18px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .brief-header dl {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 9px 14px;
+      margin: 0;
+    }
+    .brief-header dt { color: var(--blue-soft); }
+    .brief-header dd { margin: 0; color: var(--white); }
+    .brief-label {
+      display: block;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 14px;
+      color: var(--gold);
+    }
+    .jump-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 0;
+    }
+    .jump-nav a {
+      border: 1px solid rgba(0, 174, 255, 0.3);
+      background: rgba(0, 174, 255, 0.07);
+      color: var(--text);
+      padding: 9px 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .jump-nav a:hover,
+    .jump-nav a:focus-visible {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .content-flow {
+      display: grid;
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .content-card,
+    .visual-card,
+    .link-panel,
+    .closing-principle {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(0,174,255,0.075), rgba(5,10,16,0.93) 48%, rgba(2,4,6,0.98));
+      box-shadow: 0 18px 54px rgba(0,0,0,0.28);
+      padding: clamp(20px, 3vw, 30px);
+    }
+    .content-card > *,
+    .visual-card > *,
+    .link-panel > *,
+    .closing-principle > * {
+      position: relative;
+      z-index: 1;
+    }
+    .content-card h2 {
+      margin-bottom: 18px;
+      color: var(--white);
+      font-size: clamp(30px, 4.7vw, 54px);
+    }
+    .content-card h3 {
+      color: var(--blue-soft);
+      font-size: 22px;
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+    .eyebrow,
+    .card-label {
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: var(--blue-soft);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .mini-card,
+    .step-card,
+    .ownership-card,
+    .install-card {
+      border: 1px solid rgba(0,174,255,0.2);
+      background: rgba(0,174,255,0.055);
+      padding: 17px;
+    }
+    .mini-card.highlight,
+    .step-card.highlight,
+    .ownership-card.highlight {
+      border-color: rgba(255,170,0,0.38);
+      background: rgba(255,170,0,0.075);
+    }
+    .stacked-lines {
+      display: grid;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+    }
+    .callout {
+      margin-top: 18px;
+      border-left: 3px solid var(--blue);
+      background: rgba(0,174,255,0.07);
+      padding: 18px;
+      color: var(--text);
+    }
+    .callout.gold {
+      border-left-color: var(--gold);
+      background: rgba(255,170,0,0.07);
+    }
+    .statement-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+      color: var(--white);
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .tracker-infographic {
+      padding: 12px;
+      border-color: rgba(0,174,255,0.44);
+      box-shadow: 0 0 34px rgba(0,174,255,0.14), 0 18px 54px rgba(0,0,0,0.35);
+    }
+    .tracker-infographic img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid rgba(0,174,255,0.36);
+      background: rgba(0,174,255,0.055);
+      box-shadow: 0 0 28px rgba(0,174,255,0.16);
+    }
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .link-panel p {
+      margin-bottom: 14px;
+      color: var(--blue-soft);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .link-grid a {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0,174,255,0.28);
+      background: rgba(0,174,255,0.06);
+      color: var(--text);
+      padding: 10px 12px;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .link-grid a:hover,
+    .link-grid a:focus-visible {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .closing-principle {
+      border-color: rgba(255,170,0,0.36);
+      background: linear-gradient(135deg, rgba(255,170,0,0.09), rgba(4,16,26,0.96));
+      text-align: center;
+    }
+    .tagline {
+      color: var(--white);
+      font-family: var(--cond);
+      font-size: clamp(34px, 6vw, 64px);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+    .mantra {
+      margin-top: 12px;
+      color: var(--gold);
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    footer {
+      border-top: 1px solid rgba(0,174,255,0.18);
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      line-height: 1.6;
+      padding: 26px 16px 34px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .card-grid,
+      .two-column,
+      .feature-grid,
+      .link-grid {
+        grid-template-columns: 1fr;
+      }
+      .header-inner {
+        width: min(100% - 24px, 1180px);
+      }
+      .status {
+        display: none;
+      }
+    }
+    @media (max-width: 640px) {
+      .article-shell {
+        width: min(100% - 20px, 1120px);
+        padding-top: 18px;
+      }
+      .hero,
+      .content-card,
+      .visual-card,
+      .link-panel,
+      .closing-principle {
+        padding: 18px;
+      }
+      .tracker-infographic {
+        padding: 8px;
+      }
+      h1 {
+        font-size: clamp(38px, 15vw, 58px);
+      }
+      .content-card h2 {
+        font-size: clamp(30px, 12vw, 44px);
+      }
+      .brand {
+        font-size: 20px;
+      }
+      .brief-header dl {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="PROTOKOL X home">
+        <span class="brand-mark">PX</span>
+        <span>PROTOKOL X</span>
+      </a>
+      <div class="status">Tools &amp; Frameworks / Protocol Tracker</div>
+    </div>
+  </header>
+
+  <main class="article-shell">
+    <article>
+      <section class="hero" aria-labelledby="article-title">
+        <div class="article-meta">
+          <span>PROTOKOL X</span>
+          <span>Tools &amp; Frameworks</span>
+          <span>Protocol Tracker</span>
+        </div>
+        <h1 id="article-title">The PROTOKOL X Tracker</h1>
+        <p class="lead"><strong>Documentation over memory.</strong> Most people believe they will remember the protocol, the change, the result. Until they don't.</p>
+
+        <div class="hero-grid">
+          <nav class="jump-nav" aria-label="Article sections">
+            <a href="#documentation">Documentation</a>
+            <a href="#framework">Framework</a>
+            <a href="#mobile-first">Mobile-First</a>
+            <a href="#records">Records</a>
+            <a href="#ownership">Ownership</a>
+            <a href="#system">System</a>
+          </nav>
+
+          <aside class="brief-header" aria-label="PROTOKOL X brief header">
+            <span class="brief-label">PROTOKOL X BRIEF HEADER</span>
+            <dl>
+              <dt>FILE ID:</dt>
+              <dd>PX-TKR-001</dd>
+              <dt>SUBJECT:</dt>
+              <dd>Protocol Tracker</dd>
+              <dt>CATEGORY:</dt>
+              <dd>Documentation Systems</dd>
+              <dt>STATUS:</dt>
+              <dd>Active</dd>
+              <dt>LAST UPDATED:</dt>
+              <dd>June 2026</dd>
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      <div class="content-flow">
+        <section class="content-card" id="documentation">
+          <span class="eyebrow">Problem</span>
+          <h2>Documentation Over Memory</h2>
+          <div class="stacked-lines">
+            <p>Most people believe they will remember.</p>
+            <p>They remember the protocol.</p>
+            <p>They remember the change.</p>
+            <p>They remember the result.</p>
+            <p>Until they don't.</p>
+          </div>
+          <div class="card-grid">
+            <div class="mini-card">
+              <h3>Why It Breaks</h3>
+              <p>A few weeks become a few months. Details fade. Dates blur together. Variables are forgotten. What felt obvious at the time becomes difficult to reconstruct later.</p>
+            </div>
+            <div class="mini-card highlight">
+              <h3>Key Takeaway</h3>
+              <p>This is not a failure of discipline. It is simply how human memory works.</p>
+            </div>
+          </div>
+          <div class="callout">
+            <p>The purpose of documentation is not to remember more.</p>
+            <p><strong>The purpose of documentation is to rely on memory less.</strong></p>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <span class="eyebrow">Why It Matters</span>
+          <h2>Information Is Infrastructure</h2>
+          <div class="card-grid">
+            <div class="mini-card">
+              <h3>Context</h3>
+              <p>At PROTOKOL X, we discuss compounds, biomarkers, laboratory testing, calculators, and decision-making. But underneath all of those topics sits something even more important: information.</p>
+            </div>
+            <div class="mini-card">
+              <h3>Function</h3>
+              <p>Without accurate information, it becomes difficult to identify patterns, evaluate outcomes, or understand what changed over time.</p>
+            </div>
+          </div>
+          <div class="callout gold">
+            <p>Documentation creates infrastructure. It transforms isolated observations into a usable record. The more complete the record, the easier it becomes to understand the bigger picture.</p>
+            <p><strong>Structure creates clarity. And clarity supports better decisions.</strong></p>
+          </div>
+        </section>
+
+        <section class="content-card" id="framework">
+          <span class="eyebrow">Framework</span>
+          <h2>The Hidden Fourth Step</h2>
+          <p>PROTOKOL X is built around a simple operating philosophy. Most systems stop at three steps. This one doesn't.</p>
+          <div class="card-grid">
+            <div class="step-card">
+              <span class="card-label">01 / Assess</span>
+              <p>Gather information.</p>
+            </div>
+            <div class="step-card">
+              <span class="card-label">02 / Decide</span>
+              <p>Determine a course of action.</p>
+            </div>
+            <div class="step-card">
+              <span class="card-label">03 / Execute</span>
+              <p>Implement the plan.</p>
+            </div>
+            <div class="step-card highlight">
+              <span class="card-label">04 / Document</span>
+              <p>Preserve what happened.</p>
+            </div>
+          </div>
+          <div class="callout">
+            <p>Without documentation, every future assessment begins with incomplete information. Documentation closes the loop. It transforms experience into a usable asset.</p>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <span class="eyebrow">Tool Function</span>
+          <h2>Introducing the PROTOKOL X Tracker</h2>
+          <div class="card-grid">
+            <div class="mini-card">
+              <h3>Purpose</h3>
+              <p>The Tracker was built to support that philosophy. It provides a structured system for documenting protocols, observations, timelines, and historical records.</p>
+            </div>
+            <div class="mini-card highlight">
+              <h3>Key Takeaway</h3>
+              <p>Rather than relying on memory, users can create a documented record that remains accessible long after individual details have been forgotten.</p>
+            </div>
+          </div>
+          <div class="callout gold">
+            <p><strong>The goal is simple: create clarity through documentation.</strong></p>
+          </div>
+        </section>
+
+        <section class="visual-card tracker-infographic">
+          <img src="/assets/protocol-tracker-infographic.png" alt="PROTOKOL X Tracker infographic showing document, review, organize, and preserve workflow screens" />
+        </section>
+
+        <section class="content-card" id="mobile-first">
+          <span class="eyebrow">Framework</span>
+          <h2>Built Mobile-First</h2>
+          <p>The Tracker was designed primarily for smartphones. While it works on desktop and tablet, the intended experience is as a Progressive Web App (PWA) installed directly on your device, functioning like a native application without an App Store download.</p>
+          <div class="card-grid">
+            <div class="mini-card">
+              <h3>PWA Features</h3>
+              <ul>
+                <li>Add directly to your home screen</li>
+                <li>Launch like an app</li>
+                <li>No App Store approval process required</li>
+                <li>Works on iPhone and Android</li>
+                <li>Accessible from desktop and tablet</li>
+              </ul>
+            </div>
+            <div class="mini-card highlight">
+              <h3>Why It Matters</h3>
+              <p>The Tracker was designed around a simple reality: most documentation happens in the moment, not at a desk, not inside a spreadsheet, but during everyday life.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <span class="eyebrow">Access</span>
+          <h2>Free To Use</h2>
+          <div class="statement-list">
+            <p>No subscriptions.</p>
+            <p>No premium tier.</p>
+            <p>No locked reporting features.</p>
+            <p>No paid export functions.</p>
+          </div>
+          <div class="callout">
+            <p>Just a practical documentation tool available to the community.</p>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <span class="eyebrow">Installation</span>
+          <h2>Install the Tracker</h2>
+          <div class="two-column">
+            <div class="install-card">
+              <h3>Install on iPhone</h3>
+              <ol>
+                <li>Open the Tracker in Safari.</li>
+                <li>Tap the Share button.</li>
+                <li>Select <strong>Add to Home Screen</strong>.</li>
+                <li>Confirm the name and tap <strong>Add</strong>.</li>
+              </ol>
+            </div>
+            <div class="install-card">
+              <h3>Install on Android</h3>
+              <ol>
+                <li>Open the Tracker in Chrome.</li>
+                <li>Tap the browser menu.</li>
+                <li>Select <strong>Add to Home Screen</strong> or <strong>Install App</strong>.</li>
+                <li>Confirm installation.</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card" id="records">
+          <span class="eyebrow">Tool Function</span>
+          <h2>What the Tracker Records</h2>
+          <div class="feature-grid">
+            <div class="mini-card">
+              <h3>Protocol Entries</h3>
+              <p>Maintain records of active protocols and all relevant details.</p>
+            </div>
+            <div class="mini-card">
+              <h3>Session History</h3>
+              <p>Create a documented timeline of activity across your research cycles.</p>
+            </div>
+            <div class="mini-card">
+              <h3>Observation Notes</h3>
+              <p>Capture relevant observations, milestones, and context as they happen.</p>
+            </div>
+            <div class="mini-card">
+              <h3>Mission Tracking</h3>
+              <p>Organize records around specific goals and research objectives.</p>
+            </div>
+            <div class="mini-card">
+              <h3>Active Stack Tracking</h3>
+              <p>Maintain visibility into current protocols and historical stack changes.</p>
+            </div>
+            <div class="mini-card">
+              <h3>Session Classification</h3>
+              <p>Tag sessions as training, rest, travel, or normal days for cleaner pattern recognition.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <span class="eyebrow">Tool Function</span>
+          <h2>Professional Reporting</h2>
+          <p>Documentation becomes more valuable when it can be reviewed efficiently. The Tracker includes built-in PDF reporting that transforms daily entries into organized summary reports.</p>
+          <div class="card-grid">
+            <div class="mini-card">
+              <h3>Generated Reports Include</h3>
+              <ul>
+                <li>Date ranges and session counts</li>
+                <li>Active compounds and stack summaries</li>
+                <li>Historical activity and status breakdowns</li>
+                <li>Tracking metrics and observation summaries</li>
+              </ul>
+            </div>
+            <div class="mini-card highlight">
+              <h3>Review Speed</h3>
+              <p>A year's worth of documentation is far more valuable when it can be condensed into a report that can be reviewed in minutes rather than reconstructed from memory.</p>
+            </div>
+          </div>
+          <div class="callout">
+            <p>Instead of reviewing dozens of individual entries, one click generates a clean snapshot of documented information ready for review, archiving, or sharing. The purpose is not simply to store information. The purpose is to make information usable.</p>
+          </div>
+        </section>
+
+        <section class="content-card" id="ownership">
+          <span class="eyebrow">Ownership</span>
+          <h2>Your Data, Your Control</h2>
+          <p>The Tracker was built around a simple principle: your information belongs to you. Many applications make exporting data difficult or lock records into proprietary systems. The Tracker takes a different approach.</p>
+          <div class="two-column">
+            <div class="ownership-card highlight">
+              <h3>JSON Backup &amp; Restore</h3>
+              <p>Export complete Tracker data for device migration, personal backups, long-term archives, and future imports. Your data moves with you.</p>
+            </div>
+            <div class="ownership-card">
+              <h3>PDF Export</h3>
+              <p>Generate PDF reports for record keeping, progress reviews, historical archives, and information sharing. No lock-in.</p>
+            </div>
+          </div>
+          <div class="callout gold">
+            <p>Documentation should not disappear because a phone was replaced or an application changed. Information should remain accessible.</p>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <span class="eyebrow">Why It Matters</span>
+          <h2>Why Build Another Tracker?</h2>
+          <div class="card-grid">
+            <div class="mini-card">
+              <h3>The Fair Question</h3>
+              <p>There are already countless tracking applications available, some simple, some highly advanced, some with extensive analytics, cloud synchronization, and large feature sets.</p>
+            </div>
+            <div class="mini-card">
+              <h3>The PROTOKOL X Answer</h3>
+              <p>The Protocol X Tracker was never created because no other trackers existed. It was created because PROTOKOL X needed a tool that aligned with its philosophy.</p>
+            </div>
+          </div>
+          <div class="callout gold">
+            <p>The goal was not to build the most advanced tracker.</p>
+            <p><strong>The goal was to build a tracker that removes excuses.</strong></p>
+          </div>
+          <div class="statement-list">
+            <p>Free.</p>
+            <p>Mobile-first.</p>
+            <p>Cross-platform.</p>
+            <p>Exportable.</p>
+            <p>Simple enough to use consistently.</p>
+          </div>
+          <div class="callout">
+            <p><strong>Because the best documentation system is the one that actually gets used.</strong></p>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <span class="eyebrow">Key Takeaway</span>
+          <h2>Use What Works</h2>
+          <div class="card-grid">
+            <div class="mini-card">
+              <h3>No Single Correct Tool</h3>
+              <p>PROTOKOL X does not believe there is only one correct tool. Spreadsheets, journals, notes applications, commercial tracking platforms, dedicated health software, if those systems meet your needs, continue using them.</p>
+            </div>
+            <div class="mini-card highlight">
+              <h3>The Objective</h3>
+              <p>The objective is not loyalty to a specific application. The objective is maintaining accurate records. The Tracker is simply one option among many.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <span class="eyebrow">Framework</span>
+          <h2>The Documentation Stack</h2>
+          <div class="card-grid">
+            <div class="mini-card">
+              <h3>Calculator</h3>
+              <p>The <a href="/calculator.html">PROTOKOL X Calculator</a> helps organize numerical information and creates structure around calculations.</p>
+            </div>
+            <div class="mini-card">
+              <h3>Tracker</h3>
+              <p>The PROTOKOL X Tracker helps preserve historical information and creates structure around documentation.</p>
+            </div>
+          </div>
+          <div class="callout">
+            <p><strong>Together they create a complete information-management workflow.</strong></p>
+          </div>
+        </section>
+
+        <section class="content-card" id="system">
+          <span class="eyebrow">Key Takeaway</span>
+          <h2>The Tool Is Secondary</h2>
+          <div class="card-grid">
+            <div class="mini-card">
+              <h3>Principle</h3>
+              <p>The Tracker is not the system. The Tracker is one tool within the system. The system is documentation.</p>
+            </div>
+            <div class="mini-card highlight">
+              <h3>Objective</h3>
+              <p>The objective is clarity. The outcome is better decisions. Everything else is just software.</p>
+            </div>
+          </div>
+          <div class="callout">
+            <p>Whether information is captured in a notebook, spreadsheet, PDF archive, or the Protocol X Tracker is ultimately secondary. The principle remains the same:</p>
+            <p><strong>Document information. Preserve information. Organize information. Review information.</strong></p>
+          </div>
+        </section>
+
+        <section class="closing-principle" aria-label="PROTOKOL X closing principle">
+          <p class="tagline">Clarity Over Noise.</p>
+          <p class="mantra">Assess &middot; Decide &middot; Execute &middot; Document</p>
+        </section>
+
+        <section class="link-panel" aria-label="Continue building your framework">
+          <p>Continue Building Your Framework</p>
+          <div class="link-grid">
+            <a href="/tracker.html">Open the Tracker</a>
+            <a href="/calculator.html">Peptide Calculator</a>
+            <a href="/pillars.html">Peptide Pillars</a>
+            <a href="/blog/why-lab-work-matters.html">Why Lab Work Matters</a>
+            <a href="/education.html">Education Hub</a>
+          </div>
+        </section>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    PROTOKOL X &mdash; U.S.-Based Research Resource. International visitors should verify local laws, availability, and medical guidance.
+  </footer>
+</body>
+</html>
