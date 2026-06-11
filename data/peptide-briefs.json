@@ -1,9 +1,16 @@
 {
-  "updatedAt": "2026-06-10T16:45:19.351Z",
-  "updatedLabel": "Updated Jun 10, 2026",
+  "updatedAt": "2026-06-11T17:01:52.654Z",
+  "updatedLabel": "Updated Jun 11, 2026",
   "source": "PubMed",
   "query": "peptide[Title] OR peptides[Title] OR GLP-1[Title] OR tirzepatide[Title] OR retatrutide[Title] OR semaglutide[Title]",
   "items": [
+    {
+      "pmid": "42271191",
+      "title": "Membrane vesicles associated antimicrobial peptides from PGPR Priestia megaterium VIT-2021 confer in silico efficacy against Pseudomonas syringae virulence protein",
+      "source": "Plant signaling & behavior",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42271191/"
+    },
     {
       "pmid": "42189047",
       "title": "Self-assembled non-steroidal anti-inflammatory drug-peptide hydrogel to effectively mitigate ocular inflammation",
@@ -17,13 +24,6 @@
       "source": "The veterinary quarterly",
       "date": "2026 Dec 31",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42141999/"
-    },
-    {
-      "pmid": "42092775",
-      "title": "A novel bile salt hydrolase-producing Ligilactobacillus salivarius prevents diet-induced obesity via regulation of bile acid metabolism and glucagon-like peptide 1 restoration",
-      "source": "Gut microbes",
-      "date": "2026 Dec 31",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42092775/"
     }
   ]
 }
