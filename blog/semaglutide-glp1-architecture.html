@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Semaglutide: Understanding the First Modern GLP-1 Agonist | PROTOKOL X</title>
+  <meta name="description" content="Semaglutide is widely recognized, but most discussions focus on outcomes rather than architecture. Understanding the signaling system it influences is the prerequisite for every newer GLP-1 compound that followed." />
+  <meta name="author" content="PROTOKOL X" />
+  <link rel="canonical" href="https://protokolx.com/blog/semaglutide-glp1-architecture.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Semaglutide: Understanding the First Modern GLP-1 Agonist" />
+  <meta property="og:description" content="The outcomes make headlines. The architecture explains why they occur. Understanding the signaling system behind semaglutide is the prerequisite for every dual- and triple-agonist that followed." />
+  <meta property="og:url" content="https://protokolx.com/blog/semaglutide-glp1-architecture.html" />
+  <meta property="og:site_name" content="PROTOKOL X" />
+  <meta property="og:image" content="https://protokolx.com/assets/og-default.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="article:published_time" content="2026-06-13T00:00:00-07:00" />
+  <meta property="article:section" content="GLP Signaling Architecture" />
+  <meta property="article:tag" content="semaglutide" />
+  <meta property="article:tag" content="GLP-1" />
+  <meta property="article:tag" content="metabolic signaling" />
+  <meta property="article:tag" content="incretin therapy" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Semaglutide: Understanding the First Modern GLP-1 Agonist | PROTOKOL X" />
+  <meta name="twitter:description" content="The outcomes make headlines. The architecture explains why they occur. Biology before products. Signaling before compounds." />
+  <meta name="twitter:image" content="https://protokolx.com/assets/og-default.png" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Semaglutide: Understanding the First Modern GLP-1 Agonist",
+    "description": "Semaglutide is widely recognized, but most discussions focus on outcomes rather than architecture. Understanding the signaling system it influences is the prerequisite for every newer GLP-1 compound that followed.",
+    "author": {"@type": "Organization", "name": "PROTOKOL X"},
+    "publisher": {"@type": "Organization", "name": "PROTOKOL X", "url": "https://protokolx.com"},
+    "datePublished": "2026-06-13",
+    "url": "https://protokolx.com/blog/semaglutide-glp1-architecture.html"
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #020b12; color: #c8d8e8; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; line-height: 1.75; }
+    a { color: #00aeff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header { background: #020b12; border-bottom: 1px solid rgba(0,174,255,0.2); padding: 18px 24px; }
+    header .brand { font-size: 18px; font-weight: 700; letter-spacing: 0.15em; color: #00aeff; }
+    header .brand span { color: #c8d8e8; font-weight: 400; }
+
+    .article-wrap { max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    .brief-header { position: relative; overflow: hidden; background: linear-gradient(145deg, rgba(7,21,32,0.98), rgba(3,13,21,0.98)); border: 1px solid rgba(0,174,255,0.28); border-radius: 6px; padding: 20px 22px; margin-bottom: 24px; box-shadow: inset 0 0 28px rgba(0,174,255,0.035), 0 12px 32px rgba(0,0,0,0.22); }
+    .brief-header::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.24; background-image: linear-gradient(rgba(0,174,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,174,255,0.08) 1px, transparent 1px); background-size: 28px 28px; }
+    .brief-header > * { position: relative; z-index: 1; }
+    .brief-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 16px; }
+    .brief-number { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #00aeff; font-weight: 800; }
+    .brief-series { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #ffffff; font-weight: 700; }
+    .brief-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; padding-top: 14px; border-top: 1px solid rgba(0,174,255,0.15); }
+    .brief-field { display: grid; grid-template-columns: auto 1fr; gap: 8px; font-size: 12px; line-height: 1.45; }
+    .brief-field dt { color: #4f7595; text-transform: uppercase; letter-spacing: 0.08em; }
+    .brief-field dd { color: #c8d8e8; margin: 0; }
+    .brief-field.brief-purpose { grid-column: 1 / -1; padding-top: 8px; margin-top: 2px; border-top: 1px solid rgba(0,174,255,0.1); }
+
+    h1 { font-size: clamp(26px, 5vw, 40px); font-weight: 800; color: #ffffff; line-height: 1.15; margin-bottom: 8px; }
+
+    .bluf { background: rgba(0,174,255,0.07); border-left: 3px solid #00aeff; border-radius: 0 4px 4px 0; padding: 18px 22px; margin: 28px 0 36px; }
+    .bluf .bluf-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #00aeff; font-weight: 700; margin-bottom: 8px; }
+    .bluf p { font-size: 15px; color: #c8d8e8; margin-bottom: 12px; line-height: 1.65; }
+    .bluf p:last-child { margin-bottom: 0; }
+    .bluf .bluf-question { font-size: 16px; color: #ffffff; font-style: italic; margin-bottom: 12px; }
+
+    /* Key Takeaways */
+    .takeaways { background: #071520; border: 1px solid rgba(0,174,255,0.24); border-radius: 6px; padding: 20px 22px; margin: -18px 0 36px; box-shadow: inset 0 0 22px rgba(0,174,255,0.025); }
+    .takeaways .tk-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #00aeff; font-weight: 700; margin-bottom: 10px; }
+    .takeaways ul { list-style: none; padding: 0; margin: 0; }
+    .takeaways li { position: relative; padding-left: 18px; margin-bottom: 7px; color: #b0c4d8; font-size: 14px; line-height: 1.55; }
+    .takeaways li:last-child { margin-bottom: 0; }
+    .takeaways li::before { content: ""; position: absolute; left: 0; top: 0.68em; width: 6px; height: 6px; border: 1px solid #00aeff; background: rgba(0,174,255,0.14); transform: translateY(-50%); }
+
+    /* Cards */
+    .card { background: #071520; border: 1px solid rgba(0,174,255,0.2); border-radius: 6px; padding: 28px; margin: 24px 0; }
+    .card-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #00aeff; font-weight: 700; margin-bottom: 6px; }
+    .card h2 { font-size: 18px; font-weight: 700; color: #ffffff; margin: 0 0 18px; letter-spacing: 0; text-transform: none; }
+    .card p { font-size: 15px; color: #b0c4d8; margin-bottom: 14px; }
+    .card p:last-child { margin-bottom: 0; }
+
+    /* Bullet list inside cards */
+    .card ul { padding-left: 20px; margin: 10px 0 14px; }
+    .card ul li { font-size: 15px; color: #8899aa; margin-bottom: 6px; line-height: 1.6; }
+
+    /* Signal grid inside card */
+    .signal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+    .signal-tile { background: rgba(0,174,255,0.05); border: 1px solid rgba(0,174,255,0.15); border-radius: 4px; padding: 14px 16px; }
+    .signal-tile .st-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #00aeff; font-weight: 700; margin-bottom: 6px; }
+    .signal-tile p { font-size: 13px; color: #8899aa; margin: 0; }
+
+    /* Pathway diagram */
+    .pathway { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
+    .pathway-step { background: rgba(0,174,255,0.08); border: 1px solid rgba(0,174,255,0.25); border-radius: 4px; padding: 8px 14px; font-size: 13px; color: #c8d8e8; font-weight: 600; }
+    .pathway-arrow { color: #00aeff; font-size: 18px; line-height: 1; }
+    .pathway-branch { margin-top: 12px; }
+    .pathway-branch ul { padding-left: 20px; margin: 0; }
+    .pathway-branch ul li { font-size: 13px; color: #8899aa; margin-bottom: 4px; }
+
+    /* Protocol X Note */
+    .px-note { background: rgba(0,174,255,0.045); border: 1px solid rgba(0,174,255,0.16); border-left: 2px solid #00aeff; border-radius: 4px; padding: 16px 18px; margin: 18px 0 20px; }
+    .px-note .px-note-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #00aeff; font-weight: 700; margin-bottom: 8px; }
+    .card .px-note p { font-size: 13px; color: #9fb5c9; line-height: 1.55; margin-bottom: 5px; }
+    .card .px-note p:last-child { margin-bottom: 0; color: #d2e0ec; font-weight: 600; }
+
+    /* Tradeoff grid */
+    .tradeoff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+    .tradeoff-col { background: rgba(0,174,255,0.04); border: 1px solid rgba(0,174,255,0.15); border-radius: 4px; padding: 16px; }
+    .tradeoff-col .tc-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #00aeff; margin-bottom: 10px; font-weight: 700; }
+    .tradeoff-col ul { padding-left: 18px; margin: 0; }
+    .tradeoff-col ul li { font-size: 13px; color: #8899aa; margin-bottom: 6px; }
+
+    /* Misconception rows */
+    .misconception { border: 1px solid rgba(0,174,255,0.12); border-radius: 4px; overflow: hidden; margin-bottom: 12px; }
+    .misconception .mc-row { display: grid; grid-template-columns: 120px 1fr; }
+    .misconception .mc-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; padding: 14px 14px; display: flex; align-items: flex-start; border-right: 1px solid rgba(0,174,255,0.12); }
+    .misconception .mc-label.myth { color: #ff6b6b; background: rgba(255,107,107,0.05); }
+    .misconception .mc-label.fact  { color: #00aeff; background: rgba(0,174,255,0.05); }
+    .misconception .mc-text { font-size: 14px; color: #b0c4d8; padding: 14px 16px; }
+    .misconception .mc-text.myth { color: #8899aa; font-style: italic; }
+
+    /* Protocol X Assessment */
+    .intel-block { background: rgba(0,174,255,0.05); border: 1px solid rgba(0,174,255,0.25); border-radius: 6px; padding: 28px; margin: 32px 0; }
+    .intel-block .ib-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #00aeff; font-weight: 700; margin-bottom: 14px; }
+    .intel-block p { font-size: 15px; color: #c8d8e8; margin-bottom: 14px; }
+    .intel-block p:last-child { margin-bottom: 0; }
+
+    /* Evidence Boundary */
+    .evidence-boundary { background: rgba(6,18,29,0.9); border: 1px solid rgba(91,137,174,0.3); border-left: 3px solid #5b89ae; border-radius: 4px; padding: 24px 26px; margin: 34px 0 0; }
+    .evidence-boundary .eb-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #8ab5d8; font-weight: 700; margin-bottom: 12px; }
+    .evidence-boundary p { font-size: 14px; color: #a9bed1; margin-bottom: 10px; }
+    .evidence-boundary ul { list-style: none; padding: 0; margin: 8px 0 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 18px; }
+    .evidence-boundary li { position: relative; padding-left: 14px; font-size: 13px; color: #7f9bb3; }
+    .evidence-boundary li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 5px; height: 1px; background: #5b89ae; }
+    .evidence-boundary .boundary-close { color: #d4e1ec; font-weight: 600; line-height: 1.7; margin-bottom: 0; }
+
+    /* Bottom Line */
+    .bottom-line { border-top: 2px solid rgba(0,174,255,0.3); padding-top: 28px; margin-top: 48px; }
+    .bottom-line .bl-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #00aeff; font-weight: 700; margin-bottom: 14px; }
+    .bottom-line p { font-size: 15px; color: #b0c4d8; margin-bottom: 12px; }
+    .bottom-line .clarity { font-size: 16px; font-weight: 700; color: #ffffff; letter-spacing: 0.06em; margin-top: 20px; }
+
+    /* Clarity footer */
+    .clarity-footer { border-top: 1px solid rgba(0,174,255,0.1); margin-top: 40px; padding-top: 22px; }
+    .clarity-footer .cf-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #4a6a8a; margin-bottom: 8px; }
+    .clarity-footer p { font-size: 13px; color: #4a6a8a; margin: 0; }
+
+    /* Series nav */
+    .series-nav { background: #071520; border: 1px solid rgba(0,174,255,0.15); border-radius: 6px; padding: 22px 24px; margin: 40px 0 0; }
+    .series-nav .sn-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #4a6a8a; margin-bottom: 14px; }
+    .series-nav .research-path { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .series-nav .path-item { display: block; min-height: 74px; background: rgba(0,174,255,0.045); border: 1px solid rgba(0,174,255,0.16); border-radius: 4px; padding: 12px 14px; }
+    .series-nav a.path-item:hover { background: rgba(0,174,255,0.1); border-color: rgba(0,174,255,0.28); text-decoration: none; }
+    .series-nav .path-item.current { border-color: rgba(0,174,255,0.34); box-shadow: inset 2px 0 0 #00aeff; }
+    .series-nav .path-status { display: block; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #587894; font-weight: 700; margin-bottom: 5px; }
+    .series-nav .path-item.current .path-status { color: #00aeff; }
+    .series-nav .path-title { display: block; font-size: 14px; color: #c8d8e8; font-weight: 600; line-height: 1.35; }
+    .series-nav a.path-title:hover { color: #00aeff; text-decoration: none; }
+    .series-nav .path-title + .path-title { margin-top: 7px; padding-top: 7px; border-top: 1px solid rgba(0,174,255,0.1); }
+
+    footer { border-top: 1px solid rgba(0,174,255,0.1); padding: 24px; text-align: center; font-size: 12px; color: #2a3a4a; margin-top: 48px; }
+
+    @media (max-width: 600px) {
+      .article-wrap { padding: 28px 16px 60px; }
+      .brief-header { padding: 18px; }
+      .brief-fields { grid-template-columns: 1fr; gap: 7px; }
+      .brief-field { grid-template-columns: 132px 1fr; }
+      .brief-field.brief-purpose { grid-column: auto; }
+      .tradeoff-grid { grid-template-columns: 1fr; }
+      .evidence-boundary ul { grid-template-columns: 1fr; }
+      .series-nav .research-path { grid-template-columns: 1fr; }
+      .misconception .mc-row { grid-template-columns: 1fr; }
+      .misconception .mc-label { border-right: none; border-bottom: 1px solid rgba(0,174,255,0.12); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">PROTOKOL <span>X</span></div>
+</header>
+
+<div class="article-wrap">
+
+  <section class="brief-header" aria-label="Research brief classification">
+    <div class="brief-kicker">
+      <span class="brief-number">Research Brief 01</span>
+      <span class="brief-series">GLP Signaling Architecture</span>
+    </div>
+    <dl class="brief-fields">
+      <div class="brief-field"><dt>Subject:</dt><dd>Semaglutide</dd></div>
+      <div class="brief-field"><dt>Classification:</dt><dd>Research Brief</dd></div>
+      <div class="brief-field"><dt>Status:</dt><dd>Active</dd></div>
+      <div class="brief-field"><dt>Confidence:</dt><dd>High</dd></div>
+      <div class="brief-field"><dt>Estimated Read Time:</dt><dd>8 Minutes</dd></div>
+      <div class="brief-field brief-purpose"><dt>Purpose:</dt><dd>Understand the signaling architecture before evaluating the compound.</dd></div>
+    </dl>
+  </section>
+  <h1>Semaglutide: Understanding the First Modern GLP-1 Agonist</h1>
+
+  <!-- BLUF -->
+  <div class="bluf">
+    <div class="bluf-label">BLUF — Bottom Line Up Front</div>
+    <p>Semaglutide changed the discussion around metabolic intervention by demonstrating that sustained GLP-1 receptor activation could influence appetite signaling, glucose regulation, and energy intake at scale.</p>
+    <p>Its importance is not that it was first. Its importance is that it proved the architecture.</p>
+    <p>Every major incretin therapy that followed exists because this signaling model worked.</p>
+  </div>
+
+  <aside class="takeaways" aria-labelledby="key-takeaways-label">
+    <div class="tk-label" id="key-takeaways-label">Key Takeaways</div>
+    <ul>
+      <li>Semaglutide is a GLP-1 receptor agonist.</li>
+      <li>Its significance lies in signaling architecture, not weight-loss headlines.</li>
+      <li>It established the foundation for later dual- and triple-agonist therapies.</li>
+    </ul>
+  </aside>
+
+  <!-- SIGNAL 01 -->
+  <div class="card">
+    <div class="card-label">Signal 01</div>
+    <h2>What Is Semaglutide?</h2>
+    <p>Semaglutide is a GLP-1 receptor agonist. It is designed to mimic the activity of a naturally occurring hormone called glucagon-like peptide-1 (GLP-1).</p>
+    <p>GLP-1 is released after eating and serves as part of the body's nutrient-signaling system. Its primary roles include:</p>
+    <ul>
+      <li>Promoting insulin release when glucose is present</li>
+      <li>Reducing glucagon secretion</li>
+      <li>Slowing gastric emptying</li>
+      <li>Influencing appetite and satiety pathways in the brain</li>
+    </ul>
+    <p>Semaglutide was engineered to remain active significantly longer than natural GLP-1, allowing sustained receptor activation.</p>
+  </div>
+
+  <!-- SIGNAL 02 -->
+  <div class="card">
+    <div class="card-label">Signal 02</div>
+    <h2>System Influenced</h2>
+    <p>Many discussions frame semaglutide as a weight-loss compound. A more accurate description is that it acts on a collection of systems involved in:</p>
+
+    <div class="signal-grid">
+      <div class="signal-tile">
+        <div class="st-label">Metabolic Regulation</div>
+        <p>How the body processes and responds to nutrients.</p>
+      </div>
+      <div class="signal-tile">
+        <div class="st-label">Appetite Signaling</div>
+        <p>Communication between the digestive system and the brain regarding hunger and fullness.</p>
+      </div>
+      <div class="signal-tile">
+        <div class="st-label">Energy Intake</div>
+        <p>Behavioral and biological drivers influencing food consumption.</p>
+      </div>
+      <div class="signal-tile">
+        <div class="st-label">Glucose Control</div>
+        <p>Regulation of blood sugar levels through coordinated hormonal signaling.</p>
+      </div>
+    </div>
+
+    <p>The visible outcomes often receive the attention. The underlying signaling architecture is where the activity occurs.</p>
+  </div>
+
+  <!-- SIGNAL 03 -->
+  <div class="card">
+    <div class="card-label">Signal 03</div>
+    <h2>Why It Matters</h2>
+    <p>Semaglutide was not the first GLP-1 agonist.</p>
+    <p>It was the first to force the broader market to pay attention.</p>
+    <p>The significance was not the molecule itself.</p>
+    <p>The significance was demonstrating that targeted hormone signaling could influence multiple metabolic systems simultaneously.</p>
+    <p>That result changed the direction of metabolic research.</p>
+    <p>Its success helped shift attention toward hormone-signaling approaches rather than purely stimulant-based or appetite-suppression strategies.</p>
+    <p>In many ways, semaglutide served as the bridge between traditional metabolic interventions and the next generation of incretin-based therapies.</p>
+  </div>
+
+  <!-- SIGNAL 04 -->
+  <div class="card">
+    <div class="card-label">Signal 04</div>
+    <h2>Signaling Architecture</h2>
+    <p>The simplified pathway looks like this:</p>
+
+    <div class="pathway">
+      <div class="pathway-step">GLP-1 Receptor Activation</div>
+      <div class="pathway-arrow">→</div>
+      <div class="pathway-step">Appetite Signaling</div>
+      <div class="pathway-arrow">+</div>
+      <div class="pathway-step">Gastric Emptying</div>
+      <div class="pathway-arrow">+</div>
+      <div class="pathway-step">Glucose Regulation</div>
+    </div>
+
+    <aside class="px-note" aria-labelledby="px-note-label">
+      <div class="px-note-label" id="px-note-label">Protocol X Note</div>
+      <p>Compounds are interventions.</p>
+      <p>Signaling pathways are systems.</p>
+      <p>Understanding the system is prerequisite to evaluating the intervention.</p>
+    </aside>
+
+    <p>At a systems level:</p>
+    <ul>
+      <li>Food intake creates nutrient signals.</li>
+      <li>Those signals activate hormonal pathways.</li>
+      <li>Semaglutide amplifies part of that signaling network by stimulating GLP-1 receptors.</li>
+      <li>The result is altered communication between the gut, pancreas, liver, and brain.</li>
+    </ul>
+  </div>
+
+  <!-- SIGNAL 05 -->
+  <div class="card">
+    <div class="card-label">Signal 05</div>
+    <h2>Strengths</h2>
+    <p>Semaglutide focuses on a single receptor target: GLP-1. Potential advantages include:</p>
+
+    <div class="tradeoff-grid">
+      <div class="tradeoff-col">
+        <div class="tc-label">Advantages</div>
+        <ul>
+          <li>Well-characterized mechanism</li>
+          <li>Extensive clinical experience</li>
+          <li>Predictable signaling pathway</li>
+          <li>Simpler biological profile than multi-receptor agonists</li>
+        </ul>
+      </div>
+      <div class="tradeoff-col">
+        <div class="tc-label">Why It Matters</div>
+        <ul>
+          <li>Easier to attribute outcomes to a known mechanism</li>
+          <li>Large evidence base from long-duration trials</li>
+          <li>Established tolerability profile</li>
+          <li>The benchmark against which newer agents are compared</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>This focused design is one reason semaglutide became the standard reference point for the entire GLP-1 compound class.</p>
+  </div>
+
+  <!-- SIGNAL 06 -->
+  <div class="card">
+    <div class="card-label">Signal 06</div>
+    <h2>Tradeoffs</h2>
+    <p>Every architecture involves tradeoffs. Because semaglutide primarily targets GLP-1 receptors, it does not directly engage:</p>
+    <ul>
+      <li>GIP signaling pathways</li>
+      <li>Glucagon receptor pathways</li>
+    </ul>
+    <p>This limitation became part of the rationale behind later compounds such as Tirzepatide and Retatrutide.</p>
+    <p>The question evolved from:</p>
+    <ul>
+      <li><em>"Can GLP-1 signaling work?"</em></li>
+      <li>to: <em>"What happens when additional metabolic pathways are engaged simultaneously?"</em></li>
+    </ul>
+  </div>
+
+  <!-- SIGNAL 07 -->
+  <div class="card">
+    <div class="card-label">Signal 07</div>
+    <h2>Common Misconceptions</h2>
+
+    <div class="misconception">
+      <div class="mc-row">
+        <div class="mc-label myth">Misconception</div>
+        <div class="mc-text myth">"Semaglutide burns fat."</div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-label fact">More Accurate</div>
+        <div class="mc-text">Semaglutide influences signaling pathways that may alter appetite, eating behavior, and metabolic regulation.</div>
+      </div>
+    </div>
+
+    <div class="misconception">
+      <div class="mc-row">
+        <div class="mc-label myth">Misconception</div>
+        <div class="mc-text myth">"Semaglutide is the system."</div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-label fact">More Accurate</div>
+        <div class="mc-text">Semaglutide is one component interacting with a larger metabolic system.</div>
+      </div>
+    </div>
+
+    <div class="misconception">
+      <div class="mc-row">
+        <div class="mc-label myth">Misconception</div>
+        <div class="mc-text myth">"Newer automatically means better."</div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-label fact">More Accurate</div>
+        <div class="mc-text">Different receptor architectures create different tradeoffs. Effectiveness depends on context, goals, tolerance, and individual response.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROTOCOL X ASSESSMENT -->
+  <div class="intel-block">
+    <div class="ib-label">Protocol X Assessment</div>
+    <p>Semaglutide represents a major milestone in the evolution of incretin-based therapies. Its importance extends beyond the outcomes often highlighted in media coverage.</p>
+    <p>The compound demonstrated that manipulating nutrient-signaling pathways could meaningfully influence metabolic regulation and appetite control at scale.</p>
+    <p>More importantly, it established the foundation upon which dual- and triple-agonist systems were later built. Understanding semaglutide is less about understanding a single compound and more about understanding the signaling architecture that reshaped modern metabolic medicine.</p>
+  </div>
+
+  <!-- EVIDENCE BOUNDARY -->
+  <aside class="evidence-boundary" aria-labelledby="evidence-boundary-label">
+    <div class="eb-label" id="evidence-boundary-label">Evidence Boundary</div>
+    <p>This brief evaluates signaling architecture.</p>
+    <p>It does not evaluate:</p>
+    <ul>
+      <li>Individual outcomes</li>
+      <li>Clinical suitability</li>
+      <li>Treatment decisions</li>
+      <li>Product selection</li>
+    </ul>
+    <p class="boundary-close">Questions before answers.<br />Architecture before conclusions.</p>
+  </aside>
+
+  <!-- BOTTOM LINE -->
+  <div class="bottom-line">
+    <div class="bl-label">Bottom Line</div>
+    <p>Semaglutide should not be understood as a weight-loss product.</p>
+    <p>It should be understood as proof that targeted hormone signaling can reshape metabolic behavior.</p>
+    <p>The compound matters.</p>
+    <p>The architecture matters more.</p>
+    <p class="clarity">CLARITY OVER NOISE</p>
+  </div>
+
+  <!-- CLARITY FOOTER -->
+  <div class="clarity-footer">
+    <div class="cf-label">Clarity Over Noise</div>
+    <p>This article is educational research content. Semaglutide is a prescription pharmaceutical regulated by the FDA and equivalent international bodies. Nothing in this article constitutes medical advice, a treatment recommendation, or guidance on obtaining or using prescription medications. Consult a licensed clinician for any clinical application. International availability and regulatory status vary — verify your local jurisdiction.</p>
+  </div>
+
+  <!-- SERIES NAV -->
+  <div class="series-nav">
+    <div class="sn-label">GLP Signaling Architecture — Research Pathway</div>
+    <div class="research-path">
+      <a class="path-item current" href="/blog/semaglutide-glp1-architecture.html">
+        <span class="path-status">Current Brief</span>
+        <span class="path-title">Semaglutide</span>
+      </a>
+      <a class="path-item" href="/blog/tirzepatide-glp1-gip-dual-agonist.html">
+        <span class="path-status">Next Brief</span>
+        <span class="path-title">Tirzepatide</span>
+      </a>
+      <div class="path-item">
+        <span class="path-status">Upcoming</span>
+        <a class="path-title" href="/blog/retatrutide-triple-agonist.html">Retatrutide</a>
+        <a class="path-title" href="/blog/">Future of GLP Signaling</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  PROTOKOL X &mdash; U.S.-Based Research Resource. International visitors should verify local laws, availability, and medical guidance.
+</footer>
+
+</body>
+</html>
