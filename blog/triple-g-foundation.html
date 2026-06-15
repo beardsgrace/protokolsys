@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Triple G Foundation | PROTOKOL X</title>
+<meta name="description" content="GLP-1, GIP, and Glucagon are three distinct signaling systems. Understanding how they work individually — and together — is the foundation for evaluating modern metabolic compounds.">
+<meta name="keywords" content="GLP-1 GIP glucagon triple agonist metabolic signaling peptide research protokolx">
+<meta property="og:title" content="The Triple G Foundation — Protocol X Open Brief">
+<meta property="og:description" content="Three signals. Three systems. One architecture. Understanding GLP-1, GIP, and Glucagon before evaluating any compound.">
+<meta property="og:type" content="article">
+<meta name="author" content="Mikey B">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://www.protokolx.com/blog/triple-g-foundation.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;family=Barlow+Condensed:wght@400;600;700;900&amp;family=Barlow:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+    :root {
+      --black: #020406;
+      --navy: #050d18;
+      --panel: rgba(5, 13, 24, 0.9);
+      --panel-2: rgba(7, 20, 34, 0.76);
+      --border: rgba(0, 168, 255, 0.23);
+      --border-soft: rgba(0, 168, 255, 0.18);
+      --blue: #00a8ff;
+      --blue-soft: #67caff;
+      --gold: #ffaa00;
+      --green: #7dff4f;
+      --text: #b8ccd8;
+      --dim: #7893a3;
+      --hi: #eef8ff;
+      --mono: 'Share Tech Mono', monospace;
+      --cond: 'Barlow Condensed', sans-serif;
+      --body: 'Barlow', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 17px;
+      line-height: 1.68;
+      background:
+        radial-gradient(circle at 50% -12%, rgba(0, 168, 255, 0.14), transparent 34%),
+        radial-gradient(circle at 18% 28%, rgba(255, 170, 0, 0.045), transparent 28%),
+        linear-gradient(180deg, #020406 0%, #071019 48%, #020406 100%);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0, 168, 255, 0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 168, 255, 0.022) 1px, transparent 1px);
+      background-size: 96px 96px;
+      opacity: 0.08;
+    }
+
+    a { color: var(--blue-soft); text-underline-offset: 0.22em; }
+    a:hover, a:focus-visible { color: var(--hi); outline-color: var(--blue); }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(0, 168, 255, 0.2);
+      background: rgba(2, 4, 6, 0.92);
+      backdrop-filter: blur(14px);
+    }
+
+    .header-inner {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      padding: 10px clamp(12px, 2vw, 26px);
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--blue);
+      color: var(--hi);
+      font-family: var(--cond);
+      font-weight: 900;
+      font-size: 24px;
+      box-shadow: 0 0 18px rgba(0, 168, 255, 0.28);
+      background: rgba(0, 168, 255, 0.08);
+    }
+
+    .brand-name {
+      font-family: var(--cond);
+      font-weight: 900;
+      color: var(--hi);
+      letter-spacing: 0.18em;
+      font-size: 22px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .brand-name span { color: var(--blue); }
+    .tabs { display: flex; gap: 8px; align-items: center; overflow-x: auto; scrollbar-width: none; padding: 5px 0; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      flex: 0 0 auto;
+      padding: 8px 10px;
+      border: 1px solid rgba(0, 168, 255, 0.22);
+      color: var(--text);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(0, 168, 255, 0.045);
+    }
+
+    .tab:hover, .tab:focus-visible, .tab.active { border-color: var(--blue); color: var(--hi); outline: none; }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border: 1px solid rgba(255, 170, 0, 0.35);
+      color: var(--gold);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      background: rgba(255, 170, 0, 0.05);
+    }
+
+    .status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 12px rgba(255, 170, 0, 0.8);
+    }
+
+    article {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: clamp(18px, 3vw, 42px) 0 38px;
+    }
+
+    .hero {
+      max-width: 840px;
+      margin: 0 auto 20px;
+      padding: clamp(24px, 4vw, 40px);
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(135deg, rgba(0, 168, 255, 0.055), rgba(5, 10, 16, 0.96) 52%, rgba(2, 4, 6, 0.99));
+      box-shadow: 0 20px 54px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .eyebrow, .meta, .card-label, .profile-label, .bluf-label, .intel-label,
+    .card-number, .card-title, .doctrine-label, .systems-check-label, .framework-label,
+    .field-note-label, .closing-block h3, .continuation-label, .next-brief-label,
+    .disclaimer, footer { font-family: var(--mono); letter-spacing: 0.12em; text-transform: uppercase; }
+
+    .eyebrow { margin-bottom: 14px; color: var(--blue-soft); font-size: 11px; }
+    .eyebrow span { display: inline-block; border-left: 2px solid var(--blue); padding-left: 10px; }
+
+    h1, h2, h3 {
+      font-family: var(--cond);
+      color: var(--hi);
+      text-transform: uppercase;
+      letter-spacing: 0.045em;
+    }
+
+    h1 { max-width: 720px; margin: 24px 0 0; font-size: clamp(38px, 5vw, 60px); line-height: 0.94; }
+    h2 { margin: 0 0 18px; font-size: clamp(28px, 4vw, 46px); line-height: 0.95; }
+    h3 { margin: 0 0 8px; font-size: clamp(21px, 3vw, 29px); line-height: 1; }
+    .lead { max-width: 680px; margin: 14px 0 0; color: var(--text); font-size: clamp(16px, 1.8vw, 20px); }
+
+    section {
+      margin: 16px auto 0;
+      max-width: 1000px;
+      padding: clamp(22px, 3.2vw, 32px);
+      border: 1px solid var(--border);
+      background: var(--panel);
+      position: relative;
+      overflow: hidden;
+    }
+
+    section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,.13) 1px, transparent 1.5px);
+      background-size: 12px 12px;
+      opacity: 0.025;
+      mix-blend-mode: screen;
+    }
+
+    section > * { position: relative; z-index: 1; }
+    p { margin: 0 0 14px; }
+    p:last-child { margin-bottom: 0; }
+    ul { margin: 0; padding-left: 18px; }
+    li + li { margin-top: 6px; }
+    li::marker { color: var(--blue-soft); }
+    strong { color: var(--hi); }
+    .blue-card { border-color: var(--border); background: linear-gradient(135deg, rgba(0, 168, 255, 0.065), rgba(5, 13, 24, 0.94)); }
+    .highlight-card { border-color: rgba(255, 170, 0, 0.34); background: linear-gradient(135deg, rgba(255, 170, 0, 0.065), rgba(5, 13, 24, 0.93)); }
+
+    .profile-label, .bluf-label, .intel-label, .card-title, .doctrine-label,
+    .systems-check-label, .field-note-label, .next-brief-label {
+      color: var(--gold);
+      font-size: 10px;
+      margin-bottom: 16px;
+    }
+
+    .card-number, .framework-label, .continuation-label {
+      color: var(--blue-soft);
+      font-size: 10px;
+      margin-bottom: 8px;
+    }
+
+    .profile-grid, .archive-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .profile-item, .archive-meta-item, .info-tile {
+      border: 1px solid var(--border-soft);
+      background: rgba(2, 4, 6, 0.5);
+      padding: 15px;
+    }
+
+    .profile-key, .archive-meta-label {
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .profile-value, .archive-meta-value { color: var(--hi); font-family: var(--mono); font-size: 12px; line-height: 1.5; }
+    .archive-meta { margin: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .brief-tag { display: none; }
+    .subtitle { max-width: 790px; margin: 20px 0 0; color: var(--text); font-size: clamp(17px, 2vw, 22px); }
+
+    .bluf-block em, .closing-question { color: var(--hi); font-size: 19px; }
+    .bluf-coda, .systems-footer, .triline, .closing-question {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(0, 168, 255, 0.2);
+    }
+
+    .bluf-coda p, .intel-block p, .systems-footer p, .triline p, .next-brief p {
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .bluf-final, .systems-footer .hard, .next-brief .strong { color: var(--hi); }
+
+    .signal-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .signal-card { border: 1px solid rgba(0, 168, 255, 0.22); background: rgba(2, 4, 6, 0.52); }
+    .signal-card-header { padding: 15px; border-bottom: 1px solid rgba(0, 168, 255, 0.2); background: rgba(0, 168, 255, 0.055); }
+    .signal-card-name { display: block; color: var(--hi); font-family: var(--cond); font-size: 27px; font-weight: 700; line-height: 1; }
+    .signal-card-tag { display: block; color: var(--blue-soft); font-family: var(--mono); font-size: 9px; margin-top: 7px; text-transform: uppercase; }
+    .signal-card-body { padding: 17px; }
+    .signal-card-body p, .signal-card-body li { font-size: 15px; }
+
+    .architecture-block { margin-top: 22px; padding: 20px; border: 1px solid rgba(0, 168, 255, 0.25); background: rgba(0, 168, 255, 0.045); }
+    .architecture-label { color: var(--gold); font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+    .architecture-flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .architecture-step { padding: 15px; border: 1px solid rgba(0, 168, 255, 0.18); background: rgba(2, 4, 6, 0.45); }
+    .architecture-step-title { color: var(--hi); font-family: var(--cond); font-size: 22px; text-transform: uppercase; }
+    .architecture-arrow { color: var(--blue); }
+    .architecture-step-detail { color: var(--dim); font-family: var(--mono); font-size: 10px; text-transform: uppercase; }
+
+    .field-note { padding: 20px; border-left: 2px solid var(--blue); background: rgba(0, 168, 255, 0.045); }
+    .triline span, .closing-num { color: var(--gold); }
+
+    .doctrine-view-labels, .doctrine-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .doctrine-view-label, .doctrine-cell { padding: 14px 16px; border: 1px solid rgba(0, 168, 255, 0.18); }
+    .doctrine-view-label { color: var(--blue-soft); font-family: var(--mono); font-size: 10px; text-transform: uppercase; background: rgba(0, 168, 255, 0.04); }
+    .doctrine-cell.left { color: var(--dim); background: rgba(2, 4, 6, 0.42); }
+    .doctrine-cell.right { color: var(--hi); background: rgba(0, 168, 255, 0.055); }
+    .doctrine-coda { margin-top: 18px; color: var(--gold); font-family: var(--mono); }
+
+    .check-item { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid rgba(0, 168, 255, 0.15); }
+    .check-box { width: 17px; height: 17px; flex: 0 0 17px; margin-top: 4px; border: 1px solid var(--blue); background: rgba(0, 168, 255, 0.06); }
+    .systems-check-intro { margin-bottom: 24px; color: var(--dim); font-family: var(--mono); font-size: 16px; }
+
+    .closing-item { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px; margin-top: 18px; }
+    .closing-num { font-family: var(--mono); font-size: 13px; }
+
+    .framework-grid { display: grid; gap: 10px; margin-top: 18px; }
+    .framework-step {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      padding: 18px;
+      border: 1px solid var(--border-soft);
+      background: rgba(2, 4, 6, 0.48);
+    }
+    .framework-step strong {
+      color: var(--blue-soft);
+      font-family: var(--cond);
+      font-size: 24px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .framework-step span { color: var(--text); }
+
+    .related-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+    .related-link {
+      min-height: 96px;
+      padding: 15px;
+      border: 1px solid var(--border-soft);
+      background: rgba(0, 168, 255, 0.045);
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .related-link span { color: var(--hi); font-family: var(--cond); font-size: 21px; line-height: 1; text-transform: uppercase; }
+    .related-link small { color: var(--blue-soft); font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .related-link:hover, .related-link:focus-visible { border-color: var(--blue); background: rgba(0, 168, 255, 0.09); outline: none; }
+
+    .disclaimer {
+      max-width: 1000px;
+      margin: 18px auto 0;
+      padding: 16px;
+      border: 1px solid rgba(255, 170, 0, 0.28);
+      background: rgba(255, 170, 0, 0.06);
+      color: var(--text);
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 28px 14px 44px;
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .site-footer a { text-decoration: none; }
+
+    @media (max-width: 980px) {
+      .header-inner { grid-template-columns: 1fr auto; }
+      .tabs { grid-column: 1 / -1; order: 3; }
+      .archive-meta { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .signal-grid { grid-template-columns: 1fr; }
+      .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      body { font-size: 16px; }
+      .header-inner { gap: 8px; padding: 8px 10px; }
+      .brand-mark { width: 32px; height: 32px; font-size: 21px; }
+      .brand-name { font-size: 18px; letter-spacing: 0.12em; }
+      .status { display: none; }
+      article { width: calc(100% - 20px); padding-top: 10px; }
+      .hero, section { padding: 22px 16px; }
+      h1 { font-size: clamp(38px, 13vw, 52px); }
+      .tab { font-size: 10px; padding: 8px; }
+      .archive-meta, .profile-grid, .architecture-flow, .doctrine-view-labels,
+      .doctrine-row, .related-grid { grid-template-columns: 1fr; }
+      .framework-step { grid-template-columns: 1fr; gap: 6px; }
+      .doctrine-view-labels { display: none; }
+      .doctrine-cell.left::before { content: "Conventional: "; color: var(--blue-soft); font-family: var(--mono); font-size: 10px; text-transform: uppercase; }
+      .doctrine-cell.right::before { content: "Protocol X: "; color: var(--gold); font-family: var(--mono); font-size: 10px; text-transform: uppercase; }
+      .closing-item { grid-template-columns: 30px minmax(0, 1fr); }
+    }
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="PROTOKOL X home"><span class="brand-mark">X</span><span class="brand-name">PROTOKOL <span>X</span></span></a>
+    <nav class="tabs" aria-label="Primary navigation">
+      <a class="tab" href="/">Home</a>
+      <a class="tab" href="/#vendors">Vendors</a>
+      <a class="tab" href="https://protokolx-tracker2.netlify.app/">Tracker</a>
+      <a class="tab" href="/trust-index.html">Trust Index</a>
+      <a class="tab" href="/systems.html">Systems</a>
+      <a class="tab" href="/pillars/">Pillars</a>
+      <a class="tab" href="/calculator.html">Calculator</a>
+      <a class="tab active" href="/blog/">Open Brief Archive</a>
+    </nav>
+    <div class="status">Open Brief</div>
+  </div>
+</header><!-- Hero -->
+<!-- Article Body -->
+<article><header class="hero"><div class="eyebrow">
+<span>Open Brief Archive</span>
+</div>
+<div class="archive-meta">
+    <div class="archive-meta-item">
+      <div class="archive-meta-label">File ID</div>
+      <div class="archive-meta-value">PX-OBA-TGF-001</div>
+    </div>
+    <div class="archive-meta-item">
+      <div class="archive-meta-label">Status</div>
+      <div class="archive-meta-value">Active</div>
+    </div>
+    <div class="archive-meta-item">
+      <div class="archive-meta-label">Classification</div>
+      <div class="archive-meta-value">Foundational Infrastructure</div>
+    </div>
+    <div class="archive-meta-item">
+      <div class="archive-meta-label">Series</div>
+      <div class="archive-meta-value">Metabolic Signaling</div>
+    </div>
+  </div>
+<h1>The Triple G Foundation</h1>
+  <div class="lead">Three Signals. One Architecture.</div>
+  </header><section class="profile-block" id="profile">
+    <div class="profile-label">Intelligence Profile</div>
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="profile-key">Subject</div>
+        <div class="profile-value">Metabolic Signaling Architecture</div>
+      </div>
+      <div class="profile-item">
+        <div class="profile-key">Signals Reviewed</div>
+        <div class="profile-value">GLP-1<br>GIP<br>Glucagon</div>
+      </div>
+      <div class="profile-item">
+        <div class="profile-key">Research Scope</div>
+        <div class="profile-value">Foundational Systems Education</div>
+      </div>
+      <div class="profile-item">
+        <div class="profile-key">Classification</div>
+        <div class="profile-value">Open Brief Infrastructure</div>
+      </div>
+      <div class="profile-item">
+        <div class="profile-key">Prerequisite</div>
+        <div class="profile-value">Required</div>
+      </div>
+      <div class="profile-item">
+        <div class="profile-key">Follow-On Brief</div>
+        <div class="profile-value">Triple Agonist Architecture</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLUF -->
+  <section class="bluf-block blue-card" id="bluf">
+    <div class="bluf-label">BLUF — Bottom Line Up Front</div>
+    <p>GLP-1, GIP, and Glucagon are three distinct signaling systems. Each does something different. Each operates through different receptors in different locations.</p>
+    <p>Most people learn the name of a compound first. They research the outcome before they understand the mechanism.</p>
+    <p><em>Protocol X reverses that sequence.</em></p>
+    <p>Before you evaluate any compound in the GLP/GIP/Glucagon space — understand the three systems it is designed to engage.</p>
+    <div class="bluf-coda">
+      <p>Classification: Foundational Infrastructure</p>
+      <p>Prerequisite for: Triple agonist compound evaluation</p>
+      <p class="bluf-final">Understand the system before you evaluate the compound.</p>
+    </div>
+  </section>
+
+  <!-- Intelligence Assessment -->
+  <section class="intel-block" id="assessment">
+    <div class="intel-label">Intelligence Assessment</div>
+    <p>Most discussions begin with compounds.</p>
+    <p>Protocol X begins with systems.</p>
+    <p>Most discussions focus on outcomes.</p>
+    <p>Protocol X examines the pathways that create them.</p>
+    <p>Before evaluating the result, understand the architecture.</p>
+  </section>
+
+  <!-- Card 1: The Three Systems -->
+  <section class="card" id="foundation">
+    <div class="card-number">Section A</div>
+    <div class="card-title">Foundational Signals</div>
+    <p>The body uses an information network to regulate metabolism. That network is built on chemical signals — molecules released in response to conditions like food intake, blood sugar levels, and energy demand.</p>
+    <p>GLP-1, GIP, and Glucagon are three of those signals.</p>
+    <p>They are not the same signal. They do not do the same job. Understanding the difference between them is the foundation for understanding any compound that targets these pathways.</p>
+    <p class="stack">Three signals.</p>
+    <p class="stack">Three distinct jobs.</p>
+    <p class="stack stack-gap">One coordinated architecture.</p>
+    <p>Most modern metabolic compounds are designed to engage one or more of these signaling systems. Before evaluating any compound, it helps to understand the signals themselves.</p>
+    <p class="stack">The pathways come first.</p>
+    <p class="stack">The compounds come second.</p>
+  </section>
+
+  <!-- Card 2: Signal Breakdown -->
+  <section class="card" id="signals">
+    <div class="card-number">Section B</div>
+    <div class="card-title">Signal Breakdown</div>
+
+    <div class="signal-grid">
+
+      <!-- GLP-1 -->
+      <div class="signal-card">
+        <div class="signal-card-header">
+          <span class="signal-card-name">GLP-1</span>
+          <span class="signal-card-tag">Glucagon-Like Peptide-1</span>
+        </div>
+        <div class="signal-card-body">
+          <p>GLP-1 is released from the gut after you eat. Its primary job is to manage blood sugar by telling the pancreas to release insulin — but only when blood sugar is actually elevated.</p>
+          <p>It also signals the brain to reduce appetite and slows the rate at which the stomach empties. The result is less food intake and more controlled glucose response.</p>
+          <ul>
+            <li>Released from the gut in response to food</li>
+            <li>Stimulates insulin release from the pancreas</li>
+            <li>Suppresses appetite via brain signaling</li>
+            <li>Slows gastric emptying</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- GIP -->
+      <div class="signal-card">
+        <div class="signal-card-header">
+          <span class="signal-card-name">GIP</span>
+          <span class="signal-card-tag">Glucose-Dependent Insulinotropic Polypeptide</span>
+        </div>
+        <div class="signal-card-body">
+          <p>GIP is also released from the gut after eating. Like GLP-1, it stimulates insulin release from the pancreas. But GIP's role extends beyond glucose — it also influences fat storage and bone metabolism.</p>
+          <p>GIP is sometimes described as the "forgotten incretin" because it was identified before GLP-1 but received less attention until research into dual and triple agonist compounds brought it back into focus.</p>
+          <ul>
+            <li>Released from the gut after food intake</li>
+            <li>Stimulates insulin release alongside GLP-1</li>
+            <li>Influences fat cell activity and storage</li>
+            <li>Plays a role in bone density regulation</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Glucagon -->
+      <div class="signal-card">
+        <div class="signal-card-header">
+          <span class="signal-card-name">Glucagon</span>
+          <span class="signal-card-tag">Counter-Regulatory Signal</span>
+        </div>
+        <div class="signal-card-body">
+          <p>Glucagon works in the opposite direction from GLP-1 and GIP. Where the incretins manage the response to food, glucagon manages the response to fasting. It tells the liver to release stored glucose when blood sugar drops too low.</p>
+          <p>Glucagon also plays a meaningful role in energy expenditure — it increases the rate at which the body burns calories, particularly from fat. This is why glucagon receptor engagement is being studied in the context of metabolic and body composition research.</p>
+          <ul>
+            <li>Released from the pancreas when blood sugar drops</li>
+            <li>Signals the liver to release stored glucose</li>
+            <li>Increases energy expenditure and fat burning</li>
+            <li>Counter-regulatory to insulin</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Card 3: Why They Work Together -->
+  <section class="card" id="interaction">
+    <div class="card-number">Section C</div>
+    <div class="card-title">System Interaction</div>
+    <p>These three signals do not operate in isolation. They are part of the same metabolic architecture — each responding to different conditions, but ultimately working within the same system.</p>
+    <p>When you eat, GLP-1 and GIP activate together. Both signal the pancreas to release insulin. Both help manage the glucose response. GLP-1 also slows digestion and suppresses appetite. GIP adds fat metabolism and bone signaling into the picture.</p>
+    <p>Between meals — during fasting or extended energy expenditure — glucagon steps in. It prevents blood sugar from dropping too low by instructing the liver to release stored glucose. It also increases caloric burn during that fasting window.</p>
+    <p>The interaction between these three systems is what researchers are attempting to leverage with newer multi-receptor compounds. Rather than engaging one pathway, the aim is to engage the architecture as a coordinated unit.</p>
+  </section>
+
+  <!-- Card 4: Why Multi-Pathway Compounds -->
+  <section class="card" id="multi-pathway">
+    <div class="card-number">Section D</div>
+    <div class="card-title">Multi-Pathway Design</div>
+    <p>Early compounds in this space targeted GLP-1 alone. That produced meaningful results — particularly in appetite suppression and blood sugar regulation.</p>
+    <p>But researchers identified a limitation: engaging one pathway leaves the other two underutilized. GIP's influence on fat metabolism and GLP-1's appetite signaling, when combined, produced stronger outcomes than either alone. Adding glucagon receptor engagement introduced a third variable — increased energy expenditure.</p>
+    <p>The logic is straightforward: <strong>a single signal moves one lever.</strong> Multi-pathway compounds attempt to move the entire mechanism simultaneously.</p>
+    <p>This is the architecture behind triple agonist compounds — molecules designed to engage GLP-1, GIP, and Glucagon receptors in a single compound. The goal is not to maximize any single effect, but to coordinate all three signals toward a common metabolic outcome.</p>
+    <div class="architecture-block">
+      <div class="architecture-label">Signal Architecture Progression</div>
+      <div class="architecture-flow">
+        <div class="architecture-step">
+          <div class="architecture-step-title">Single Pathway</div>
+          <div class="architecture-arrow">↓</div>
+          <div class="architecture-step-detail">One Signaling System</div>
+        </div>
+        <div class="architecture-step">
+          <div class="architecture-step-title">Dual Pathway</div>
+          <div class="architecture-arrow">↓</div>
+          <div class="architecture-step-detail">Two Signaling Systems</div>
+        </div>
+        <div class="architecture-step">
+          <div class="architecture-step-title">Triple Pathway</div>
+          <div class="architecture-arrow">↓</div>
+          <div class="architecture-step-detail">Three Signaling Systems</div>
+        </div>
+      </div>
+    </div>
+    <p>The progression is not about complexity for its own sake.</p>
+    <p>It reflects a growing effort to engage multiple parts of the metabolic system simultaneously rather than relying on a single pathway alone.</p>
+  </section>
+
+  <!-- Field Note -->
+  <section class="card" id="field-note">
+    <div class="card-number">Section E</div>
+    <div class="card-title">Field Note</div>
+    <div class="field-note">
+      <div class="field-note-label">Operator Observation</div>
+      <p>When I first started researching this space, everybody was talking about the compounds.</p>
+      <p>Single agonists.</p>
+      <p>Dual agonists.</p>
+      <p>Triple agonists.</p>
+      <p>Everybody knew the names.</p>
+      <p>Almost nobody was talking about the system.</p>
+      <p>The more I researched, the more obvious it became that the compound name was only the final layer.</p>
+      <p>The real story was underneath it.</p>
+      <p>GLP-1 regulates appetite and glucose response.</p>
+      <p>GIP adds another layer of metabolic signaling.</p>
+      <p>Glucagon influences energy expenditure and glucose availability.</p>
+      <p>Three signals.</p>
+      <p>Three jobs.</p>
+      <p>One coordinated architecture.</p>
+      <p>Once I understood the system, the compound names started making sense.</p>
+      <p>Not the other way around.</p>
+      <div class="triline">
+        <p><span>Signal:</span> GLP-1 — Appetite + Blood Sugar</p>
+        <p><span>Signal:</span> GIP — Fat Metabolism + Insulin</p>
+        <p><span>Signal:</span> Glucagon — Energy Expenditure + Liver Output</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Protocol X Doctrine -->
+  <section class="doctrine highlight-card" id="doctrine">
+    <div class="doctrine-label">Protocol X Doctrine</div>
+    <div class="doctrine-view-labels">
+      <div class="doctrine-view-label">Conventional View</div>
+      <div class="doctrine-view-label">Protocol X View</div>
+    </div>
+    <div class="doctrine-row">
+      <div class="doctrine-cell left">Most research starts here</div>
+      <div class="doctrine-cell right"><strong>Protocol X starts here</strong></div>
+    </div>
+    <div class="doctrine-row">
+      <div class="doctrine-cell left">Name of the compound</div>
+      <div class="doctrine-cell right"><strong>The signaling system it targets</strong></div>
+    </div>
+    <div class="doctrine-row">
+      <div class="doctrine-cell left">The clinical outcome</div>
+      <div class="doctrine-cell right"><strong>The pathway that produces it</strong></div>
+    </div>
+    <div class="doctrine-row">
+      <div class="doctrine-cell left">One receptor. One signal.</div>
+      <div class="doctrine-cell right"><strong>The architecture. All three signals.</strong></div>
+    </div>
+    <div class="doctrine-row">
+      <div class="doctrine-cell left">What it does</div>
+      <div class="doctrine-cell right"><strong>How the system works</strong></div>
+    </div>
+    <div class="doctrine-coda">→ Understand the system. Then evaluate the compound.</div>
+  </section>
+
+  <!-- Systems Check -->
+  <section class="systems-check" id="systems-check">
+    <div class="framework-label">PX Framework Checkpoint</div>
+    <div class="systems-check-label">Systems Check</div>
+    <p class="systems-check-intro">Before evaluating any compound in this space, perform a Systems Check:</p>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Which receptor pathways does this compound engage — GLP-1, GIP, Glucagon, or a combination?</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Do I understand what each engaged pathway does individually before evaluating the combined effect?</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">What metabolic outcome am I researching — appetite, glucose regulation, energy expenditure, fat metabolism?</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Is the compound a single, dual, or triple agonist — and does that distinction match my research objective?</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Have I reviewed the quality of the source material, the study context, and the limits of the available evidence?</div>
+    </div>
+    <div class="systems-footer">
+      <p>Five checkpoints. One framework.</p>
+      <p class="hard">Map the system before you engage the compound.</p>
+    </div>
+  </section>
+
+  <!-- Final Assessment / Closing -->
+  <section class="closing-block highlight-card" id="takeaway">
+    <h3>Protocol X Takeaway</h3>
+    <div class="closing-item">
+      <div class="closing-num">01</div>
+      <div class="closing-text">
+<strong>GLP-1</strong> manages appetite and blood sugar. It is the most researched pathway in this space and the foundation for understanding the others.</div>
+    </div>
+    <div class="closing-item">
+      <div class="closing-num">02</div>
+      <div class="closing-text">
+<strong>GIP</strong> works alongside GLP-1 on insulin signaling, but adds fat cell and bone metabolism into the picture. It was underestimated for years — recent research has corrected that.</div>
+    </div>
+    <div class="closing-item">
+      <div class="closing-num">03</div>
+      <div class="closing-text">
+<strong>Glucagon</strong> is the counter-regulatory signal. It increases energy expenditure and prevents blood sugar from dropping too low. Engaging this pathway is what separates triple agonists from dual agonists.</div>
+    </div>
+    <div class="closing-item">
+      <div class="closing-num">04</div>
+      <div class="closing-text">Newer compounds target <strong>multiple pathways simultaneously</strong> because the body's metabolic system is coordinated — not isolated. Engaging one signal moves one lever. Engaging three moves the architecture.</div>
+    </div>
+    <div class="closing-question">
+      <p>The compound is the tool.</p>
+      <p>The signaling system is the mechanism.</p>
+      <p>Understand the mechanism first.</p>
+    </div>
+  </section>
+
+  <section class="blue-card" id="protocol-x-framework">
+    <span class="card-label">Protocol X Framework</span>
+    <h2>Assess. Decide. Act.</h2>
+    <div class="framework-grid">
+      <div class="framework-step">
+        <strong>Assess</strong>
+        <span>Understand the signals.</span>
+      </div>
+      <div class="framework-step">
+        <strong>Decide</strong>
+        <span>Identify the pathways involved.</span>
+      </div>
+      <div class="framework-step">
+        <strong>Act</strong>
+        <span>Apply the framework before evaluating the compound.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="next-brief blue-card" id="next-brief">
+    <div class="continuation-label">Archive Continuation</div>
+    <div class="next-brief-label">Next Brief in Series</div>
+    <p>The Triple G Foundation established the architecture.</p>
+    <p>The next Open Brief examines how researchers attempt to engage all three pathways simultaneously through modern triple agonist design.</p>
+    <p class="strong">Foundation first.</p>
+    <p class="strong">Compounds second.</p>
+  </section>
+
+<section id="related" class="blue-card">
+  <span class="card-label">Protocol X Research Pathways</span>
+  <h2>Continue Through the System</h2>
+  <p>Use the broader Protocol X architecture to move from foundational signaling into structured research navigation and documentation.</p>
+  <div class="related-grid">
+    <a class="related-link" href="/blog/understanding-glp-signaling.html"><span>GLP Signaling Foundation</span><small>Read the prerequisite brief</small></a>
+    <a class="related-link" href="/pillars/"><span>Pillars</span><small>Map the research framework</small></a>
+    <a class="related-link" href="/calculator.html"><span>Calculator</span><small>Open research math tools</small></a>
+    <a class="related-link" href="https://protokolx-tracker2.netlify.app/"><span>Tracker</span><small>Open protocol documentation</small></a>
+    <a class="related-link" href="/blog/"><span>Open Brief Archive</span><small>Browse the full archive</small></a>
+  </div>
+</section><section class="principle blue-card" aria-label="Protocol X footer principle">
+  <span class="card-label">Protocol X Principle</span>
+  <h2>Clarity Over Noise.</h2>
+  <p>Understand the signal before the compound.</p>
+  <p>Understand the pathway before the outcome.</p>
+  <p>Understand the architecture before the decision.</p>
+  <p><strong>Assess. Decide. Execute.</strong></p>
+</section><div class="disclaimer">Research-use disclaimer: PROTOKOL X organizes educational research categories only. This page does not provide medical advice, dosing guidance, treatment recommendations, vendor recommendations, or product outcome claims.</div></article><!-- Footer -->
+<footer class="site-footer"><a href="/">PROTOKOL X</a> - <a href="/blog/">Open Brief Archive</a> - PX-OBA-TGF-001</footer>
+</body>
+</html>

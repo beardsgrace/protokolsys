@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retatrutide: The Triple-Agonist Architecture | Protocol X Research Brief</title>
+  <meta name="description" content="Retatrutide combines GLP-1, GIP, and glucagon receptor agonism in a single molecule. A Protocol X intelligence brief on triple-signal metabolic architecture, research context, and what the evidence actually shows." />
+  <meta name="author" content="PROTOKOL X" />
+  <link rel="canonical" href="https://protokolx.com/blog/retatrutide-triple-agonist-brief.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Retatrutide: The Triple-Agonist Architecture | PROTOKOL X" />
+  <meta property="og:description" content="One signal. Then two. Then three. A Protocol X intelligence brief on how retatrutide extends dual-agonist architecture into triple-signal metabolic design." />
+  <meta property="og:url" content="https://protokolx.com/blog/retatrutide-triple-agonist-brief.html" />
+  <meta property="og:site_name" content="PROTOKOL X" />
+  <meta property="og:image" content="https://protokolx.com/assets/og-default.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="article:published_time" content="2026-06-14T00:00:00-07:00" />
+  <meta property="article:section" content="GLP Signaling Architecture" />
+  <meta property="article:tag" content="retatrutide" />
+  <meta property="article:tag" content="GLP-1" />
+  <meta property="article:tag" content="GIP" />
+  <meta property="article:tag" content="glucagon" />
+  <meta property="article:tag" content="triple agonist" />
+  <meta property="article:tag" content="incretin therapy" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Retatrutide: The Triple-Agonist Architecture | PROTOKOL X" />
+  <meta name="twitter:description" content="GLP-1 + GIP + Glucagon in a single molecule. Architecture before conclusions. Clarity over noise." />
+  <meta name="twitter:image" content="https://protokolx.com/assets/og-default.png" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Retatrutide: The Triple-Agonist Architecture Brief",
+    "description": "Retatrutide combines GLP-1, GIP, and glucagon receptor agonism in a single molecule. A Protocol X intelligence brief on triple-signal metabolic architecture and research context.",
+    "author": {"@type": "Organization", "name": "PROTOKOL X"},
+    "publisher": {"@type": "Organization", "name": "PROTOKOL X", "url": "https://protokolx.com"},
+    "datePublished": "2026-06-14",
+    "url": "https://protokolx.com/blog/retatrutide-triple-agonist-brief.html",
+    "keywords": "retatrutide, GLP-1, GIP, glucagon, triple agonist, incretin, metabolic architecture"
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #020b12;
+      --bg-card:     #071520;
+      --bg-card-alt: #040f1a;
+      --blue:        #00aeff;
+      --gold:        #f0b429;
+      --green:       #00c878;
+      --text:        #c8d8e8;
+      --text-muted:  #8899aa;
+      --text-dim:    #4a6a8a;
+      --border:      rgba(0,174,255,0.2);
+      --border-dim:  rgba(0,174,255,0.1);
+      --border-gold: rgba(240,180,41,0.35);
+      --border-green:rgba(0,200,120,0.3);
+      --glow:        rgba(0,174,255,0.07);
+      --glow-green:  rgba(0,200,120,0.06);
+    }
+
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; line-height: 1.75; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── HEADER ── */
+    header { background: var(--bg); border-bottom: 1px solid var(--border); padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .brand { font-size: 18px; font-weight: 700; letter-spacing: 0.15em; color: var(--blue); }
+    .brand span { color: var(--text); font-weight: 400; }
+    .header-nav { display: flex; gap: 18px; flex-wrap: wrap; }
+    .header-nav a { font-size: 12px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; }
+    .header-nav a:hover { color: var(--blue); text-decoration: none; }
+
+    /* ── STICKY PROGRESS NAV ── */
+    .progress-nav { position: sticky; top: 0; z-index: 100; background: rgba(2,11,18,0.96); border-bottom: 1px solid var(--border-dim); backdrop-filter: blur(8px); padding: 0 24px; overflow-x: auto; white-space: nowrap; }
+    .progress-nav ul { display: inline-flex; list-style: none; gap: 0; padding: 0; margin: 0; }
+    .progress-nav ul li a { display: inline-block; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); padding: 11px 14px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; text-decoration: none; }
+    .progress-nav ul li a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+    .progress-nav ul li a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+    /* ── LAYOUT ── */
+    .article-wrap { max-width: 800px; margin: 0 auto; padding: 52px 24px 96px; }
+
+    /* ── HERO ── */
+    .hero-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+    .hero-series { display: inline-flex; align-items: center; gap: 8px; background: rgba(240,180,41,0.08); border: 1px solid var(--border-gold); border-radius: 3px; padding: 4px 12px; margin-bottom: 18px; }
+    .hero-series span { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+    h1 { font-size: clamp(26px, 5.5vw, 42px); font-weight: 800; color: #fff; line-height: 1.12; margin-bottom: 12px; }
+    .hero-subtitle { font-size: 16px; color: var(--text-muted); margin-bottom: 24px; font-style: italic; line-height: 1.5; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 0; padding-bottom: 36px; border-bottom: 1px solid var(--border-dim); }
+    .hero-meta-item { font-size: 12px; color: var(--text-dim); }
+    .hero-meta-item span { color: var(--text-muted); }
+
+    /* ── BLUF ── */
+    .bluf { background: var(--glow); border-left: 3px solid var(--blue); border-radius: 0 4px 4px 0; padding: 20px 24px; margin: 36px 0; }
+    .bluf-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); font-weight: 700; margin-bottom: 10px; }
+    .bluf p { font-size: 15px; color: var(--text); margin-bottom: 12px; line-height: 1.65; }
+    .bluf p:last-child { margin-bottom: 0; }
+    .bluf .key-line { font-size: 15px; color: #fff; font-weight: 600; padding-left: 14px; border-left: 2px solid var(--border); margin: 10px 0; }
+
+    /* ── SIGNAL CHECKLIST ── */
+    .signal-checklist { list-style: none; padding: 0; margin: 14px 0; }
+    .signal-checklist li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text); padding: 7px 0; border-bottom: 1px solid var(--border-dim); }
+    .signal-checklist li:last-child { border-bottom: none; }
+    .sc-check { color: var(--green); font-size: 14px; font-weight: 700; flex-shrink: 0; }
+    .sc-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+    .sc-badge.glp  { background: rgba(0,174,255,0.1);  color: var(--blue);  border: 1px solid rgba(0,174,255,0.3); }
+    .sc-badge.gip  { background: rgba(240,180,41,0.1); color: var(--gold);  border: 1px solid var(--border-gold); }
+    .sc-badge.gluc { background: rgba(0,200,120,0.1);  color: var(--green); border: 1px solid var(--border-green); }
+
+    /* ── SECTION HEADING ── */
+    .section-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; margin-top: 52px; }
+    h2 { font-size: 20px; font-weight: 700; color: var(--blue); letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 16px; }
+
+    /* ── CARD ── */
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 28px; margin: 20px 0; }
+    .card-num { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+    .card h3 { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+    .card p { font-size: 15px; color: var(--text-muted); margin-bottom: 14px; }
+    .card p:last-child { margin-bottom: 0; }
+    .card ul { padding-left: 20px; margin: 10px 0 14px; }
+    .card ul li { font-size: 15px; color: var(--text-muted); margin-bottom: 6px; line-height: 1.6; }
+
+    /* ── DOCTRINE CALLOUT ── */
+    .doctrine { background: rgba(240,180,41,0.05); border: 1px solid var(--border-gold); border-radius: 6px; padding: 20px 24px; margin: 24px 0; }
+    .doctrine .doc-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 10px; }
+    .doctrine p { font-size: 15px; color: #e8d8b8; margin-bottom: 10px; font-style: italic; line-height: 1.65; }
+    .doctrine p:last-child { margin-bottom: 0; }
+
+    /* ── WARNING BOX ── */
+    .warning-box { background: rgba(240,180,41,0.04); border: 1px solid var(--border-gold); border-left: 3px solid var(--gold); border-radius: 0 4px 4px 0; padding: 16px 20px; margin: 20px 0; }
+    .warning-box .w-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 6px; }
+    .warning-box p { font-size: 14px; color: #c8b870; margin: 0; font-style: italic; }
+
+    /* ── PROGRESSION DIAGRAM ── */
+    .progression { display: flex; flex-direction: column; align-items: flex-start; gap: 0; margin: 24px 0; }
+    .prog-row { display: flex; align-items: center; gap: 14px; }
+    .prog-step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 10px 18px; font-size: 13px; color: var(--text); font-weight: 600; min-width: 260px; }
+    .prog-step.active { border-color: rgba(0,200,120,0.5); color: var(--green); background: rgba(0,200,120,0.05); }
+    .prog-arrow { color: var(--text-dim); font-size: 20px; margin: 4px 0 4px 28px; line-height: 1; }
+    .prog-sub { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); margin-left: 12px; font-weight: 400; }
+
+    /* ── THREE-SIGNAL GRID ── */
+    .signal-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0; }
+    .signal-mini { border-radius: 6px; padding: 20px; }
+    .signal-mini.s-glp  { background: rgba(0,174,255,0.05);  border: 1px solid rgba(0,174,255,0.25); }
+    .signal-mini.s-gip  { background: rgba(240,180,41,0.05); border: 1px solid rgba(240,180,41,0.25); }
+    .signal-mini.s-gluc { background: rgba(0,200,120,0.05);  border: 1px solid rgba(0,200,120,0.25); }
+    .signal-mini .sm-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 3px; margin-bottom: 10px; }
+    .sm-badge.glp  { background: rgba(0,174,255,0.12);  color: var(--blue);  border: 1px solid rgba(0,174,255,0.35); }
+    .sm-badge.gip  { background: rgba(240,180,41,0.12); color: var(--gold);  border: 1px solid var(--border-gold); }
+    .sm-badge.gluc { background: rgba(0,200,120,0.12);  color: var(--green); border: 1px solid var(--border-green); }
+    .signal-mini h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .signal-mini ul { padding-left: 16px; margin: 0; }
+    .signal-mini ul li { font-size: 13px; color: var(--text-muted); margin-bottom: 5px; line-height: 1.5; }
+
+    /* ── ARCH DIAGRAM (3-node) ── */
+    .arch-diagram { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 28px 0; padding: 24px; background: var(--bg-card-alt); border: 1px solid var(--border-dim); border-radius: 6px; }
+    .arch-node { text-align: center; }
+    .an-signal { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; padding: 10px 18px; border-radius: 4px; display: inline-block; }
+    .an-signal.glp  { background: rgba(0,174,255,0.1);  color: var(--blue);  border: 1px solid rgba(0,174,255,0.3); }
+    .an-signal.gip  { background: rgba(240,180,41,0.1); color: var(--gold);  border: 1px solid var(--border-gold); }
+    .an-signal.gluc { background: rgba(0,200,120,0.1);  color: var(--green); border: 1px solid var(--border-green); }
+    .an-signal.result { background: rgba(0,200,120,0.05); color: #fff; border: 1px solid rgba(0,200,120,0.3); font-size: 14px; padding: 12px 24px; }
+    .arch-op { font-size: 22px; color: var(--blue); font-weight: 700; line-height: 1; }
+    .arch-eq { font-size: 22px; color: var(--text-dim); font-weight: 700; line-height: 1; }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+    .compare-table th { background: rgba(0,174,255,0.1); color: var(--blue); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 11px 16px; text-align: left; border-bottom: 1px solid rgba(0,174,255,0.25); }
+    .compare-table td { padding: 13px 16px; border-bottom: 1px solid var(--border-dim); color: var(--text-muted); vertical-align: middle; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table .highlight td { color: var(--text); }
+    .badge-signal { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 3px; margin: 2px 2px 2px 0; }
+    .bs-blue  { background: rgba(0,174,255,0.1);  color: var(--blue);  border: 1px solid rgba(0,174,255,0.25); }
+    .bs-gold  { background: rgba(240,180,41,0.1); color: var(--gold);  border: 1px solid rgba(240,180,41,0.25); }
+    .bs-green { background: rgba(0,200,120,0.1);  color: var(--green); border: 1px solid rgba(0,200,120,0.25); }
+
+    /* ── SIGNAL STRENGTH GRID ── */
+    .strength-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+    .strength-item { background: var(--bg-card-alt); border: 1px solid var(--border-dim); border-radius: 5px; padding: 16px 18px; }
+    .strength-item .si-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+    .strength-item .si-value { font-size: 15px; font-weight: 700; color: #fff; }
+    .strength-item .si-value.high   { color: var(--green); }
+    .strength-item .si-value.mod    { color: var(--gold); }
+    .strength-item .si-value.vhigh  { color: var(--blue); }
+    .strength-item .si-value.dev    { color: var(--text-muted); }
+
+    /* ── ASSESSMENT CARD ── */
+    .assessment-card { background: var(--bg-card); border: 1px solid rgba(0,200,120,0.3); border-radius: 6px; overflow: hidden; margin: 20px 0; }
+    .assessment-card .ac-header { background: rgba(0,200,120,0.07); border-bottom: 1px solid rgba(0,200,120,0.2); padding: 14px 24px; }
+    .assessment-card .ac-header-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); font-weight: 700; }
+    .assessment-card .ac-body { padding: 24px; }
+    .assessment-row { display: grid; grid-template-columns: 180px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-dim); align-items: start; }
+    .assessment-row:last-child { border-bottom: none; }
+    .ar-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); padding-top: 2px; }
+    .ar-value { font-size: 14px; color: var(--text); }
+    .ar-value ul { padding-left: 16px; margin: 4px 0 0; }
+    .ar-value ul li { margin-bottom: 4px; font-size: 14px; color: var(--text-muted); }
+
+    /* ── EVIDENCE CARD ── */
+    .evidence-card { background: rgba(0,174,255,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 24px 28px; margin: 20px 0; }
+    .evidence-card .ec-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 14px; }
+    .evidence-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+    .evidence-item { display: flex; align-items: flex-start; gap: 10px; }
+    .ev-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 8px; }
+    .evidence-item span { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── BOTTOM LINE ── */
+    .bottom-line { border-top: 2px solid rgba(0,200,120,0.3); padding-top: 32px; margin-top: 52px; }
+    .bl-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); font-weight: 700; margin-bottom: 18px; }
+    .bottom-line p { font-size: 15px; color: var(--text-muted); margin-bottom: 12px; }
+    .bottom-line .bl-close { font-size: 13px; color: var(--text-dim); margin-top: 20px; font-style: italic; letter-spacing: 0.04em; }
+    .bottom-line .clarity { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 0.08em; margin-top: 8px; }
+
+    /* ── CLARITY FOOTER ── */
+    .clarity-footer { border-top: 1px solid var(--border-dim); margin-top: 44px; padding-top: 22px; }
+    .clarity-footer .cf-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+    .clarity-footer p { font-size: 13px; color: var(--text-dim); margin: 0; line-height: 1.6; }
+
+    /* ── INTERNAL LINKS ── */
+    .internal-links { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: 6px; padding: 20px 24px; margin: 32px 0; }
+    .il-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+    .il-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .il-grid a { font-size: 13px; background: var(--glow); border: 1px solid var(--border); border-radius: 4px; padding: 7px 13px; color: var(--blue); }
+    .il-grid a:hover { background: rgba(0,174,255,0.12); text-decoration: none; }
+
+    /* ── SERIES NAV ── */
+    .series-nav { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: 6px; padding: 22px 24px; margin: 40px 0 0; }
+    .series-nav .sn-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+    .series-nav .link-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .series-nav .link-grid a { font-size: 13px; background: var(--glow); border: 1px solid var(--border); border-radius: 4px; padding: 8px 14px; color: var(--blue); }
+    .series-nav .link-grid a:hover { background: rgba(0,174,255,0.15); text-decoration: none; }
+    .series-nav .link-grid a.current { border-color: rgba(0,200,120,0.4); color: var(--green); background: rgba(0,200,120,0.04); }
+
+    footer { border-top: 1px solid var(--border-dim); padding: 24px; text-align: center; font-size: 12px; margin-top: 48px; }
+    footer span { color: #2a3a4a; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .article-wrap { padding: 28px 16px 64px; }
+      .signal-trio { grid-template-columns: 1fr; }
+      .strength-grid { grid-template-columns: 1fr; }
+      .assessment-row { grid-template-columns: 1fr; gap: 4px; }
+      .arch-diagram { gap: 8px; padding: 16px 10px; }
+      .an-signal { font-size: 11px; padding: 8px 12px; }
+      .header-nav { display: none; }
+      .compare-table { font-size: 13px; }
+      .compare-table th, .compare-table td { padding: 9px 10px; }
+      .progress-nav ul li a { font-size: 10px; padding: 9px 10px; }
+    }
+
+    /* ── GRAPHIC BLOCK ── */
+    .graphic-block { margin: 28px 0; }
+    .graphic-caption { font-size: 12px; color: var(--text-dim); margin-top: 10px; text-align: center; letter-spacing: 0.02em; font-style: italic; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">PROTOKOL <span>X</span></div>
+  <nav class="header-nav">
+    <a href="/blog/">Education</a>
+    <a href="/systems.html">Systems</a>
+    <a href="/calculator.html">Calculator</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
+
+<!-- ── STICKY PROGRESS NAV ── -->
+<nav class="progress-nav">
+  <ul>
+    <li><a href="#card1">Executive Summary</a></li>
+    <li><a href="#card2">Evolution</a></li>
+    <li><a href="#card3">Three Signals</a></li>
+    <li><a href="#card4">Glucagon</a></li>
+    <li><a href="#card5">Advantages</a></li>
+    <li><a href="#card6">Challenges</a></li>
+    <li><a href="#card7">Comparison</a></li>
+    <li><a href="#card8">Assessment</a></li>
+  </ul>
+</nav>
+
+<div class="article-wrap">
+
+  <!-- ── HERO ── -->
+  <div class="hero-label">PROTOKOL X &nbsp;·&nbsp; Research Brief &nbsp;·&nbsp; GLP Signaling Architecture</div>
+  <div class="hero-series"><span>GLP Signaling Architecture Series &nbsp;·&nbsp; Research Brief</span></div>
+  <h1>Retatrutide: The Triple-Agonist Architecture Brief</h1>
+  <p class="hero-subtitle">Understanding GLP-1, GIP, and Glucagon Signaling in a Single Molecule</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">Published: <span>June 2026</span></div>
+    <div class="hero-meta-item">Category: <span>GLP Signaling Architecture</span></div>
+    <div class="hero-meta-item">Reading Time: <span>8–10 Minutes</span></div>
+    <div class="hero-meta-item">Classification: <span>Educational Research</span></div>
+  </div>
+
+  <!-- ── CARD 1: EXECUTIVE SUMMARY ── -->
+  <div class="section-label" id="card1">Card 1</div>
+  <h2>Executive Summary</h2>
+
+  <div class="bluf">
+    <div class="bluf-label">BLUF — Bottom Line Up Front</div>
+    <p>Retatrutide combines three distinct signaling pathways within a single molecule — a structural design that represents the current frontier of incretin-based metabolic research.</p>
+    <ul class="signal-checklist">
+      <li><span class="sc-check">✓</span><span class="sc-badge glp">GLP-1</span> Glucagon-Like Peptide-1 receptor agonism</li>
+      <li><span class="sc-check">✓</span><span class="sc-badge gip">GIP</span> Glucose-Dependent Insulinotropic Polypeptide receptor agonism</li>
+      <li><span class="sc-check">✓</span><span class="sc-badge gluc">Glucagon</span> Glucagon receptor agonism</li>
+    </ul>
+    <p>Unlike semaglutide (single agonist) and tirzepatide (dual agonist), retatrutide introduces a third pathway — glucagon receptor activation — intended to influence energy expenditure alongside appetite regulation and metabolic signaling.</p>
+    <div class="key-line">Retatrutide represents a shift from appetite-focused approaches toward broader metabolic architecture involving energy mobilization and expenditure.</div>
+  </div>
+
+  <!-- ── CARD 2: EVOLUTION ── -->
+  <div class="section-label" id="card2">Card 2</div>
+  <h2>The Evolution of GLP Signaling</h2>
+
+  <div class="card">
+    <p>Incretin-based research did not arrive at triple agonism in a single step. Each generation of compounds was built on evidence from the previous one. Understanding that lineage is understanding why retatrutide exists.</p>
+    <p>Semaglutide established that sustained GLP-1 receptor activation could produce meaningful metabolic effects at scale. That proof of concept raised the next question: could adding a second signal — GIP — extend those effects further? Tirzepatide answered that question with a substantial body of clinical evidence.</p>
+    <p>Tirzepatide's success with dual agonism then raised the question that retatrutide was designed to answer: what happens when glucagon receptor activation is added to the GLP-1 and GIP combination?</p>
+    <p>Each step was a deliberate architectural experiment, not an arbitrary escalation.</p>
+  </div>
+
+  <div class="progression">
+    <div class="prog-row">
+      <div class="prog-step">
+        <span class="badge-signal bs-blue">GLP-1</span> &nbsp; Semaglutide
+        <span class="prog-sub">Single Agonist</span>
+      </div>
+    </div>
+    <div class="prog-arrow">↓</div>
+    <div class="prog-row">
+      <div class="prog-step">
+        <span class="badge-signal bs-blue">GLP-1</span> <span class="badge-signal bs-gold">GIP</span> &nbsp; Tirzepatide
+        <span class="prog-sub">Dual Agonist</span>
+      </div>
+    </div>
+    <div class="prog-arrow">↓</div>
+    <div class="prog-row">
+      <div class="prog-step active">
+        <span class="badge-signal bs-blue">GLP-1</span> <span class="badge-signal bs-gold">GIP</span> <span class="badge-signal bs-green">Glucagon</span> &nbsp; Retatrutide
+        <span class="prog-sub">Triple Agonist</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="doctrine">
+    <div class="doc-label">Protocol X — Research Lineage</div>
+    <p>Researchers did not continue adding pathways because more is always better. They continued because each new pathway was hypothesized to contribute something the previous architecture could not — and evidence was the test of that hypothesis.</p>
+  </div>
+
+  <!-- ── CARD 3: THREE SIGNALS ── -->
+  <div class="section-label" id="card3">Card 3</div>
+  <h2>Understanding the Three Signals</h2>
+
+  <div class="signal-trio">
+    <div class="signal-mini s-glp">
+      <div class="sm-badge glp">GLP-1</div>
+      <h4>Glucagon-Like Peptide-1</h4>
+      <ul>
+        <li>Satiety signaling</li>
+        <li>Gastric emptying</li>
+        <li>Appetite reduction</li>
+        <li>Glucose-dependent insulin secretion</li>
+      </ul>
+    </div>
+    <div class="signal-mini s-gip">
+      <div class="sm-badge gip">GIP</div>
+      <h4>Glucose-Dependent Insulinotropic Polypeptide</h4>
+      <ul>
+        <li>Insulin regulation</li>
+        <li>Metabolic support</li>
+        <li>Synergistic signaling with GLP-1</li>
+        <li>Nutrient-response activity</li>
+      </ul>
+    </div>
+    <div class="signal-mini s-gluc">
+      <div class="sm-badge gluc">Glucagon</div>
+      <h4>Glucagon Receptor</h4>
+      <ul>
+        <li>Energy mobilization</li>
+        <li>Metabolic activity</li>
+        <li>Increased energy expenditure</li>
+        <li>Hepatic glucose and lipid regulation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="arch-diagram">
+    <div class="arch-node"><div class="an-signal glp">GLP-1</div></div>
+    <div class="arch-op">+</div>
+    <div class="arch-node"><div class="an-signal gip">GIP</div></div>
+    <div class="arch-op">+</div>
+    <div class="arch-node"><div class="an-signal gluc">Glucagon</div></div>
+    <div class="arch-eq">=</div>
+    <div class="arch-node"><div class="an-signal result">Retatrutide</div></div>
+  </div>
+
+  <div class="doctrine">
+    <div class="doc-label">Protocol X — Key Distinction</div>
+    <p>The addition of glucagon receptor agonism is what separates retatrutide from every previous generation. GLP-1 and GIP primarily address intake and signaling. Glucagon addresses the expenditure side of the metabolic equation.</p>
+  </div>
+
+  <!-- ── CARD 4: WHY GLUCAGON MATTERS ── -->
+  <div class="section-label" id="card4">Card 4</div>
+  <h2>Why Glucagon Matters</h2>
+
+  <div class="card">
+    <h3>The Case for the Third Signal</h3>
+    <p>For many people, glucagon is primarily associated with raising blood glucose levels. That framing is accurate but incomplete. Glucagon's role in energy management extends well beyond glucose counter-regulation.</p>
+    <p>At the systems level, glucagon is a mobilization signal. When the body needs to access stored energy — whether from glycogen in the liver or fat in adipose tissue — glucagon is part of the signaling cascade that initiates that process. It promotes lipolysis, increases hepatic glucose output, and contributes to thermogenic activity.</p>
+    <p>This is where the architectural logic of retatrutide becomes important. GLP-1 and GIP primarily act on the input side of the metabolic equation — reducing appetite, slowing gastric emptying, and modulating insulin response. Glucagon acts on the expenditure side — influencing how efficiently the body accesses and burns stored energy.</p>
+    <p>In a single-agonist or dual-agonist design, that expenditure pathway is not directly engaged. Retatrutide was designed to close that gap.</p>
+  </div>
+
+  <div class="graphic-block">
+    <img
+      src="/assets/energy-architecture-framework.png"
+      alt="Energy Architecture diagram showing how GLP-1, GIP, and Glucagon influence the four core energy functions: Input, Storage, Mobilization, and Expenditure. Retatrutide activates all three signals across the entire architecture."
+      width="100%"
+      style="display:block; width:100%; height:auto; border-radius:6px; border:1px solid rgba(0,200,120,0.2);"
+      loading="lazy"
+    />
+    <p class="graphic-caption"><strong>Energy Architecture Framework</strong><br />GLP-1 primarily influences intake. GIP supports metabolic signaling. Glucagon contributes to mobilization and expenditure. Retatrutide combines all three pathways into a single signaling architecture.</p>
+  </div>
+
+  <div class="doctrine">
+    <div class="doc-label">Protocol X Doctrine</div>
+    <p>The goal is not simply eating less.</p>
+    <p>The goal is changing how energy is managed — across intake, storage, mobilization, and expenditure simultaneously.</p>
+  </div>
+
+  <!-- ── CARD 5: POTENTIAL ADVANTAGES ── -->
+  <div class="section-label" id="card5">Card 5</div>
+  <h2>Potential Advantages of Triple Agonism</h2>
+
+  <div class="card">
+    <h3>Research Areas Under Investigation</h3>
+    <p>Retatrutide is currently under large-scale clinical investigation. The following represent areas where researchers are examining potential effects — not established conclusions.</p>
+    <ul>
+      <li><strong>Weight management.</strong> Researchers are investigating whether triple agonism produces effects on body composition that are distinguishable from dual-agonist approaches.</li>
+      <li><strong>Metabolic health.</strong> The combined signaling architecture is being studied for effects across glucose regulation, insulin sensitivity, and related metabolic markers.</li>
+      <li><strong>Energy expenditure.</strong> Glucagon receptor activation introduces a pathway that may influence basal metabolic activity. Researchers are investigating the practical significance of this effect.</li>
+      <li><strong>Liver health.</strong> Glucagon has established roles in hepatic metabolism. Researchers are examining whether retatrutide's glucagon component produces measurable effects on liver-related markers.</li>
+      <li><strong>Cardiometabolic outcomes.</strong> As with previous incretin-based compounds, cardiovascular-adjacent outcomes are included in ongoing research programs.</li>
+    </ul>
+    <p>Each of these areas represents an active research question, not a confirmed clinical outcome.</p>
+  </div>
+
+  <div class="warning-box">
+    <div class="w-label">Protocol X — Evidence Boundary</div>
+    <p>"Researchers are investigating" is not the same as "research has proven." These are hypotheses under active study — not clinical conclusions.</p>
+  </div>
+
+  <!-- ── CARD 6: CHALLENGES ── -->
+  <div class="section-label" id="card6">Card 6</div>
+  <h2>Challenges and Unknowns</h2>
+
+  <div class="card">
+    <h3>What the Evidence Has Not Yet Answered</h3>
+    <p>Retatrutide has generated significant early research interest. It has also generated a level of enthusiasm in popular media that runs considerably ahead of the available evidence. Protocol X treats that gap seriously.</p>
+    <ul>
+      <li><strong>Longer-term data is still developing.</strong> Early-phase trial results are not the same as long-term outcome data. The durability of effects over multiple years has not been established.</li>
+      <li><strong>Tolerability considerations.</strong> Triple-pathway signaling creates a more complex pharmacological profile. Tolerability data, particularly at higher dose ranges, continues to be characterized.</li>
+      <li><strong>Complexity of triple-pathway signaling.</strong> Engaging three receptor systems simultaneously introduces interaction effects that are not always predictable from single- or dual-agonist data. The full picture of what three simultaneous signals produce — and in which populations — remains under study.</li>
+      <li><strong>Real-world durability remains under study.</strong> Clinical trial populations are controlled environments. How these findings translate across broader, more heterogeneous real-world populations is still an open question.</li>
+    </ul>
+  </div>
+
+  <div class="doctrine">
+    <div class="doc-label">Protocol X Doctrine</div>
+    <p>More signaling does not automatically mean better outcomes.</p>
+    <p>Architecture creates possibilities. Evidence determines value.</p>
+  </div>
+
+  <!-- ── CARD 7: COMPARISON ── -->
+  <div class="section-label" id="card7">Card 7</div>
+  <h2>Retatrutide vs Semaglutide vs Tirzepatide</h2>
+
+  <div class="card">
+    <p>This is an architecture comparison, not a performance ranking. Each compound engages a different number of metabolic pathways. The question of which architecture produces the best outcomes for a given individual is a question only evidence — and clinical context — can answer.</p>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Compound</th>
+        <th>Architecture</th>
+        <th>Receptor Targets</th>
+        <th>Generation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Semaglutide</td>
+        <td>Single Agonist</td>
+        <td><span class="badge-signal bs-blue">GLP-1</span></td>
+        <td>First Modern GLP-1 Agonist</td>
+      </tr>
+      <tr>
+        <td>Tirzepatide</td>
+        <td>Dual Agonist</td>
+        <td><span class="badge-signal bs-blue">GLP-1</span> <span class="badge-signal bs-gold">GIP</span></td>
+        <td>First Dual Agonist</td>
+      </tr>
+      <tr class="highlight">
+        <td><strong>Retatrutide</strong></td>
+        <td><strong>Triple Agonist</strong></td>
+        <td><span class="badge-signal bs-blue">GLP-1</span> <span class="badge-signal bs-gold">GIP</span> <span class="badge-signal bs-green">Glucagon</span></td>
+        <td>Triple Agonist Research Stage</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="doctrine">
+    <div class="doc-label">Protocol X Note</div>
+    <p>This is not a winner board. It is a map of how the architecture evolved — and why each layer was added. The value of each architecture depends on the evidence behind it, the individual using it, and the clinical context it is applied within.</p>
+  </div>
+
+  <!-- ── CARD 8: ASSESSMENT ── -->
+  <div class="section-label" id="card8">Card 8</div>
+  <h2>Protocol X Assessment</h2>
+
+  <div class="strength-grid">
+    <div class="strength-item">
+      <div class="si-label">Signal Strength</div>
+      <div class="si-value high">High</div>
+    </div>
+    <div class="strength-item">
+      <div class="si-label">Evidence Maturity</div>
+      <div class="si-value mod">Moderate</div>
+    </div>
+    <div class="strength-item">
+      <div class="si-label">Architectural Novelty</div>
+      <div class="si-value vhigh">Very High</div>
+    </div>
+    <div class="strength-item">
+      <div class="si-label">Research Status</div>
+      <div class="si-value dev">Developing</div>
+    </div>
+  </div>
+
+  <div class="assessment-card">
+    <div class="ac-header">
+      <div class="ac-header-label">Intelligence Assessment &nbsp;·&nbsp; Retatrutide</div>
+    </div>
+    <div class="ac-body">
+      <div class="assessment-row">
+        <div class="ar-label">Classification</div>
+        <div class="ar-value">Triple Agonist &nbsp; <span class="badge-signal bs-blue">GLP-1</span> <span class="badge-signal bs-gold">GIP</span> <span class="badge-signal bs-green">Glucagon</span></div>
+      </div>
+      <div class="assessment-row">
+        <div class="ar-label">Primary Signals</div>
+        <div class="ar-value">
+          <ul>
+            <li>GLP-1 (Glucagon-Like Peptide-1)</li>
+            <li>GIP (Glucose-Dependent Insulinotropic Polypeptide)</li>
+            <li>Glucagon receptor agonism</li>
+          </ul>
+        </div>
+      </div>
+      <div class="assessment-row">
+        <div class="ar-label">Historical Significance</div>
+        <div class="ar-value">First large-scale clinical investigation of triple-agonist metabolic architecture. Introduced glucagon receptor activation as a third coordinated signal alongside GLP-1 and GIP.</div>
+      </div>
+      <div class="assessment-row">
+        <div class="ar-label">Research Context</div>
+        <div class="ar-value">Active large-scale clinical research program. Results across weight management, metabolic health, and cardiometabolic endpoints continue to be published.</div>
+      </div>
+      <div class="assessment-row">
+        <div class="ar-label">Protocol X View</div>
+        <div class="ar-value">Retatrutide represents the most advanced incretin architecture currently under large-scale investigation. Whether that architecture ultimately translates into superior long-term outcomes remains a question only continued evidence can answer.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BOTTOM LINE ── -->
+  <div class="bottom-line">
+    <div class="bl-label">Bottom Line</div>
+    <p>Semaglutide showed what one signal could do. Tirzepatide showed what two signals could do. Retatrutide asks what three signals can do — and that question is still being answered.</p>
+    <p>The glucagon component is what makes this architecture distinct from everything that came before it. It extends the metabolic intervention from the input side — appetite and glucose regulation — toward the expenditure side, where stored energy is mobilized and burned.</p>
+    <p>Whether that extension produces clinically superior long-term outcomes at scale is the central open question. The early evidence is compelling enough to sustain large-scale investigation. The final answer requires more time and more data.</p>
+    <p>That is not a limitation of the compound. That is how evidence-based research works.</p>
+    <div class="bl-close">Architecture before conclusions.</div>
+    <div class="clarity">Clarity Over Noise.</div>
+  </div>
+
+  <!-- ── EVIDENCE BOUNDARY ── -->
+  <div class="evidence-card" style="margin-top:40px;">
+    <div class="ec-label">Classification — Educational Content Only</div>
+    <div class="evidence-grid">
+      <div class="evidence-item"><div class="ev-dot"></div><span>Educational and research-focused discussion only</span></div>
+      <div class="evidence-item"><div class="ev-dot"></div><span>Not medical advice of any kind</span></div>
+      <div class="evidence-item"><div class="ev-dot"></div><span>No treatment recommendations</span></div>
+      <div class="evidence-item"><div class="ev-dot"></div><span>No dosing guidance or clinical protocols</span></div>
+      <div class="evidence-item"><div class="ev-dot"></div><span>No product or vendor recommendations</span></div>
+      <div class="evidence-item"><div class="ev-dot"></div><span>Individual outcomes vary significantly</span></div>
+    </div>
+  </div>
+
+  <!-- ── INTERNAL LINKS ── -->
+  <div class="internal-links">
+    <div class="il-label">Continue the Research</div>
+    <div class="il-grid">
+      <a href="/blog/understanding-glp-signaling.html">GLP Signaling Foundation</a>
+      <a href="/blog/triple-g-foundation.html">GLP-1, GIP, and Glucagon Overview</a>
+      <a href="/blog/single-dual-triple-agonists.html">Single vs Dual vs Triple Agonists</a>
+      <a href="/blog/semaglutide-glp1-architecture.html">Semaglutide Research Brief</a>
+      <a href="/blog/tirzepatide-dual-agonist-brief.html">Tirzepatide Research Brief</a>
+      <a href="/calculator.html">Protocol X Calculator</a>
+      <a href="/systems.html">Protocol X Pillars Framework</a>
+    </div>
+  </div>
+
+  <!-- ── CLARITY FOOTER ── -->
+  <div class="clarity-footer">
+    <div class="cf-label">Clarity Over Noise</div>
+    <p>This article is educational research content. Retatrutide is an investigational compound currently in clinical research programs. It is not approved by the FDA or equivalent international regulatory bodies as of publication. Nothing in this article constitutes medical advice, a clinical recommendation, or guidance on obtaining or using any investigational compound. Consult a licensed clinician for any clinical application. Regulatory status and availability vary by jurisdiction.</p>
+  </div>
+
+  <!-- ── SERIES NAV ── -->
+  <div class="series-nav">
+    <div class="sn-label">GLP Signaling Architecture — Series</div>
+    <div class="link-grid">
+      <a href="/blog/semaglutide-glp1-architecture.html">01 · Semaglutide</a>
+      <a href="/blog/tirzepatide-dual-agonist-brief.html">02 · Tirzepatide</a>
+      <a href="/blog/retatrutide-triple-agonist-brief.html" class="current">03 · Retatrutide</a>
+      <a href="/blog/">All Education</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── STICKY NAV JS ── -->
+<script>
+  (function() {
+    var navLinks = document.querySelectorAll('.progress-nav a');
+    var sections = [];
+    navLinks.forEach(function(link) {
+      var id = link.getAttribute('href').replace('#','');
+      var el = document.getElementById(id);
+      if (el) sections.push({ id: id, el: el, link: link });
+    });
+    function onScroll() {
+      var scrollY = window.scrollY + 100;
+      var active = null;
+      sections.forEach(function(s) {
+        if (s.el.getBoundingClientRect().top + window.scrollY <= scrollY) active = s;
+      });
+      navLinks.forEach(function(l) { l.classList.remove('active'); });
+      if (active) active.link.classList.add('active');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+<footer>
+  <span>PROTOKOL X &mdash; U.S.-Based Research Resource. International visitors should verify local laws, availability, and medical guidance.</span>
+</footer>
+
+</body>
+</html>
