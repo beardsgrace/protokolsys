@@ -51,6 +51,25 @@
       endDate: "2026-06-15",
       ctaText: "View ION",
       ctaUrl: "/ion/"
+    },
+    {
+      vendor: "axon",
+      eventId: "axon-momentum-event-2026-06-15",
+      active: true,
+      theme: "axon-gold",
+      storageScope: "session",
+      title: "AXON Momentum Event",
+      label: "Current Vendor Event",
+      description: "June 15, 6:00 AM EST \u2013 June 22, 11:59 PM EST",
+      lines: [
+        "10% Off Sitewide",
+        "Free Shipping on Orders $149+",
+        "Earn $10 in Axon Rewards for Every $100 Spent",
+        "Save an Additional 20% with Code AXONMB"
+      ],
+      emphasizedLines: [3],
+      startDateTime: "2026-06-15T06:00:00-05:00",
+      endDateTime: "2026-06-22T23:59:59-05:00"
     }
   ];
 
@@ -134,6 +153,24 @@
   }
 
   function isEventInDateRange(event, now) {
+    if (event.startDateTime || event.endDateTime) {
+      var startDateTime = new Date(event.startDateTime);
+      var endDateTime = new Date(event.endDateTime);
+
+      if (
+        Number.isNaN(startDateTime.getTime()) ||
+        Number.isNaN(endDateTime.getTime()) ||
+        startDateTime.getTime() > endDateTime.getTime()
+      ) {
+        return false;
+      }
+
+      return (
+        now.getTime() >= startDateTime.getTime() &&
+        now.getTime() <= endDateTime.getTime()
+      );
+    }
+
     var start = parseCalendarDate(event.startDate, false);
     var end = parseCalendarDate(event.endDate, true);
 
@@ -148,28 +185,37 @@
     return STORAGE_PREFIX + property + "_" + eventId;
   }
 
-  function readStorage(eventId, property) {
+  function getStorage(event) {
+    return event.storageScope === "session"
+      ? global.sessionStorage
+      : global.localStorage;
+  }
+
+  function readStorage(event, property) {
     try {
-      return global.localStorage.getItem(storageKey(eventId, property)) === "true";
+      return getStorage(event).getItem(storageKey(event.eventId, property)) === "true";
     } catch (error) {
       return false;
     }
   }
 
-  function writeStorage(eventId, property, value) {
+  function writeStorage(event, property, value) {
     try {
-      global.localStorage.setItem(storageKey(eventId, property), String(Boolean(value)));
+      getStorage(event).setItem(
+        storageKey(event.eventId, property),
+        String(Boolean(value))
+      );
     } catch (error) {
       // Storage can be unavailable in private browsing or restricted embeds.
     }
   }
 
   function isDismissed(event) {
-    return readStorage(event.eventId, "dismissed");
+    return readStorage(event, "dismissed");
   }
 
   function isMinimized(event) {
-    return readStorage(event.eventId, "minimized");
+    return readStorage(event, "minimized");
   }
 
   function getActiveEvents(vendor, now) {
@@ -311,6 +357,7 @@
     var list = state.modal.querySelector("[data-px-event-lines]");
     var cta = state.modal.querySelector("[data-px-event-cta]");
 
+    state.root.setAttribute("data-px-event-theme", event.theme || "default");
     label.textContent = event.label;
     title.textContent = event.title;
     description.textContent = event.description;
@@ -324,9 +371,16 @@
       list.appendChild(item);
     });
 
-    cta.textContent = event.ctaText;
-    cta.href = event.ctaUrl;
-    cta.setAttribute("data-event-id", event.eventId);
+    if (event.ctaText && event.ctaUrl) {
+      cta.hidden = false;
+      cta.textContent = event.ctaText;
+      cta.href = event.ctaUrl;
+      cta.setAttribute("data-event-id", event.eventId);
+    } else {
+      cta.hidden = true;
+      cta.removeAttribute("href");
+      cta.removeAttribute("data-event-id");
+    }
   }
 
   function showEvent(event, trigger) {
@@ -337,7 +391,7 @@
     state.currentEvent = event;
     state.previouslyFocused = trigger || document.activeElement;
     renderEvent(event);
-    writeStorage(event.eventId, "minimized", false);
+    writeStorage(event, "minimized", false);
     state.badge.hidden = true;
     state.overlay.setAttribute("aria-hidden", "false");
     setPageLocked(true);
@@ -358,7 +412,7 @@
       return;
     }
 
-    writeStorage(state.currentEvent.eventId, "minimized", true);
+    writeStorage(state.currentEvent, "minimized", true);
     track("minimized", state.currentEvent);
     hideModal({ showBadge: true, restoreFocus: true });
   }
@@ -369,8 +423,8 @@
     }
 
     var dismissedEvent = state.currentEvent;
-    writeStorage(dismissedEvent.eventId, "dismissed", true);
-    writeStorage(dismissedEvent.eventId, "minimized", false);
+    writeStorage(dismissedEvent, "dismissed", true);
+    writeStorage(dismissedEvent, "minimized", false);
     track("dismissed", dismissedEvent);
     hideModal({ showBadge: false, restoreFocus: true });
 

@@ -221,6 +221,10 @@ html.px-event-open body {
   text-decoration: none;
 }
 
+.px-event-cta[hidden] {
+  display: none;
+}
+
 .px-event-button {
   flex: 0 1 auto;
   background: rgba(2, 4, 6, 0.58);
@@ -302,6 +306,65 @@ html.px-event-open body {
 
 .px-event-badge-count[hidden] {
   display: none;
+}
+
+.px-event-system[data-px-event-theme="axon-gold"] .px-event-modal {
+  border-color: rgba(255, 170, 0, 0.72);
+  background:
+    linear-gradient(135deg, rgba(255, 170, 0, 0.08), transparent 38%),
+    linear-gradient(180deg, rgba(7, 14, 24, 0.99), rgba(2, 4, 8, 0.99));
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.68),
+    0 0 34px rgba(255, 170, 0, 0.12);
+}
+
+.px-event-system[data-px-event-theme="axon-gold"] .px-event-modal::before {
+  border-top-color: var(--px-event-gold);
+}
+
+.px-event-system[data-px-event-theme="axon-gold"] .px-event-title,
+.px-event-system[data-px-event-theme="axon-gold"] .px-event-label,
+.px-event-system[data-px-event-theme="axon-gold"] .px-event-close {
+  color: var(--px-event-gold);
+}
+
+.px-event-system[data-px-event-theme="axon-gold"] .px-event-label::before {
+  background: var(--px-event-gold);
+  box-shadow: 0 0 10px rgba(255, 170, 0, 0.7);
+}
+
+.px-event-system[data-px-event-theme="axon-gold"] .px-event-line {
+  padding-left: 39px;
+  border-color: rgba(255, 170, 0, 0.24);
+  color: var(--px-event-text-strong);
+}
+
+.px-event-system[data-px-event-theme="axon-gold"] .px-event-line::before {
+  content: "\2713";
+  top: 10px;
+  left: 14px;
+  width: auto;
+  height: auto;
+  border: 0;
+  background: transparent;
+  color: var(--px-event-gold);
+  font-family: var(--px-event-mono);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.px-event-system[data-px-event-theme="axon-gold"] .px-event-line.is-emphasized {
+  border-color: rgba(255, 170, 0, 0.62);
+  background: linear-gradient(90deg, rgba(255, 170, 0, 0.14), rgba(2, 4, 6, 0.5));
+}
+
+.px-event-system[data-px-event-theme="axon-gold"] .px-event-badge {
+  border-color: rgba(255, 170, 0, 0.55);
+}
+
+.px-event-system[data-px-event-theme="axon-gold"] .px-event-badge-dot {
+  background: var(--px-event-gold);
+  box-shadow: 0 0 10px rgba(255, 170, 0, 0.72);
 }
 
 @media (max-width: 640px) {
