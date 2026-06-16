@@ -1,6 +1,14 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GHVBPQ6KQ4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-GHVBPQ6KQ4');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PROTOKOL X Pillars | PROTOKOL X</title>
@@ -787,6 +795,12 @@ const mDesc   = document.getElementById('modalDesc');
 function openModal(name) {
   const d = peptideData[name];
   if (!d) return;
+  if (typeof gtag === 'function') {
+    gtag('event', 'px_open_pillar_compound', {
+      compound_name: name,
+      page_location: window.location.href
+    });
+  }
   mName.textContent  = name;
   mFound.textContent = d.f + ' · ' + d.p + ' Pillar';
   mTag.textContent   = d.p;
@@ -813,6 +827,28 @@ document.querySelectorAll('.nav-pill').forEach(pill => {
     const f = pill.dataset.pillar;
     document.querySelectorAll('.main-pillar').forEach(s => {
       s.classList.toggle('hidden', f!=='all' && s.dataset.main!==f);
+    });
+    if (typeof gtag === 'function') {
+      gtag('event', 'px_filter_pillar', {
+        pillar_name: f,
+        page_location: window.location.href
+      });
+    }
+  });
+});
+
+document.querySelectorAll('a[href]').forEach(link => {
+  link.addEventListener('click', () => {
+    if (typeof gtag !== 'function') return;
+    const href = link.getAttribute('href') || '';
+    let eventName = 'px_link_click';
+    if (href.indexOf('pillarsv6.netlify.app') !== -1) eventName = 'px_open_pillars_app';
+    else if (href.indexOf('/calculator') === 0) eventName = 'px_open_calculator';
+    else if (href.indexOf('/blog/') === 0) eventName = 'px_open_article';
+    gtag('event', eventName, {
+      link_url: link.href,
+      link_text: (link.textContent || '').trim().slice(0, 80),
+      page_location: window.location.href
     });
   });
 });

@@ -171,5 +171,24 @@
     </section>
   </main>
   <footer>PROTOKOL X - Education and research tools - Updated May 28, 2026</footer>
+  <script>
+    document.querySelectorAll('a[href]').forEach(function(link) {
+      link.addEventListener('click', function() {
+        if (typeof gtag !== 'function') return;
+        var href = link.getAttribute('href') || '';
+        var eventName = 'px_education_click';
+        if (href.indexOf('/tools/nutrition-calculator') === 0) eventName = 'px_open_nutrition_calculator';
+        else if (href.indexOf('/blog/how-to-read-peptide-coa') === 0) eventName = 'px_open_coa_guide';
+        else if (href.indexOf('/#research-pathway') === 0) eventName = 'px_open_research_pathway';
+        else if (href.indexOf('bravermantest.com') !== -1) eventName = 'px_open_braverman_test';
+        else if (href.indexOf('/legal') === 0) eventName = 'px_open_legal';
+        gtag('event', eventName, {
+          link_url: link.href,
+          link_text: (link.textContent || '').trim().slice(0, 80),
+          page_location: window.location.href
+        });
+      });
+    });
+  </script>
 </body>
 </html>

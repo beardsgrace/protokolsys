@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GHVBPQ6KQ4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-GHVBPQ6KQ4');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Understanding GLP Signaling | PROTOKOL X</title>
@@ -516,5 +524,23 @@
   </article>
 
   <footer>PROTOKOL X - Open Brief Archive - PX-OBA-GLP-001</footer>
+  <script>
+    document.querySelectorAll('a[href]').forEach(function(link) {
+      link.addEventListener('click', function() {
+        if (typeof gtag !== 'function') return;
+        var href = link.getAttribute('href') || '';
+        var eventName = 'px_link_click';
+        if (href.indexOf('protokolx-tracker2.netlify.app') !== -1) eventName = 'px_open_tracker';
+        else if (href.indexOf('/calculator') === 0) eventName = 'px_open_calculator';
+        else if (href.indexOf('/pillars') === 0) eventName = 'px_open_pillars';
+        else if (href.indexOf('/blog/') === 0) eventName = 'px_open_article';
+        gtag('event', eventName, {
+          link_url: link.href,
+          link_text: (link.textContent || '').trim().slice(0, 80),
+          page_location: window.location.href
+        });
+      });
+    });
+  </script>
 </body>
 </html>
