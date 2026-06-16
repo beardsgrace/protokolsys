@@ -2,194 +2,230 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.protokolx.com/</loc>
-    <lastmod>2026-06-14</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://www.protokolx.com/about.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.74</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/axon/</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.74</priority>
+  </url>
+  <url>
     <loc>https://www.protokolx.com/blog/</loc>
-    <lastmod>2026-06-14</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://www.protokolx.com/blog/retatrutide-triple-agonist-brief.html</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/blog/tirzepatide-dual-agonist-brief.html</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/blog/semaglutide-glp1-architecture.html</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/blog/single-dual-triple-agonists.html</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/blog/triple-g-foundation.html</loc>
-    <lastmod>2026-06-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/blog/understanding-peptide-testing-beyond-coa.html</loc>
-    <lastmod>2026-06-01</lastmod>
+    <loc>https://www.protokolx.com/blog/bpc-157-tb-500-wolverine-compound.html</loc>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
-    <loc>https://www.protokolx.com/blog/understanding-glp-signaling.html</loc>
-    <lastmod>2026-06-05</lastmod>
+    <loc>https://www.protokolx.com/blog/cjc-1295-ipamorelin-system-research-brief.html</loc>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.78</priority>
   </url>
   <url>
-    <loc>https://www.protokolx.com/blog/cjc-1295-ipamorelin-system-research-brief.html</loc>
-    <lastmod>2026-06-04</lastmod>
+    <loc>https://www.protokolx.com/blog/how-to-read-peptide-coa.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/blog/how-to-use-the-protokol-x-calculator.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/blog/protocol-tracker.html</loc>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
   <url>
     <loc>https://www.protokolx.com/blog/protokol-x-pillars-framework.html</loc>
-    <lastmod>2026-06-01</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.76</priority>
+    <priority>0.78</priority>
   </url>
   <url>
-    <loc>https://www.protokolx.com/blog/how-to-use-the-protokol-x-calculator.html</loc>
-    <lastmod>2026-06-01</lastmod>
+    <loc>https://www.protokolx.com/blog/retatrutide-triple-agonist-brief.html</loc>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.76</priority>
+    <priority>0.78</priority>
   </url>
   <url>
-    <loc>https://www.protokolx.com/blog/protocol-tracker.html</loc>
-    <lastmod>2026-06-01</lastmod>
+    <loc>https://www.protokolx.com/blog/semaglutide-glp1-agonist.html</loc>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.76</priority>
+    <priority>0.78</priority>
   </url>
   <url>
-    <loc>https://www.protokolx.com/blog/bpc-157-tb-500-wolverine-compound.html</loc>
-    <lastmod>2026-05-27</lastmod>
+    <loc>https://www.protokolx.com/blog/semaglutide-glp1-architecture.html</loc>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.76</priority>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/blog/single-dual-triple-agonists.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/blog/tirzepatide-dual-agonist-brief.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/blog/triple-g-foundation.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/blog/understanding-glp-signaling.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/blog/understanding-peptide-testing-beyond-coa.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
   </url>
   <url>
     <loc>https://www.protokolx.com/blog/why-lab-work-matters.html</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.76</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/blog/how-to-read-peptide-coa.html</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.76</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/systems.html</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.88</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/systems-body.html</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.86</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/systems-mind.html</loc>
-    <lastmod>2026-05-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/systems-longevity.html</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/vendors/ion-peptide-discount.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/vendors/swisschems-vendor-profile.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/vendors/peptipura-vendor-profile.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.86</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/vendors/kraken-pep-vendor-profile.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.82</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/vendors/ramp-peptides-vendor-profile.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.84</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/vendors/petratide-science-vendor-profile.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.87</priority>
+    <priority>0.78</priority>
   </url>
   <url>
     <loc>https://www.protokolx.com/calculator.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.protokolx.com/supplies.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.72</priority>
+    <priority>0.74</priority>
   </url>
   <url>
     <loc>https://www.protokolx.com/education.html</loc>
-    <lastmod>2026-05-10</lastmod>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.74</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/legal.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.74</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/pillars/</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/supplies.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.74</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/systems-body.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.74</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/systems-longevity.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.74</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/systems-mind.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.74</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/systems.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/tools/nutrition-calculator/</loc>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.74</priority>
   </url>
   <url>
     <loc>https://www.protokolx.com/trust-index.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.78</priority>
+    <priority>0.74</priority>
   </url>
   <url>
-    <loc>https://www.protokolx.com/about.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.76</priority>
+    <loc>https://www.protokolx.com/vendors/axon-vendor-profile.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
   </url>
   <url>
-    <loc>https://www.protokolx.com/legal.html</loc>
-    <lastmod>2026-05-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <loc>https://www.protokolx.com/vendors/axon.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/ion-peptide-discount.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/kraken-pep-vendor-profile.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/peptipura-vendor-profile.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/petratide-science-vendor-profile.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/ramp-peptides-vendor-profile.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/swisschems-vendor-profile.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
   </url>
 </urlset>
