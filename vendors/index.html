@@ -11,7 +11,7 @@
   <title>Protokol X Vendor Intelligence Index</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #05070b;
@@ -30,6 +30,7 @@
       --muted: #788aa5;
       --dim: #42536a;
       --white: #edf4ff;
+      --hairline: rgba(130,162,199,0.13);
     }
 
     * { box-sizing: border-box; }
@@ -45,10 +46,10 @@
       font-family: 'Inter', system-ui, sans-serif;
       line-height: 1.6;
       background:
-        radial-gradient(circle at 50% -18%, rgba(46,124,246,0.2), transparent 34rem),
-        radial-gradient(circle at 92% 14%, rgba(240,180,41,0.1), transparent 24rem),
-        linear-gradient(rgba(46,124,246,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(46,124,246,0.035) 1px, transparent 1px),
+        radial-gradient(circle at 52% -16%, rgba(46,124,246,0.15), transparent 34rem),
+        radial-gradient(circle at 92% 14%, rgba(240,180,41,0.075), transparent 24rem),
+        linear-gradient(rgba(46,124,246,0.024) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46,124,246,0.024) 1px, transparent 1px),
         var(--bg);
       background-size: auto, auto, 44px 44px, 44px 44px, auto;
       -webkit-font-smoothing: antialiased;
@@ -61,8 +62,8 @@
       pointer-events: none;
       background:
         linear-gradient(180deg, rgba(5,7,11,0.18), rgba(5,7,11,0.84)),
-        radial-gradient(circle at 18% 28%, rgba(46,124,246,0.08), transparent 22rem),
-        radial-gradient(circle at 82% 74%, rgba(240,180,41,0.065), transparent 26rem);
+        radial-gradient(circle at 18% 28%, rgba(46,124,246,0.055), transparent 22rem),
+        radial-gradient(circle at 82% 74%, rgba(240,180,41,0.045), transparent 26rem);
       z-index: -1;
     }
 
@@ -81,8 +82,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 18px;
-      padding: 0 0 18px;
-      border-bottom: 1px solid rgba(46,124,246,0.2);
+      padding: 0 0 20px;
+      border-bottom: 1px solid var(--hairline);
     }
 
     .brand,
@@ -91,13 +92,11 @@
     .metric-label,
     .brief-rank,
     .brief-tier,
-    .brief-status,
-    .brief-link,
-    .tag-row,
+    .score-lockup span,
     footer {
       font-family: 'JetBrains Mono', monospace;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.13em;
     }
 
     .brand {
@@ -105,7 +104,7 @@
       font-size: 12px;
       font-weight: 700;
       text-decoration: none;
-      text-shadow: 0 0 18px rgba(46,124,246,0.35);
+      text-shadow: 0 0 18px rgba(46,124,246,0.24);
     }
 
     .topbar span {
@@ -117,9 +116,9 @@
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) 360px;
-      gap: 28px;
+      gap: 30px;
       align-items: stretch;
-      padding: 52px 0 34px;
+      padding: 64px 0 38px;
     }
 
     .hero-panel,
@@ -127,15 +126,15 @@
     .brief-card,
     .doctrine-strip,
     .disclosure {
-      border: 1px solid rgba(46,124,246,0.2);
-      border-radius: 18px;
+      border: 1px solid var(--hairline);
+      border-radius: 12px;
       background:
-        linear-gradient(145deg, rgba(17,24,39,0.96), rgba(7,10,18,0.98));
-      box-shadow: 0 24px 78px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.035);
+        linear-gradient(145deg, rgba(17,24,39,0.94), rgba(7,10,18,0.98));
+      box-shadow: 0 22px 70px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.028);
     }
 
     .hero-panel {
-      padding: clamp(26px, 5vw, 44px);
+      padding: clamp(32px, 5vw, 56px);
       position: relative;
       overflow: hidden;
     }
@@ -145,38 +144,40 @@
       position: absolute;
       inset: auto 0 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(46,124,246,0.72), rgba(240,180,41,0.58), transparent);
+      background: linear-gradient(90deg, transparent, rgba(46,124,246,0.58), rgba(240,180,41,0.44), transparent);
     }
 
     .kicker {
       color: var(--gold);
       font-size: 11px;
       font-weight: 700;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     h1 {
       max-width: 760px;
       margin: 0;
       color: var(--white);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(42px, 8vw, 82px);
-      line-height: 0.94;
-      letter-spacing: -0.055em;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: clamp(42px, 7vw, 76px);
+      font-weight: 900;
+      line-height: 0.98;
+      letter-spacing: -0.045em;
     }
 
     .hero-copy {
       max-width: 720px;
-      margin: 22px 0 0;
+      margin: 26px 0 0;
       color: var(--text);
-      font-size: clamp(16px, 2vw, 19px);
+      font-size: clamp(16px, 2vw, 18px);
+      line-height: 1.72;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 28px;
+      margin-top: 34px;
     }
 
     .button {
@@ -185,15 +186,14 @@
       justify-content: center;
       min-height: 44px;
       padding: 12px 18px;
-      border-radius: 999px;
+      border-radius: 6px;
       border: 1px solid rgba(46,124,246,0.32);
       background: rgba(46,124,246,0.12);
       color: var(--white);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 13px;
       font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      letter-spacing: 0;
       text-decoration: none;
       transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     }
@@ -201,7 +201,7 @@
     .button.primary {
       background: var(--blue);
       border-color: var(--blue);
-      box-shadow: 0 14px 34px rgba(46,124,246,0.24);
+      box-shadow: 0 12px 30px rgba(46,124,246,0.22);
     }
 
     .button:hover,
@@ -211,11 +211,11 @@
     }
 
     .score-panel {
-      padding: 24px;
+      padding: 28px;
       display: grid;
       align-content: center;
       background:
-        linear-gradient(145deg, rgba(240,180,41,0.105), rgba(46,124,246,0.065)),
+        linear-gradient(145deg, rgba(240,180,41,0.09), rgba(46,124,246,0.052)),
         rgba(9,13,22,0.96);
     }
 
@@ -228,8 +228,8 @@
     .metric-number {
       margin-top: 10px;
       color: var(--gold);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 78px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 76px;
       font-weight: 700;
       line-height: 0.9;
       letter-spacing: -0.06em;
@@ -239,6 +239,7 @@
       margin: 14px 0 0;
       color: var(--muted);
       font-size: 14px;
+      line-height: 1.7;
     }
 
     .doctrine-strip {
@@ -246,19 +247,18 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 1px;
       overflow: hidden;
-      margin: 0 0 24px;
-      background: rgba(46,124,246,0.18);
+      margin: 2px 0 34px;
+      background: rgba(46,124,246,0.12);
     }
 
     .doctrine-strip span {
       padding: 16px;
       color: var(--gold);
       background: rgba(9,13,22,0.94);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 13px;
       font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      letter-spacing: 0;
       text-align: center;
     }
 
@@ -267,14 +267,15 @@
       justify-content: space-between;
       gap: 24px;
       align-items: end;
-      margin: 36px 0 18px;
+      margin: 44px 0 22px;
     }
 
     .section-head h2 {
       margin: 0;
       color: var(--white);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(26px, 4vw, 42px);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
       letter-spacing: -0.035em;
     }
 
@@ -282,23 +283,24 @@
       max-width: 430px;
       margin: 0;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 15px;
+      line-height: 1.65;
     }
 
     .brief-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+      gap: 18px;
     }
 
     .brief-card {
       position: relative;
       display: flex;
       flex-direction: column;
-      min-height: 410px;
-      padding: 22px;
+      min-height: 398px;
+      padding: 24px;
       overflow: hidden;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
     }
 
     .brief-card::before {
@@ -306,16 +308,16 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(135deg, rgba(46,124,246,0.08), transparent 46%),
-        radial-gradient(circle at 85% 12%, rgba(240,180,41,0.1), transparent 12rem);
-      opacity: 0.78;
+        linear-gradient(135deg, rgba(46,124,246,0.055), transparent 48%),
+        radial-gradient(circle at 85% 12%, rgba(240,180,41,0.07), transparent 12rem);
+      opacity: 0.72;
       pointer-events: none;
     }
 
     .brief-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(46,124,246,0.45);
-      box-shadow: 0 26px 86px rgba(0,0,0,0.34);
+      transform: translateY(-2px);
+      border-color: rgba(46,124,246,0.38);
+      box-shadow: 0 28px 82px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04);
     }
 
     .brief-card > * {
@@ -328,18 +330,18 @@
       justify-content: space-between;
       gap: 12px;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .brief-rank {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
       color: #07101b;
-      background: linear-gradient(135deg, var(--gold), #ffe18a);
+      background: linear-gradient(135deg, var(--gold), #f8d36d);
       font-size: 12px;
       font-weight: 700;
       box-shadow: 0 0 26px rgba(240,180,41,0.2);
@@ -348,9 +350,9 @@
     .brief-tier {
       color: var(--blue);
       border: 1px solid rgba(46,124,246,0.28);
-      border-radius: 999px;
-      background: var(--blue-soft);
-      padding: 6px 10px;
+      border-radius: 4px;
+      background: rgba(46,124,246,0.085);
+      padding: 5px 9px;
       font-size: 10px;
       font-weight: 700;
     }
@@ -359,20 +361,21 @@
       display: flex;
       align-items: baseline;
       gap: 6px;
-      margin: 0 0 14px;
+      margin: 2px 0 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(130,162,199,0.1);
     }
 
     .score-lockup strong {
       color: var(--gold);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 56px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 58px;
       line-height: 0.9;
-      letter-spacing: -0.06em;
+      letter-spacing: -0.055em;
     }
 
     .score-lockup span {
       color: var(--dim);
-      font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
       font-weight: 700;
     }
@@ -380,23 +383,27 @@
     .brief-card h2 {
       margin: 0;
       color: var(--white);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 27px;
-      line-height: 1.05;
-      letter-spacing: -0.035em;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
     }
 
     .brief-card p {
       margin: 14px 0 0;
       color: var(--text);
-      font-size: 14px;
+      font-size: 14.5px;
+      line-height: 1.66;
     }
 
     .brief-status {
       margin: 18px 0 0;
       color: var(--green);
-      font-size: 10px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 13px;
       font-weight: 700;
+      letter-spacing: 0;
     }
 
     .brief-card[data-tier="Tier 2"] .brief-status {
@@ -410,18 +417,35 @@
     .tag-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
-      margin: 18px 0 22px;
+      flex-direction: column;
+      gap: 6px;
+      margin: 18px 0 24px;
+      padding: 14px 0 0;
+      border-top: 1px solid rgba(130,162,199,0.1);
     }
 
     .tag-row span {
-      border: 1px solid rgba(46,124,246,0.18);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.025);
+      border: 0;
+      border-radius: 0;
+      background: transparent;
       color: var(--muted);
-      padding: 5px 8px;
-      font-size: 9px;
-      font-weight: 700;
+      padding: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .tag-row span::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 12px rgba(46,124,246,0.35);
     }
 
     .brief-link {
@@ -431,20 +455,23 @@
       justify-content: center;
       min-height: 42px;
       border: 1px solid rgba(46,124,246,0.34);
-      border-radius: 999px;
-      background: rgba(46,124,246,0.13);
+      border-radius: 6px;
+      background: rgba(46,124,246,0.105);
       color: var(--white);
-      font-size: 10px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 13px;
       font-weight: 700;
+      letter-spacing: 0;
       text-decoration: none;
       transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     }
 
     .disclosure {
-      margin-top: 28px;
-      padding: 22px;
+      margin-top: 34px;
+      padding: 24px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 14px;
+      line-height: 1.75;
     }
 
     .disclosure strong {
@@ -458,7 +485,7 @@
       flex-wrap: wrap;
       margin-top: 38px;
       padding-top: 20px;
-      border-top: 1px solid rgba(46,124,246,0.18);
+      border-top: 1px solid var(--hairline);
       color: var(--dim);
       font-size: 10px;
     }
