@@ -228,4 +228,52 @@
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
   </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/swisschems-intelligence-brief.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/ion-peptide-intelligence-brief-v2.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/axon-peptide-intelligence-brief-v2.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/petratide-science-intelligence-brief.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/peptipura-intelligence-brief.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/ramp-peptides-intelligence-brief-v2.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/vendors/kraken-pep-intelligence-brief-v2.html</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.86</priority>
+  </url>
 </urlset>

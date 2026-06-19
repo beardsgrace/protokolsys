@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Peptipura — Vendor Intelligence Brief | Protokol X</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:        #0b0f1a;
+    --navy-2:      #0f1522;
+    --navy-card:   #131926;
+    --navy-raised: #18202f;
+    --blue:        #2e7cf6;
+    --blue-dim:    rgba(46,124,246,0.15);
+    --blue-line:   rgba(46,124,246,0.35);
+    --gold:        #f0b429;
+    --gold-dim:    rgba(240,180,41,0.12);
+    --text:        #c8d4e8;
+    --text-secondary: #6e809a;
+    --text-muted:  #3d4f66;
+    --white:       #e8edf5;
+    --red-dim:     rgba(224,76,76,0.12);
+    --red:         #e04c4c;
+    --green-dim:   rgba(52,199,128,0.12);
+    --green:       #34c780;
+    --amber:       #f59e0b;
+    --amber-dim:   rgba(245,158,11,0.12);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background: var(--navy); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  .page { max-width: 780px; margin: 0 auto; padding: 48px 20px 96px; }
+
+  .header { border-bottom: 1px solid var(--blue-line); padding-bottom: 32px; margin-bottom: 40px; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); }
+  .classification { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(240,180,41,0.25); padding: 4px 12px; border-radius: 4px; }
+  .vendor-name { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 6vw, 42px); font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px; }
+  .vendor-sub { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); letter-spacing: 0.08em; margin-bottom: 20px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 4px; border: 1px solid var(--blue-line); color: var(--blue); background: var(--blue-dim); }
+  .meta-pill.gold  { border-color: rgba(240,180,41,0.3); color: var(--gold); background: var(--gold-dim); }
+  .meta-pill.green { border-color: rgba(52,199,128,0.3); color: var(--green); background: var(--green-dim); }
+  .meta-pill.amber { border-color: rgba(245,158,11,0.3); color: var(--amber); background: var(--amber-dim); }
+
+  .bluf { background: var(--navy-2); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 20px 22px; margin-bottom: 40px; }
+  .bluf-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .bluf p { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+  .card { background: var(--navy-card); border: 1px solid rgba(46,124,246,0.12); border-radius: 10px; margin-bottom: 16px; overflow: hidden; transition: border-color 0.2s ease; }
+  .card:hover { border-color: rgba(46,124,246,0.28); }
+  .card-header { display: flex; align-items: center; gap: 14px; padding: 18px 22px; border-bottom: 1px solid rgba(46,124,246,0.1); cursor: pointer; user-select: none; }
+  .card-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-dim); border: 1px solid var(--blue-line); width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); flex: 1; }
+  .card-chevron { color: var(--text-muted); font-size: 18px; transition: transform 0.2s ease; flex-shrink: 0; }
+  .card.open .card-chevron { transform: rotate(180deg); }
+  .card-body { display: none; padding: 22px; }
+  .card.open .card-body { display: block; }
+
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; }
+  .field-value { font-size: 14px; color: var(--text); line-height: 1.65; }
+  .field-value strong { color: var(--white); font-weight: 600; }
+  .blue-divider { height: 1px; background: linear-gradient(90deg, var(--blue-line), transparent); margin: 18px 0; }
+
+  .signal-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .signal-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); line-height: 1.55; }
+  .signal-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .signal-dot.blue  { background: var(--blue); }
+  .signal-dot.gold  { background: var(--gold); }
+  .signal-dot.green { background: var(--green); }
+  .signal-dot.red   { background: var(--red); }
+  .signal-dot.amber { background: var(--amber); }
+
+  .tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; vertical-align: middle; }
+  .tag.green { background: var(--green-dim); color: var(--green); }
+  .tag.gold  { background: var(--gold-dim); color: var(--gold); }
+  .tag.blue  { background: var(--blue-dim); color: var(--blue); }
+  .tag.amber { background: var(--amber-dim); color: var(--amber); }
+
+  /* heritage banner */
+  .heritage-block { background: rgba(46,124,246,0.06); border: 1px solid rgba(46,124,246,0.22); border-radius: 8px; padding: 16px 18px; margin: 14px 0; }
+  .heritage-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+  .heritage-block p { font-size: 13px; color: var(--text); line-height: 1.65; }
+
+  .score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); width: 220px; flex-shrink: 0; line-height: 1.3; }
+  .score-weight { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); display: block; }
+  .score-bar-wrap { flex: 1; height: 5px; background: rgba(46,124,246,0.1); border-radius: 3px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 3px; background: var(--gold); }
+  .score-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--gold); width: 36px; text-align: right; flex-shrink: 0; }
+
+  .total-score { display: flex; align-items: center; justify-content: space-between; background: var(--navy-raised); border: 1px solid rgba(240,180,41,0.25); border-radius: 8px; padding: 18px 22px; margin-top: 22px; }
+  .total-score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary); }
+  .total-tier { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); margin-top: 4px; letter-spacing: 0.08em; }
+  .total-score-num { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; text-align: right; }
+  .total-score-denom { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+
+  .assessment-block { background: var(--navy-raised); border-radius: 8px; padding: 16px 18px; margin-bottom: 12px; }
+  .assessment-block-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
+  .assessment-block-title.green { color: var(--green); }
+  .assessment-block-title.gold  { color: var(--gold); }
+
+  .callout { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 13px; line-height: 1.6; }
+  .callout.green { background: var(--green-dim); border: 1px solid rgba(52,199,128,0.2); color: var(--green); }
+  .callout strong { font-weight: 700; }
+
+  .confidence { display: flex; align-items: center; gap: 6px; margin: 16px 0; }
+  .conf-pip { flex: 1; height: 6px; border-radius: 3px; background: rgba(46,124,246,0.1); }
+  .conf-pip.active.gold  { background: var(--gold); }
+  .conf-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; white-space: nowrap; color: var(--gold); }
+
+  .cta-block { background: linear-gradient(135deg, var(--navy-raised) 0%, rgba(46,124,246,0.08) 100%); border: 1px solid var(--blue-line); border-radius: 10px; padding: 24px; margin-top: 40px; text-align: center; }
+  .cta-block p { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 14px; }
+  .cta-btn { display: inline-block; background: var(--blue); color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; padding: 12px 28px; border-radius: 6px; text-decoration: none; transition: background 0.2s ease, transform 0.2s ease; }
+  .cta-btn:hover { background: #1a6ae0; transform: translateY(-1px); }
+  .cta-note { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; }
+
+  .bottom-line { background: var(--navy-2); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 18px 22px; margin-top: 32px; }
+  .bottom-line-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .bottom-line p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; font-style: italic; }
+
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--text-muted); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .footer-brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+  .footer-doctrine { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
+  .footer-disclosure { width: 100%; font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-top: 8px; }
+
+
+
+  /* Protokol X visual alignment layer */
+  body {
+    background:
+      radial-gradient(circle at 50% -20%, rgba(46,124,246,0.16), transparent 34rem),
+      linear-gradient(rgba(46,124,246,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,124,246,0.035) 1px, transparent 1px),
+      #05070b;
+    background-size: auto, 44px 44px, 44px 44px, auto;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.035), transparent 16%, transparent 84%, rgba(240,180,41,0.035)),
+      radial-gradient(circle at 12% 18%, rgba(52,199,128,0.07), transparent 18rem);
+    mix-blend-mode: screen;
+    opacity: 0.75;
+  }
+
+  .page { max-width: 980px; padding: 28px 20px 96px; position: relative; }
+  .top-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+  .back-link,
+  .px-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .back-link { color: var(--blue); text-decoration: none; }
+  .back-link:hover { color: var(--white); }
+  .px-mark { color: var(--text-muted); text-align: right; }
+
+  .header {
+    position: relative;
+    background: linear-gradient(145deg, rgba(13,19,32,0.94), rgba(4,7,12,0.98));
+    border: 1px solid rgba(46,124,246,0.28);
+    border-radius: 14px;
+    padding: 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 22px 70px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.04);
+    overflow: hidden;
+  }
+  .header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(120deg, rgba(46,124,246,0.14), transparent 38%),
+      radial-gradient(circle at 82% 24%, rgba(240,180,41,0.12), transparent 18rem),
+      radial-gradient(circle at 14% 78%, rgba(52,199,128,0.08), transparent 16rem);
+    pointer-events: none;
+  }
+  .header > * { position: relative; z-index: 1; }
+  .vendor-name { font-size: clamp(34px, 7vw, 64px); letter-spacing: -0.045em; text-transform: uppercase; }
+  .vendor-sub { color: #8798b3; }
+  .meta-row { margin-top: 22px; }
+  .meta-pill { border-radius: 999px; background: rgba(46,124,246,0.1); }
+  .meta-pill.green { box-shadow: 0 0 22px rgba(52,199,128,0.1); }
+
+  .hero-score {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 18px;
+    margin-top: 26px;
+    padding: 20px;
+    border: 1px solid rgba(240,180,41,0.34);
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(240,180,41,0.13), rgba(46,124,246,0.06));
+  }
+  .hero-score-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 7px;
+  }
+  .hero-score-copy { color: var(--text-secondary); font-size: 13px; max-width: 58ch; }
+  .hero-score-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 10vw, 82px);
+    font-weight: 700;
+    line-height: 0.85;
+    color: var(--gold);
+    text-align: right;
+  }
+  .hero-score-denom {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 8px;
+  }
+
+  .bluf, .bottom-line {
+    border-radius: 12px;
+    border: 1px solid rgba(46,124,246,0.24);
+    border-left: 4px solid var(--blue);
+    background: rgba(9,14,24,0.92);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.28);
+  }
+  .bottom-line { border-color: rgba(240,180,41,0.24); border-left-color: var(--gold); }
+  .card {
+    background: linear-gradient(180deg, rgba(19,25,38,0.92), rgba(9,14,24,0.92));
+    border-color: rgba(46,124,246,0.18);
+    border-radius: 12px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.22);
+  }
+  .card:hover { border-color: rgba(46,124,246,0.48); transform: translateY(-1px); }
+  .card-header { min-height: 76px; }
+  .card-num {
+    color: #06101d;
+    background: linear-gradient(135deg, var(--gold), #d99618);
+    border: 0;
+    box-shadow: 0 0 26px rgba(240,180,41,0.16);
+  }
+  .card-title { font-size: 16px; letter-spacing: 0.01em; }
+  .score-bar-wrap { background: rgba(255,255,255,0.08); }
+  .score-bar { background: linear-gradient(90deg, #b98519, var(--gold), #ffe199); }
+  .total-score {
+    background: linear-gradient(135deg, rgba(240,180,41,0.12), rgba(11,15,26,0.9));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .heritage-block {
+    border-radius: 12px;
+    border-color: rgba(46,124,246,0.34);
+    border-left: 4px solid var(--blue);
+    background: linear-gradient(135deg, rgba(46,124,246,0.12), rgba(9,14,24,0.95));
+    box-shadow: 0 18px 48px rgba(0,0,0,0.22);
+  }
+  .callout.green {
+    border-radius: 12px;
+    border-left: 4px solid var(--green);
+    background: rgba(18,25,38,0.92);
+  }
+  .assessment-block {
+    border: 1px solid rgba(46,124,246,0.14);
+    background: rgba(18,25,38,0.9);
+  }
+  .assessment-block-title.green { color: #42d991; }
+  .assessment-block-title.gold { color: var(--gold); }
+  .confidence {
+    padding: 14px;
+    border: 1px solid rgba(240,180,41,0.24);
+    border-radius: 10px;
+    background: rgba(240,180,41,0.06);
+  }
+  .cta-block {
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(46,124,246,0.16), rgba(5,7,11,0.96));
+    box-shadow: 0 20px 60px rgba(0,0,0,0.34);
+  }
+  .cta-btn {
+    border-radius: 999px;
+    background: linear-gradient(135deg, #4f96ff, var(--blue));
+    box-shadow: 0 12px 34px rgba(46,124,246,0.32);
+  }
+  .cta-btn:hover { background: linear-gradient(135deg, #76adff, #2e7cf6); }
+  footer { border-top-color: rgba(46,124,246,0.22); }
+
+  @media (max-width: 640px) {
+    .page { padding: 22px 14px 72px; }
+    .top-nav { align-items: flex-start; flex-direction: column; }
+    .px-mark { text-align: left; }
+    .header { padding: 22px 18px; }
+    .header-top { align-items: flex-start; }
+    .hero-score { grid-template-columns: 1fr; }
+    .hero-score-num, .hero-score-denom { text-align: left; }
+    .card-header { padding: 16px; }
+    .card-body { padding: 18px 16px; }
+    .score-row { align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+    .score-label { width: calc(100% - 48px); }
+    .score-bar-wrap { order: 3; flex-basis: 100%; }
+    .conf-label { white-space: normal; }
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 28px 16px 72px; }
+    .score-label { width: 160px; font-size: 9px; }
+    .total-score-num { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="top-nav" aria-label="Vendor brief navigation">
+    <a class="back-link" href="index.html" aria-label="Back to Vendor Index">&larr; Back to Vendor Index</a>
+    <div class="px-mark">Protokol X // Vendor Intelligence Brief // Clarity Over Noise</div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="brand">Protokol X // Vendor Intelligence</div>
+      <div class="classification">Research Use Only</div>
+    </div>
+    <div class="vendor-name">Peptipura</div>
+    <div class="vendor-sub">peptipura.net &nbsp;·&nbsp; Brief Date: June 2026 &nbsp;·&nbsp; Revision: 1.0</div>
+    <div class="meta-row">
+      <span class="meta-pill">US-Based · San Francisco</span>
+      <span class="meta-pill">Founder-Operated</span>
+      <span class="meta-pill">Free USPS Priority Shipping</span>
+      <span class="meta-pill">Bilingual — EN / ES</span>
+      <span class="meta-pill green">formerly Bridge Research</span>
+      <span class="meta-pill gold">Rank 5 · Tier 2 · 8.1 / 10</span>
+    </div>
+    <div class="hero-score" aria-label="Protokol X Trust Score">
+      <div>
+        <div class="hero-score-label">Protokol X Trust Score</div>
+        <div class="hero-score-copy">Rank 5 &middot; Tier 2 &middot; 8.1 / 10. Founder-operated boutique profile with Bridge Research heritage, open COA access, and high accountability signals.</div>
+      </div>
+      <div>
+        <div class="hero-score-num">8.1</div>
+        <div class="hero-score-denom">/ 10</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLUF -->
+  <div class="bluf">
+    <div class="bluf-label">BLUF — Bottom Line Up Front</div>
+    <p>This assessment evaluates publicly available evidence, documentation, verification architecture, operational transparency, and community signals for Peptipura. Peptipura is a founder-operated US vendor — run by Angela, based in San Francisco — built explicitly around the quality gaps she experienced as a researcher sourcing peptides in the market. The brand represents a rebrand of the former Bridge Research operation, providing meaningful operational history beyond the Peptipura domain registration date. Documentation posture is strong for a boutique operation: publicly accessible Lab Results page, third-party testing stated across the catalog, clean RUO compliance language, and a full policy suite. Operational heritage combined with founder transparency and multilingual support places Peptipura in a distinct position in the series. Watch items center on limited independent community review volume and the need to build Peptipura-branded public documentation record. Protokol X evaluates evidence, not intent. Architecture before conclusions. Questions before answers.</p>
+  </div>
+
+  <!-- CARD 1 -->
+  <div class="card open" id="card-1">
+    <div class="card-header" onclick="toggleCard('card-1')">
+      <div class="card-num">01</div>
+      <div class="card-title">Executive Summary</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="heritage-block">
+        <div class="heritage-label">Operational Heritage — Bridge Research</div>
+        <p>Peptipura operates as a rebrand of the former Bridge Research vendor operation, providing an operational track record estimated at over one year prior to the Peptipura brand launch. This is a material contextual differentiator: unlike other newer vendors in the series whose domain age equals their operational age, Peptipura's founder carries prior vendor operating experience, established sourcing relationships, and fulfillment history under the Bridge Research identity. The rebrand represents a brand evolution and documentation upgrade, not a cold start. This heritage is incorporated into the operational maturity assessment throughout this brief.</p>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Who They Are</div>
+        <div class="field-value">Peptipura is a US-based, founder-operated research compound vendor run by <strong>Angela</strong>, based in San Francisco (415 area code confirmed via contact page). The brand was built from Angela's direct experience as a frustrated researcher — inconsistent quality, missing documentation, delayed shipments, and disappearing vendors. Peptipura's stated pillars: Quality and Affordability, Clear Third-Party Testing, Accessible COAs, Consistent Clean Labeling, RUO Compliance, Bilingual Support (English and Spanish), Free USPS Priority Mail shipping (often within 12 hours), and Honest Communication. WooCommerce-powered WordPress storefront. Publicly accessible Lab Results page at peptipura.net/coas/. Phone support available: (415) 323-9395.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Primary Strengths</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Operational heritage — Bridge Research</strong> — over one year of vendor operating experience carried through rebrand; not a first-time operation</li>
+          <li><span class="signal-dot green"></span><strong>Publicly accessible Lab Results page</strong> — peptipura.net/coas/ is open without account login; independent COA review requires no registration barrier</li>
+          <li><span class="signal-dot green"></span><strong>Third-party testing stated across catalog</strong> — consistent documentation standard applied to all products, not select SKUs</li>
+          <li><span class="signal-dot green"></span><strong>Free USPS Priority Mail shipping on all domestic orders</strong> — no minimum threshold; strongest included shipping value in the series</li>
+          <li><span class="signal-dot green"></span><strong>Often ships within 12 hours</strong> — stated fulfillment speed is the fastest declared window in the series</li>
+          <li><span class="signal-dot green"></span><strong>Phone support available</strong> — (415) 323-9395; real phone number is a rare transparency signal in this vendor category</li>
+          <li><span class="signal-dot green"></span><strong>Bilingual support (English and Spanish)</strong> — differentiating accessibility feature serving a broader researcher population</li>
+          <li><span class="signal-dot green"></span><strong>Complete policy suite</strong> — Terms & Conditions, Return Policy, Shipping & Delivery, Privacy Policy all publicly accessible</li>
+          <li><span class="signal-dot green"></span><strong>Founder identity fully disclosed</strong> — Angela is named, photographed, and accountable; transparent personal accountability uncommon at this vendor scale</li>
+          <li><span class="signal-dot blue"></span>Curated specialty catalog including SLU-PP-32, SNAP-8, Cagrilintide, KPV — compounds not universally available</li>
+          <li><span class="signal-dot blue"></span>Active social presence: Facebook, Twitter/X, YouTube, Instagram, Pinterest</li>
+          <li><span class="signal-dot blue"></span>Return policy published and accessible — rare in the RUO vendor category</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Notable Limitations</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot amber"></span>Limited independent Peptipura-branded community review volume — brand is newer even if the operator is not; public review record under Peptipura name is still building</li>
+          <li><span class="signal-dot amber"></span>Bridge Research operational history is not independently documented in publicly searchable community platforms under that name at time of brief — heritage is known through Protokol X context, not widely verified in public record</li>
+          <li><span class="signal-dot amber"></span>Testing methodology specifics (which lab, which methods, endotoxin inclusion) not confirmed in available public data — Lab Results page requires review for methodology detail</li>
+          <li><span class="signal-dot amber"></span>Boutique catalog — curated selection rather than broad coverage; researchers needing specific compounds not in Peptipura's range must supplement</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Best Fit Audience</div>
+        <div class="field-value">Researchers who value direct founder accountability and communication above all else. Spanish-speaking researchers who need bilingual support. Price-conscious researchers who want free Priority Mail shipping with no minimum. Those sourcing specialty compounds (SLU-PP-32, SNAP-8, Cagrilintide, KPV) not universally available. Researchers who want to call their vendor directly — a real phone number is rare in this category. Protokol X Rank 5, Tier 2 reflects strong boutique positioning with developing public documentation record under the Peptipura brand.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card" id="card-2">
+    <div class="card-header" onclick="toggleCard('card-2')">
+      <div class="card-num">02</div>
+      <div class="card-title">Verification Architecture</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="callout green">
+        <strong>Key differentiator in the series:</strong> Peptipura's Lab Results page (peptipura.net/coas/) is publicly accessible without requiring account registration — placing it alongside Axon's AxonVerified portal in the "open access" documentation tier, and ahead of Petratide and Ramp which require login for full documentation access.
+      </div>
+      <div class="field">
+        <div class="field-label">Testing Commitment</div>
+        <div class="field-value">Third-party testing is stated as a core pillar across the full Peptipura catalog — "Clear Third-party Testing" and "Accessible Certificates of Analysis" are explicitly listed in the founder's stated operating standards. COAs are described as available and downloadable from the Lab Results page. The site's Terms & Conditions note: "Certificates of Analysis (CoAs) may be provided for transparency and verification purposes only" — a legally conservative but transparency-forward disclosure.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Lab Results Page</div>
+        <div class="field-value">A dedicated Lab Results page exists at peptipura.net/coas/ and is publicly accessible without account login. This is a structural transparency choice — not every vendor in the series provides open COA access without requiring purchase or registration. The depth and completeness of the COA library (which labs, how many products covered, testing methods included) requires direct review of the page, which is accessible without barriers.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Testing Methodology — Open Items</div>
+        <div class="field-value">Specific testing lab identity, HPLC confirmation, mass spectrometry inclusion, and endotoxin screening status are not confirmed in the publicly available site text at time of brief. These details require direct review of the COA library. Researchers who prioritize specific testing method confirmation (particularly endotoxin screening, given the Petratide precedent in this series) should review the Lab Results page directly before ordering.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:14px;">Protokol X 8-Factor Subscores</div>
+      <div class="score-row">
+        <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+        <div class="score-num">8.5</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+        <div class="score-num">8.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card" id="card-3">
+    <div class="card-header" onclick="toggleCard('card-3')">
+      <div class="card-num">03</div>
+      <div class="card-title">Transparency & Documentation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Policy Architecture</div>
+        <div class="field-value">Peptipura maintains a complete public policy suite: Terms & Conditions, Return Policy, Shipping & Delivery, Privacy Policy — all publicly accessible without registration. The Terms & Conditions are detailed and legally complete, including WooCommerce transaction terms, RUO acknowledgment at checkout, age confirmation (21+), medical advice disclaimer, and a COA transparency disclosure. This is a more complete policy architecture than most boutique vendors in the series.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Return Policy</div>
+        <div class="field-value">A dedicated Return Policy is publicly accessible — rare in the RUO vendor category where most vendors explicitly state no returns due to the nature of research compounds. The existence of a published return policy indicates Peptipura has defined a documented resolution pathway. Specific terms require direct review. The presence of the policy is a transparency signal regardless of the terms within it.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Founder Identity & Accountability</div>
+        <div class="field-value">Angela is named, photographed, and personally accountable on the About page — describing her personal frustration with the vendor landscape and the specific standards she built Peptipura to meet. This level of founder identity disclosure is uncommon in this vendor category and functions as a personal accountability signal. A named, photographed founder with a real phone number and email creates a verifiable chain of responsibility that anonymous vendor operations cannot provide.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">RUO Compliance Language</div>
+        <div class="field-value">Consistent RUO labeling throughout — header banner, footer, checkout acknowledgment, Terms & Conditions, and product-level labeling. No medical advice, dosing guidance, treatment recommendations, or reconstitution instructions are provided — explicitly stated as policy. The compliance posture is intentional and consistent with the documentation-forward brand positioning Angela describes.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+        <div class="score-num">8.0</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+        <div class="score-num">8.5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="card" id="card-4">
+    <div class="card-header" onclick="toggleCard('card-4')">
+      <div class="card-num">04</div>
+      <div class="card-title">Customer Experience</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Shipping — Strongest in the Series</div>
+        <div class="field-value"><strong>Free USPS Priority Mail on all US domestic orders</strong> — no minimum order threshold. Stated fulfillment window of <strong>often within 12 hours</strong> of order placement. This combination — free priority shipping plus sub-12-hour processing — is the most aggressive fulfillment proposition in the Protokol X vendor series. Shipping is domestic US only at time of brief.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Support Infrastructure</div>
+        <div class="field-value">Multiple support channels: email (peptipura@gmail.com), phone (415) 323-9395, and live chat widget on-site. A real phone number in a vendor category where most operations are email-only or chat-only is a meaningful accountability differentiator. Angela's stated standard: "If someone places an order, they deserve clarity. If they have a question, they deserve an answer. If there's an issue, they deserve resolution, not avoidance." That's the brand's stated accountability posture — founder-stated, not institutional.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Bilingual Support</div>
+        <div class="field-value">English and Spanish support is explicitly listed as a Peptipura operating standard. This expands the researcher audience Peptipura can serve effectively and represents a meaningful accessibility differentiator — no other vendor in the Protokol X series offers bilingual support documentation.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Pricing Position</div>
+        <div class="field-value">Value positioning is explicit — "Affordable Research Peptides" is the site tagline. BPC-157 from $25, GHK-Cu at $40, Retatrutide $40–$70, TB-500 $40–$50, KPV $45, Cagrilintide $45, SNAP-8 $35, SLU-PP-32 $55. Pricing is competitive within the series and below the premium tier, consistent with Angela's stated principle of removing "ridiculously high prices" from the equation.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div>
+        <div class="score-num">9.0</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:88%"></div></div>
+        <div class="score-num">8.8</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5 -->
+  <div class="card" id="card-5">
+    <div class="card-header" onclick="toggleCard('card-5')">
+      <div class="card-num">05</div>
+      <div class="card-title">Operations & Catalog</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Catalog — Curated with Specialty Depth</div>
+        <div class="field-value">
+          <span class="tag blue">Recovery</span>&nbsp; BPC-157 ($25–$35) · TB-500 ($40–$50)<br><br>
+          <span class="tag blue">Longevity / Cellular</span>&nbsp; GHK-Cu ($40)<br><br>
+          <span class="tag blue">Metabolic / GLP</span>&nbsp; Retatrutide ($40–$70) · Cagrilintide ($45) · GLP-T Research Trio (10/20/30mg bundle, $125)<br><br>
+          <span class="tag blue">Anti-inflammatory</span>&nbsp; KPV ($45)<br><br>
+          <span class="tag blue">Cognitive / Neurological</span>&nbsp; Selank ($35)<br><br>
+          <span class="tag amber">Specialty</span>&nbsp; SLU-PP-32 ($55) · SNAP-8 ($35)<br><br>
+          Full catalog available at peptipura.net/store/
+        </div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Specialty Compounds Note</div>
+        <div class="field-value">SLU-PP-32 and SNAP-8 are specialty compounds available at a limited number of vendors. SLU-PP-32 (a nuclear receptor agonist studied for metabolic effects) and SNAP-8 (a peptide studied in anti-aging/wrinkle reduction research) represent catalog depth beyond the commodity peptide layer. Cagrilintide, a long-acting amylin analog studied in metabolic research, is also not universally available. These inclusions serve researchers with specific protocol requirements not met by most core-catalog vendors.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Operational Continuity — Bridge Research Heritage</div>
+        <div class="field-value">The Bridge Research rebrand means Angela's operational experience in sourcing, fulfillment, supplier relationships, and customer service predates the Peptipura domain. While the Peptipura brand is newer, the operator is not new to the vendor role. Established sourcing relationships, fulfillment infrastructure, and quality assessment processes carry forward through the rebrand — a meaningful continuity signal relative to true cold-start vendors of comparable brand age.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+        <div class="score-num">8.0</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:82%"></div></div>
+        <div class="score-num">8.2</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6 -->
+  <div class="card" id="card-6">
+    <div class="card-header" onclick="toggleCard('card-6')">
+      <div class="card-num">06</div>
+      <div class="card-title">Community & Reputation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Community Signal — Building Phase</div>
+        <div class="field-value">Independent community review volume under the Peptipura brand is in building phase at time of brief. The brand's social footprint spans Facebook, Twitter/X, YouTube, Instagram, and Pinterest — a broader platform presence than most boutique vendors. Active TikTok content noted in available search data. The community is building through content, direct outreach, and Protokol X affiliate partnership rather than through the legacy community platform volume that older vendors carry.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Bridge Research Heritage Signal</div>
+        <div class="field-value">Angela's Bridge Research operating history represents community experience that predates the Peptipura brand launch. While the Bridge Research name does not surface prominently in major public peptide community databases at time of brief, the operational experience, supplier relationships, and fulfillment track record that history represents is a real contextual differentiator relative to vendors building for the first time. The rebrand is a brand evolution, not an attempt to shed negative history — no negative Bridge Research community signal has been identified in available data.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Protokol X Affiliation</div>
+        <div class="field-value">Peptipura is included in the Protokol X vendor series, vendor trust index scoring, and this Intelligence Brief as a non-affiliate vendor assessment. This brief represents the primary community documentation framework for Peptipura's credentialing at this stage of brand development. The Protokol X context provides a more rigorous evaluation framework than most boutique vendors of comparable brand age have access to.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Reputation Architecture</div>
+        <div class="field-value">Peptipura's reputation architecture is currently founder-anchored rather than community-volume-anchored. Angela's personal accountability, published phone number, named identity, and stated operating principles are the primary trust signals available at this stage. That's a different type of reputation evidence than community review volume — it's accountability-based rather than outcome-based. Both matter. At this stage in Peptipura's brand lifecycle, accountability evidence is what is available and what should be weighted.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7 -->
+  <div class="card" id="card-7">
+    <div class="card-header" onclick="toggleCard('card-7')">
+      <div class="card-num">07</div>
+      <div class="card-title">Intelligence Assessment</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="assessment-block">
+        <div class="assessment-block-title green">Strengths — Evidence-Supported</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Bridge Research operational heritage</strong> — over one year of vendor experience carried through rebrand; sourcing relationships, fulfillment infrastructure, and quality assessment processes are not starting from zero</li>
+          <li><span class="signal-dot green"></span><strong>Open COA access without registration</strong> — peptipura.net/coas/ is publicly accessible; matches Axon's AxonVerified in the open-access tier; ahead of Petratide, Ramp, and Kraken on this axis</li>
+          <li><span class="signal-dot green"></span><strong>Free Priority Mail shipping — no minimum</strong> — strongest included shipping value in the series; 12-hour processing window is the fastest declared fulfillment time in the series</li>
+          <li><span class="signal-dot green"></span><strong>Real phone number — (415) 323-9395</strong> — verifiable, callable accountability in a category where most vendors are email-only; highest founder accountability signal in the boutique vendor tier</li>
+          <li><span class="signal-dot green"></span><strong>Named founder, photographed, personally accountable</strong> — Angela's identity is publicly disclosed; the vendor has a face, a name, and a stated personal standard</li>
+          <li><span class="signal-dot green"></span><strong>Bilingual support — unique in the series</strong> — English and Spanish; no other Protokol X series vendor offers bilingual documentation and support</li>
+          <li><span class="signal-dot green"></span><strong>Full published policy suite</strong> — Terms, Return Policy, Shipping, Privacy all publicly accessible; return policy specifically is rare in this vendor category</li>
+          <li><span class="signal-dot green"></span><strong>Specialty catalog depth</strong> — SLU-PP-32, SNAP-8, Cagrilintide, KPV represent compounds not universally available across peer vendors</li>
+        </ul>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title gold">Watch Items — Continued Monitoring</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot gold"></span><strong>Peptipura-branded community review volume:</strong> Independent platform reviews under the Peptipura name are limited at time of brief; the brand is in the community trust-building phase; monitor VialTalk, Trustpilot, and Reddit as volume accumulates</li>
+          <li><span class="signal-dot gold"></span><strong>Testing methodology specifics:</strong> Which lab, which methods, whether endotoxin is included — these should be confirmed directly from the Lab Results page; not confirmed in available site text at time of brief</li>
+          <li><span class="signal-dot gold"></span><strong>Bridge Research public documentation:</strong> The heritage is real and relevant; the public community record under that name is limited in available search data; the operational history is Protokol X-contextual rather than independently widely documented</li>
+          <li><span class="signal-dot gold"></span><strong>Catalog breadth:</strong> Curated selection suits specific protocol needs; researchers requiring broad compound access will need to supplement with other series vendors</li>
+        </ul>
+      </div>
+
+      <!-- Confidence -->
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Confidence Level</div>
+      <div class="confidence">
+        <div class="conf-pip active gold"></div>
+        <div class="conf-pip active gold"></div>
+        <div class="conf-pip active gold"></div>
+        <div class="conf-pip"></div>
+        <div class="conf-label">&nbsp;High — Founder Accountability Anchored</div>
+      </div>
+      <div class="field-value" style="font-size:13px; color:var(--text-secondary);">Confidence is High — driven by the operational heritage of the Bridge Research rebrand, founder identity transparency, open COA access, complete policy architecture, and a real phone number that places accountability at an unusually concrete level for a boutique operation. Not Very High due to limited independent Peptipura-branded community review volume and unconfirmed testing methodology specifics at time of brief.</div>
+
+      <!-- Total score -->
+      <div class="total-score">
+        <div>
+          <div class="total-score-label">Protokol X Trust Score</div>
+          <div class="total-tier">Rank 5 &nbsp;·&nbsp; Tier 2 &nbsp;·&nbsp; 8-Factor Matrix</div>
+        </div>
+        <div>
+          <div class="total-score-num">8.1</div>
+          <div class="total-score-denom">/ 10 &nbsp;·&nbsp; Recommended</div>
+        </div>
+      </div>
+
+      <!-- Full 8-factor -->
+      <div style="margin-top:20px;">
+        <div class="score-row">
+          <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+          <div class="score-num">8.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+          <div class="score-num">8.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+          <div class="score-num">8.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+          <div class="score-num">8.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:88%"></div></div>
+          <div class="score-num">8.8</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div>
+          <div class="score-num">9.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+          <div class="score-num">8.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:82%"></div></div>
+          <div class="score-num">8.2</div>
+        </div>
+      </div>
+
+      <!-- Final assessment -->
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Protokol X Assessment</div>
+      <div class="field-value">Peptipura occupies a distinct position in the Protokol X series — the accountability-forward boutique. The combination of a named founder with a real phone number, open COA access, free Priority Mail shipping with 12-hour processing, bilingual support, and a published return policy represents a transparency and accessibility package that is genuinely differentiated, not assembled from vendor category defaults.<br><br>The Bridge Research heritage is a meaningful contextual modifier. Angela is not building her first vendor operation with Peptipura — she is rebranding an operation that already has sourcing relationships, fulfillment experience, and an operational track record. That matters for confidence calibration. The Peptipura brand may be relatively new; the operator is not.<br><br>The watch items are calibration notes rather than red flags. Peptipura-branded community review volume is limited because the brand is in its early public phase — not because the operator has a negative record. Testing methodology specifics should be confirmed by reviewing the Lab Results page directly. These are standard due diligence steps for a boutique vendor, not evidence-based concerns.<br><br>Where Peptipura stands out most is founder accountability. A real name, a real photo, a real phone number, and a personal statement of operating standards that explicitly addresses the failures she experienced as a researcher — that's a different accountability architecture than institutional vendor documentation. It's personal, verifiable, and callable.<br><br><strong>Protokol X assessment: Rank 5, Tier 2. Recommended. Strongest accountability posture in the boutique tier. Bridge Research heritage provides meaningful operational continuity. Community documentation record under the Peptipura brand is the primary development area to monitor.</strong></div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <p>Protokol X Affiliate Link &nbsp;·&nbsp; Research Use Only</p>
+    <a class="cta-btn" href="https://peptipura.net/" target="_blank" rel="noopener">Visit Peptipura — Free Priority Shipping on All Orders</a>
+    <div class="cta-note">For research purposes only. Not for human or animal use. Not FDA-approved.</div>
+  </div>
+
+  <!-- Bottom Line -->
+  <div class="bottom-line">
+    <div class="bottom-line-label">Bottom Line</div>
+    <p>"No vendor should be trusted because they make claims. Vendors earn confidence through evidence, transparency, verification architecture, and consistency over time. The goal is not certainty. The goal is reducing uncertainty."</p>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Protokol X &nbsp;·&nbsp; Vendor Intelligence Series</div>
+    <div class="footer-doctrine">Clarity Over Noise. Assess. Decide. Execute.</div>
+    <div class="footer-disclosure">Disclosure: Peptipura is not presented as a Protokol X affiliate partner in this brief. Vendor Trust Index scores are applied independently of commercial relationships. All content is for informational purposes only. Not medical advice. Not FDA-approved. For research use only.</div>
+  </footer>
+
+</div>
+<script>
+  function toggleCard(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

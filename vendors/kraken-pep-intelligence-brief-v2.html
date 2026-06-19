@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Kraken Pep — Vendor Intelligence Brief | Protokol X</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:        #0b0f1a;
+    --navy-2:      #0f1522;
+    --navy-card:   #131926;
+    --navy-raised: #18202f;
+    --blue:        #2e7cf6;
+    --blue-dim:    rgba(46,124,246,0.15);
+    --blue-line:   rgba(46,124,246,0.35);
+    --gold:        #f0b429;
+    --gold-dim:    rgba(240,180,41,0.12);
+    --text:        #c8d4e8;
+    --text-secondary: #6e809a;
+    --text-muted:  #3d4f66;
+    --white:       #e8edf5;
+    --red-dim:     rgba(224,76,76,0.12);
+    --red:         #e04c4c;
+    --green-dim:   rgba(52,199,128,0.12);
+    --green:       #34c780;
+    --amber:       #f59e0b;
+    --amber-dim:   rgba(245,158,11,0.12);
+    --purple:      #8b5cf6;
+    --purple-dim:  rgba(139,92,246,0.12);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background: var(--navy); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  .page { max-width: 780px; margin: 0 auto; padding: 48px 20px 96px; }
+
+  .header { border-bottom: 1px solid var(--blue-line); padding-bottom: 32px; margin-bottom: 40px; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); }
+  .classification { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(240,180,41,0.25); padding: 4px 12px; border-radius: 4px; }
+  .vendor-name { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 6vw, 42px); font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px; }
+  .vendor-sub { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); letter-spacing: 0.08em; margin-bottom: 20px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 4px; border: 1px solid var(--blue-line); color: var(--blue); background: var(--blue-dim); }
+  .meta-pill.gold   { border-color: rgba(240,180,41,0.3); color: var(--gold); background: var(--gold-dim); }
+  .meta-pill.amber  { border-color: rgba(245,158,11,0.3); color: var(--amber); background: var(--amber-dim); }
+  .meta-pill.purple { border-color: rgba(139,92,246,0.3); color: var(--purple); background: var(--purple-dim); }
+
+  .bluf { background: var(--navy-2); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 20px 22px; margin-bottom: 40px; }
+  .bluf-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .bluf p { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+  .card { background: var(--navy-card); border: 1px solid rgba(46,124,246,0.12); border-radius: 10px; margin-bottom: 16px; overflow: hidden; transition: border-color 0.2s ease; }
+  .card:hover { border-color: rgba(46,124,246,0.28); }
+  .card-header { display: flex; align-items: center; gap: 14px; padding: 18px 22px; border-bottom: 1px solid rgba(46,124,246,0.1); cursor: pointer; user-select: none; }
+  .card-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-dim); border: 1px solid var(--blue-line); width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); flex: 1; }
+  .card-chevron { color: var(--text-muted); font-size: 18px; transition: transform 0.2s ease; flex-shrink: 0; }
+  .card.open .card-chevron { transform: rotate(180deg); }
+  .card-body { display: none; padding: 22px; }
+  .card.open .card-body { display: block; }
+
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; }
+  .field-value { font-size: 14px; color: var(--text); line-height: 1.65; }
+  .field-value strong { color: var(--white); font-weight: 600; }
+  .blue-divider { height: 1px; background: linear-gradient(90deg, var(--blue-line), transparent); margin: 18px 0; }
+
+  .signal-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .signal-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); line-height: 1.55; }
+  .signal-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .signal-dot.blue   { background: var(--blue); }
+  .signal-dot.gold   { background: var(--gold); }
+  .signal-dot.green  { background: var(--green); }
+  .signal-dot.amber  { background: var(--amber); }
+  .signal-dot.purple { background: var(--purple); }
+
+  .tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; vertical-align: middle; }
+  .tag.gold   { background: var(--gold-dim); color: var(--gold); }
+  .tag.blue   { background: var(--blue-dim); color: var(--blue); }
+  .tag.amber  { background: var(--amber-dim); color: var(--amber); }
+  .tag.purple { background: var(--purple-dim); color: var(--purple); }
+
+  /* TikTok primary badge */
+  .tiktok-block { background: rgba(139,92,246,0.06); border: 1px solid rgba(139,92,246,0.22); border-radius: 8px; padding: 16px 18px; margin: 14px 0; }
+  .tiktok-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--purple); margin-bottom: 8px; }
+  .tiktok-block p { font-size: 13px; color: var(--text); line-height: 1.65; }
+
+  .callout { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 13px; line-height: 1.6; }
+  .callout.amber  { background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.25); color: var(--amber); }
+  .callout.purple { background: var(--purple-dim); border: 1px solid rgba(139,92,246,0.25); color: var(--purple); }
+  .callout strong { font-weight: 700; }
+
+  .score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); width: 230px; flex-shrink: 0; line-height: 1.3; }
+  .score-weight { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); display: block; }
+  .score-bar-wrap { flex: 1; height: 5px; background: rgba(46,124,246,0.1); border-radius: 3px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 3px; background: var(--gold); }
+  .score-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--gold); width: 36px; text-align: right; flex-shrink: 0; }
+
+  .total-score { display: flex; align-items: center; justify-content: space-between; background: var(--navy-raised); border: 1px solid rgba(240,180,41,0.25); border-radius: 8px; padding: 18px 22px; margin-top: 22px; }
+  .total-score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary); }
+  .total-tier { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); margin-top: 4px; letter-spacing: 0.08em; }
+  .total-score-num { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; text-align: right; }
+  .total-score-denom { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+
+  .assessment-block { background: var(--navy-raised); border-radius: 8px; padding: 16px 18px; margin-bottom: 12px; }
+  .assessment-block-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
+  .assessment-block-title.green  { color: var(--green); }
+  .assessment-block-title.gold   { color: var(--gold); }
+  .assessment-block-title.purple { color: var(--purple); }
+
+  .confidence { display: flex; align-items: center; gap: 6px; margin: 16px 0; }
+  .conf-pip { flex: 1; height: 6px; border-radius: 3px; background: rgba(46,124,246,0.1); }
+  .conf-pip.active.amber { background: var(--amber); }
+  .conf-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; white-space: nowrap; color: var(--amber); }
+
+  .cta-block { background: linear-gradient(135deg, var(--navy-raised) 0%, rgba(46,124,246,0.08) 100%); border: 1px solid var(--blue-line); border-radius: 10px; padding: 24px; margin-top: 40px; text-align: center; }
+  .cta-block p { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 14px; }
+  .cta-btn { display: inline-block; background: var(--blue); color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; padding: 12px 28px; border-radius: 6px; text-decoration: none; transition: background 0.2s ease, transform 0.2s ease; }
+  .cta-btn:hover { background: #1a6ae0; transform: translateY(-1px); }
+  .cta-note { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; }
+
+  .bottom-line { background: var(--navy-2); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 18px 22px; margin-top: 32px; }
+  .bottom-line-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .bottom-line p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; font-style: italic; }
+
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--text-muted); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .footer-brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+  .footer-doctrine { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
+  .footer-disclosure { width: 100%; font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-top: 8px; }
+
+
+
+  /* Protokol X visual alignment layer */
+  body {
+    background:
+      radial-gradient(circle at 50% -20%, rgba(46,124,246,0.16), transparent 34rem),
+      linear-gradient(rgba(46,124,246,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,124,246,0.035) 1px, transparent 1px),
+      #05070b;
+    background-size: auto, 44px 44px, 44px 44px, auto;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.035), transparent 16%, transparent 84%, rgba(240,180,41,0.035)),
+      radial-gradient(circle at 12% 18%, rgba(139,92,246,0.08), transparent 18rem);
+    mix-blend-mode: screen;
+    opacity: 0.75;
+  }
+
+  .page { max-width: 980px; padding: 28px 20px 96px; position: relative; }
+  .top-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+  .back-link,
+  .px-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .back-link { color: var(--blue); text-decoration: none; }
+  .back-link:hover { color: var(--white); }
+  .px-mark { color: var(--text-muted); text-align: right; }
+
+  .header {
+    position: relative;
+    background: linear-gradient(145deg, rgba(13,19,32,0.94), rgba(4,7,12,0.98));
+    border: 1px solid rgba(46,124,246,0.28);
+    border-radius: 14px;
+    padding: 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 22px 70px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.04);
+    overflow: hidden;
+  }
+  .header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(120deg, rgba(46,124,246,0.14), transparent 38%),
+      radial-gradient(circle at 82% 24%, rgba(240,180,41,0.12), transparent 18rem),
+      radial-gradient(circle at 14% 78%, rgba(139,92,246,0.08), transparent 16rem);
+    pointer-events: none;
+  }
+  .header > * { position: relative; z-index: 1; }
+  .vendor-name { font-size: clamp(34px, 7vw, 64px); letter-spacing: -0.045em; text-transform: uppercase; }
+  .vendor-sub { color: #8798b3; }
+  .meta-row { margin-top: 22px; }
+  .meta-pill { border-radius: 999px; background: rgba(46,124,246,0.1); }
+  .meta-pill.amber { box-shadow: 0 0 22px rgba(245,158,11,0.1); }
+  .meta-pill.purple { box-shadow: 0 0 22px rgba(139,92,246,0.1); }
+
+  .hero-score {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 18px;
+    margin-top: 26px;
+    padding: 20px;
+    border: 1px solid rgba(240,180,41,0.34);
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(240,180,41,0.13), rgba(46,124,246,0.06));
+  }
+  .hero-score-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 7px;
+  }
+  .hero-score-copy { color: var(--text-secondary); font-size: 13px; max-width: 58ch; }
+  .hero-score-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 10vw, 82px);
+    font-weight: 700;
+    line-height: 0.85;
+    color: var(--gold);
+    text-align: right;
+  }
+  .hero-score-denom {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 8px;
+  }
+
+  .bluf, .bottom-line {
+    border-radius: 12px;
+    border: 1px solid rgba(46,124,246,0.24);
+    border-left: 4px solid var(--blue);
+    background: rgba(9,14,24,0.92);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.28);
+  }
+  .bottom-line { border-color: rgba(240,180,41,0.24); border-left-color: var(--gold); }
+  .card {
+    background: linear-gradient(180deg, rgba(19,25,38,0.92), rgba(9,14,24,0.92));
+    border-color: rgba(46,124,246,0.18);
+    border-radius: 12px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.22);
+  }
+  .card:hover { border-color: rgba(46,124,246,0.48); transform: translateY(-1px); }
+  .card-header { min-height: 76px; }
+  .card-num {
+    color: #06101d;
+    background: linear-gradient(135deg, var(--gold), #d99618);
+    border: 0;
+    box-shadow: 0 0 26px rgba(240,180,41,0.16);
+  }
+  .card-title { font-size: 16px; letter-spacing: 0.01em; }
+  .score-bar-wrap { background: rgba(255,255,255,0.08); }
+  .score-bar { background: linear-gradient(90deg, #b98519, var(--gold), #ffe199); }
+  .total-score {
+    background: linear-gradient(135deg, rgba(240,180,41,0.12), rgba(11,15,26,0.9));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .tiktok-block {
+    border-radius: 12px;
+    border-color: rgba(139,92,246,0.34);
+    border-left: 4px solid var(--purple);
+    background: linear-gradient(135deg, rgba(139,92,246,0.12), rgba(9,14,24,0.95));
+    box-shadow: 0 18px 48px rgba(0,0,0,0.22);
+  }
+  .callout.amber, .callout.purple {
+    border-radius: 12px;
+    background: rgba(18,25,38,0.92);
+  }
+  .callout.amber { border-left: 4px solid var(--amber); }
+  .callout.purple { border-left: 4px solid var(--purple); }
+  .assessment-block {
+    border: 1px solid rgba(46,124,246,0.14);
+    background: rgba(18,25,38,0.9);
+  }
+  .assessment-block-title.green { color: #42d991; }
+  .assessment-block-title.gold { color: var(--gold); }
+  .assessment-block-title.purple { color: #a78bfa; }
+  .confidence {
+    padding: 14px;
+    border: 1px solid rgba(245,158,11,0.24);
+    border-radius: 10px;
+    background: rgba(245,158,11,0.06);
+  }
+  .cta-block {
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(46,124,246,0.16), rgba(5,7,11,0.96));
+    box-shadow: 0 20px 60px rgba(0,0,0,0.34);
+  }
+  .cta-btn {
+    border-radius: 999px;
+    background: linear-gradient(135deg, #4f96ff, var(--blue));
+    box-shadow: 0 12px 34px rgba(46,124,246,0.32);
+  }
+  .cta-btn:hover { background: linear-gradient(135deg, #76adff, #2e7cf6); }
+  footer { border-top-color: rgba(46,124,246,0.22); }
+
+  @media (max-width: 640px) {
+    .page { padding: 22px 14px 72px; }
+    .top-nav { align-items: flex-start; flex-direction: column; }
+    .px-mark { text-align: left; }
+    .header { padding: 22px 18px; }
+    .header-top { align-items: flex-start; }
+    .hero-score { grid-template-columns: 1fr; }
+    .hero-score-num, .hero-score-denom { text-align: left; }
+    .card-header { padding: 16px; }
+    .card-body { padding: 18px 16px; }
+    .score-row { align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+    .score-label { width: calc(100% - 48px); }
+    .score-bar-wrap { order: 3; flex-basis: 100%; }
+    .conf-label { white-space: normal; }
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 28px 16px 72px; }
+    .score-label { width: 160px; font-size: 9px; }
+    .total-score-num { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="top-nav" aria-label="Vendor brief navigation">
+    <a class="back-link" href="index.html" aria-label="Back to Vendor Index">&larr; Back to Vendor Index</a>
+    <div class="px-mark">Protokol X // Vendor Intelligence Brief // Clarity Over Noise</div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="brand">Protokol X // Vendor Intelligence</div>
+      <div class="classification">Research Use Only</div>
+    </div>
+    <div class="vendor-name">The Kraken Pep</div>
+    <div class="vendor-sub">thekrakenpep.com &nbsp;·&nbsp; Brief Date: June 2026 &nbsp;·&nbsp; Revision: 2.0</div>
+    <div class="meta-row">
+      <span class="meta-pill">US-Based</span>
+      <span class="meta-pill">Dual Trademark Registration</span>
+      <span class="meta-pill">Bulk Discounts Available</span>
+      <span class="meta-pill purple">Primary Presence: TikTok @thekrakenpep</span>
+      <span class="meta-pill amber">IP Impersonation Active Alert</span>
+      <span class="meta-pill gold">Rank 7 · Tier 3 · 6.2 / 10</span>
+    </div>
+    <div class="hero-score" aria-label="Protokol X Trust Score">
+      <div>
+        <div class="hero-score-label">Protokol X Trust Score</div>
+        <div class="hero-score-copy">Rank 7 &middot; Tier 3 &middot; 6.2 / 10. Developing classification with TikTok-first community signal, post-registration COA access, and July/Q3 reassessment preserved.</div>
+      </div>
+      <div>
+        <div class="hero-score-num">6.2</div>
+        <div class="hero-score-denom">/ 10</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLUF -->
+  <div class="bluf">
+    <div class="bluf-label">BLUF — Bottom Line Up Front</div>
+    <p>This assessment evaluates publicly available evidence, documentation, verification architecture, operational transparency, and community signals for The Kraken Pep. The Kraken Pep is a US-based research peptide vendor with a distinctive brand identity — dual registered trademarks, a compliance-structured registration system, a complete published policy suite, and an active affiliate program. The brand's primary community presence is TikTok (@thekrakenpep) — a social-first distribution model that reflects where the researcher community is being built rather than on traditional platform review sites. A dedicated COA library page exists at thekrakenpep.com/coa-library/ — accessible post-registration, consistent with the site's standard RUO compliance posture. Gated storefront and COA library access is standard across the current vendor landscape and is not scored. The Protokol X Rank 7 placement reflects the gap between stated quality claims and publicly verifiable COA documentation at this stage of development — not a judgment on product quality. Protokol X evaluates evidence, not intent. Architecture before conclusions. Questions before answers.</p>
+  </div>
+
+  <!-- CARD 1 -->
+  <div class="card open" id="card-1">
+    <div class="card-header" onclick="toggleCard('card-1')">
+      <div class="card-num">01</div>
+      <div class="card-title">Executive Summary</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Who They Are</div>
+        <div class="field-value">The Kraken Pep is a US-based research peptide vendor operating at thekrakenpep.com. <strong>The Kraken Pep™</strong> and companion brand <strong>The Kraken Merch™</strong> are both registered trademarks — a commercial investment in brand identity uncommon at this vendor tier. The brand's primary community home is <strong>TikTok (@thekrakenpep)</strong> — a social-first model that builds researcher relationships through content and engagement rather than through traditional peptide community platforms. WordPress/Elementor storefront with member-only catalog access — standard RUO compliance posture. Active affiliate "Research Team" network with code KRAKENMB for Protokol X researchers. First-order discount via code KRAKEN15 (15% off). Free shipping on orders over $200. Active promotional cadence (BOGO, 50% off tiers). Brand protection notice active on homepage — copycat sites using similar branding are reported and being investigated.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Primary Strengths</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot blue"></span><strong>TikTok-first community — primary home</strong> — active content cadence at @thekrakenpep; this is where the Kraken researcher community lives; a deliberate social-first distribution model rather than a platform review strategy</li>
+          <li><span class="signal-dot blue"></span><strong>Dual trademark registration</strong> — The Kraken Pep™ and The Kraken Merch™; formal IP protection signals commercial seriousness and long-term brand intent</li>
+          <li><span class="signal-dot blue"></span><strong>Complete published policy suite</strong> — Privacy Policy, Shipping Policy, Terms of Use, Refunds and Returns Policy all publicly accessible without registration</li>
+          <li><span class="signal-dot blue"></span><strong>Compliance-structured registration</strong> — four researcher categories (Business Reseller, Laboratory/Institution, Independent Researcher, Educational/Academic) plus four acknowledgment checkboxes; above-baseline access design</li>
+          <li><span class="signal-dot blue"></span><strong>Brand protection posture</strong> — actively monitoring and reporting IP impersonation; market visibility sufficient to attract copycat operations is a backhanded brand validation signal</li>
+          <li><span class="signal-dot blue"></span><strong>Active promotional and affiliate infrastructure</strong> — BOGO, bulk tiers, Research Team affiliate program, active marketing cadence signal ongoing commercial operations</li>
+          <li><span class="signal-dot blue"></span><strong>FD&C Act 503A/503B disclaimer present</strong> — explicit legal RUO positioning in site footer</li>
+          <li><span class="signal-dot blue"></span><strong>Refunds and Returns Policy published</strong> — rare in the RUO vendor category; a documented dispute resolution pathway exists</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Notable Limitations</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot amber"></span><strong>COA library accessible post-registration</strong> — a dedicated COA library exists at thekrakenpep.com/coa-library/; access follows standard site login, consistent with RUO compliance posture; lab identity and testing methodology specifics require account-level review to confirm</li>
+          <li><span class="signal-dot amber"></span><strong>Testing methodology not confirmed in public data</strong> — "strict quality control and testing" is stated on-site; specific methods (HPLC, MS, endotoxin, lab identity) not documented in publicly accessible pages</li>
+          <li><span class="signal-dot amber"></span><strong>TikTok-first model limits traditional platform signal</strong> — community feedback is not concentrated on VialTalk, Trustpilot, or Reddit where it can be independently assessed by researchers on traditional channels; signal exists but requires engagement with TikTok content</li>
+          <li><span class="signal-dot amber"></span><strong>Corporate entity name not confirmed</strong> — no LLC/Inc entity name visible in publicly accessible pages; brand names are trademarked but underlying legal entity is not publicly disclosed</li>
+          <li><span class="signal-dot amber"></span><strong>Brand impersonation active</strong> — copycat sites using similar branding require researcher vigilance; always verify thekrakenpep.com specifically</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Best Fit Audience</div>
+        <div class="field-value">Researchers who engage with the peptide space on TikTok and have established comfort with the brand through content. Those seeking bulk pricing access and strong promotional discounts. Researchers willing to create an account and verify COA documentation at the product level before ordering. Those for whom the KRAKENMB affiliate code provides a meaningful pricing advantage. Protokol X Rank 7, Tier 3 reflects the current verifiable evidence base — the score is a documentation assessment, not a product quality verdict.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card" id="card-2">
+    <div class="card-header" onclick="toggleCard('card-2')">
+      <div class="card-num">02</div>
+      <div class="card-title">Verification Architecture</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="callout amber">
+        <strong>Documentation access note:</strong> The Kraken Pep operates a dedicated COA library at thekrakenpep.com/coa-library/ — accessible post-registration, consistent with standard RUO compliance posture. Testing methodology specifics (lab identity, HPLC, MS, endotoxin inclusion) require account-level review to confirm. Researchers should register and review the COA library directly before ordering.
+      </div>
+
+      <div class="field">
+        <div class="field-label">Stated Quality Standard</div>
+        <div class="field-value">The Kraken Pep states: <em>"Every product undergoes strict quality control and testing to ensure high purity, consistency, and dependable performance for research purposes."</em> The FAQ confirms: <em>"Yes, all our peptides are handled with strict quality standards to ensure high purity and consistency, supporting accurate and dependable research outcomes."</em> These are vendor-stated claims. The specific testing methodology — which laboratory, which analytical methods (HPLC, MS, endotoxin), batch-specificity of COAs — requires account-level access to verify.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">COA Library — Confirmed, Login-Gated</div>
+        <div class="field-value">A dedicated COA library page exists at <strong>thekrakenpep.com/coa-library/</strong> — confirmed. The URL redirects to the standard site login/registration page, meaning the COA library is accessible post-registration, consistent with the site's RUO compliance posture across all content. This is a meaningful structural detail: a dedicated COA library page exists as a distinct resource, not buried in product pages. Access follows the same login requirement as the rest of the site — standard RUO compliance posture, not scored as a limitation. The distinction from open-access libraries (Axon's AxonVerified, ION's Lab Results page, Peptipura's /coas/) is that those are accessible without any registration; Kraken's library is accessible post-registration. Both models are legitimate — the open-access tier simply provides pre-purchase independent verification without a friction step.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">SEO Intent Signal</div>
+        <div class="field-value">Published meta keywords include: "third-party tested peptides," "peptide COA," "peptide purity testing," "lyophilized peptides." These terms in the site's SEO metadata signal the vendor's intent to position around documentation quality. Intent is present; independently verifiable execution requires account access to confirm.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:14px;">Protokol X 8-Factor Subscores</div>
+      <div class="score-row">
+        <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:60%"></div></div>
+        <div class="score-num">6.0</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:58%"></div></div>
+        <div class="score-num">5.8</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card" id="card-3">
+    <div class="card-header" onclick="toggleCard('card-3')">
+      <div class="card-num">03</div>
+      <div class="card-title">Transparency & Documentation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Policy Suite — Complete and Public</div>
+        <div class="field-value">Four publicly accessible policies confirmed: Privacy Policy, Shipping Policy, Terms of Use, and Refunds and Returns Policy. All accessible without account registration. Policy depth and specifics require direct review at each policy URL. The presence of a published Refunds and Returns Policy is notable — most RUO vendors explicitly state no returns. A documented dispute resolution pathway existing at all is a transparency signal.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Registration Architecture</div>
+        <div class="field-value">The registration system requires researcher category selection (Business Reseller, Laboratory/Institution, Independent Researcher, Educational/Academic) plus four acknowledgment checkboxes: 21+ age confirmation, research-use-only confirmation, no human/animal consumption, and research-purpose-only access. This tiered structure is above the baseline signup flow and reflects intentional compliance design — appropriate for the current FDA enforcement environment.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">RUO Compliance Language</div>
+        <div class="field-value">Consistent RUO labeling throughout site footer, FAQ, and product disclaimers. FD&C Act Sections 503A and 503B are explicitly cited — the vendor is not a compounding pharmacy or outsourcing facility. All product pages require acknowledgment of research-use-only purpose. Compliance posture is intentional, complete, and consistent.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Corporate Identity</div>
+        <div class="field-value">The Kraken Pep™ and The Kraken Merch™ are registered trademarks. Copyright notice reads "© 2026 The Kraken Pep™." No specific corporate entity name (LLC, Inc.) is visible in publicly accessible site pages at time of brief. Trademark registration is confirmed; underlying legal entity is not publicly disclosed — a minor transparency gap relative to vendors with named entities (Axon Research Supply, LLC; Ion Research, LLC).</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:55%"></div></div>
+        <div class="score-num">5.5</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:70%"></div></div>
+        <div class="score-num">7.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="card" id="card-4">
+    <div class="card-header" onclick="toggleCard('card-4')">
+      <div class="card-num">04</div>
+      <div class="card-title">Customer Experience</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Ordering & Shipping</div>
+        <div class="field-value">Free shipping on orders over $200. First-order code KRAKEN15 (15% off). Active promotional cadence — Buy 1 Get 1 50% off; Buy 2 Get 1 Free observed. A "Treasure Chest" gamification element on-site reflects the brand's identity-forward design approach. Specific fulfillment windows and shipping scope require account-level review. Contact page is available. FAQ covers basic purchasing questions.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Support</div>
+        <div class="field-value">Contact page available. FAQ publicly accessible. Specific support channels (email, phone, chat) require direct site visit to confirm. The TikTok community presence (@thekrakenpep) also functions as a de facto support and engagement channel — researchers who follow the brand on TikTok have visibility into operational activity and can engage directly through social media. No phone number listed in publicly accessible pages.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Community Feedback — TikTok Channel</div>
+        <div class="field-value">The Kraken Pep's primary community feedback loop is TikTok — not VialTalk, Trustpilot, or Reddit. This means the available community signal for traditional platform assessment is limited by design, not by absence of community engagement. Researchers who want to assess peer feedback on The Kraken Pep should engage directly with TikTok content at @thekrakenpep — the comment sections, creator reviews, and affiliate content on that platform represent the most active independent community signal available for this vendor.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:68%"></div></div>
+        <div class="score-num">6.8</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:70%"></div></div>
+        <div class="score-num">7.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5 -->
+  <div class="card" id="card-5">
+    <div class="card-header" onclick="toggleCard('card-5')">
+      <div class="card-num">05</div>
+      <div class="card-title">Operations & Catalog</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="callout purple">
+        <strong>Catalog access note:</strong> Full product catalog is member-only. Confirmed compounds from available site imagery include CJC-1295 + Ipamorelin blend. Additional compounds require account registration. Catalog breadth and pricing require direct verification.
+      </div>
+
+      <div class="field">
+        <div class="field-label">Confirmed Catalog Signals</div>
+        <div class="field-value">
+          <span class="tag blue">GH Axis</span>&nbsp; CJC-1295 + Ipamorelin blend (confirmed in site imagery)<br><br>
+          <span class="tag amber">Full catalog</span>&nbsp; Member-only; additional compounds require account registration<br><br>
+          <span class="tag blue">Format</span>&nbsp; Lyophilized peptide vials (confirmed from product imagery)<br><br>
+          <span class="tag blue">Pricing model</span>&nbsp; Bulk discounts available; member-exclusive pricing; specific price points require account access
+        </div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Dual Brand Architecture</div>
+        <div class="field-value">The Kraken Pep™ (research peptide supply) and The Kraken Merch™ (merchandise) operate as two registered brand properties under the same identity. The merchandise brand reflects a community-building strategy beyond the transactional layer — branding, lifestyle, and identity positioned alongside the core research compound offering. This type of dual-brand investment is a longer-horizon commitment than a commodity vendor operation.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Operational Infrastructure</div>
+        <div class="field-value">WordPress/Elementor platform. Google Tag Manager integration (GTM-MB4STB6F). OneSignal push notification system. Custom "Treasure Chest" gamification element. Active promotional calendar with defined offer tiers. Research Team affiliate program operational. These are meaningful infrastructure investments above a basic launch template — they reflect commercial intent and ongoing operational development.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:62%"></div></div>
+        <div class="score-num">6.2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:68%"></div></div>
+        <div class="score-num">6.8</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6 -->
+  <div class="card" id="card-6">
+    <div class="card-header" onclick="toggleCard('card-6')">
+      <div class="card-num">06</div>
+      <div class="card-title">Community & Reputation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="tiktok-block">
+        <div class="tiktok-label">Primary Community Home — TikTok @thekrakenpep</div>
+        <p>The Kraken Pep's primary community presence is TikTok — not VialTalk, Trustpilot, or Reddit. This is a deliberate social-first brand strategy consistent with how the vendor was built: through content, personality, and engagement rather than through traditional peptide community platform reviews. Researchers who want to assess peer experience with The Kraken Pep should engage with TikTok content at @thekrakenpep directly — the comment sections, affiliate creator reviews, and community responses on that platform are where the live community signal lives. This is not an absence of community — it is a different community architecture than the rest of the series.</p>
+      </div>
+
+      <div class="field">
+        <div class="field-label">TikTok-First Model — Assessment Implications</div>
+        <div class="field-value">The TikTok-first model has a specific implication for this assessment: traditional community signal extraction through standard research methods (VialTalk search, Trustpilot, Reddit r/Peptides) returns limited results for The Kraken Pep. The Protokol X assessment is therefore based primarily on publicly accessible site documentation and verified primary source data rather than community platform corroboration. This limits the confidence level but does not invalidate the structural evidence that is available.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Brand Impersonation — Reputation Signal</div>
+        <div class="field-value">The active IP impersonation notice on the homepage is a signal in two directions. It indicates sufficient market visibility to attract copycat operations — a form of commercial validation. It also creates a purchasing risk. The vendor's response — publicly disclosing the threat and directing researchers to verify the official domain — is the appropriate transparency posture. Researchers should bookmark <strong>thekrakenpep.com</strong> specifically and verify the URL before any transaction. Impersonator sites operating in the same namespace are a genuine risk.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Protokol X Affiliate Relationship</div>
+        <div class="field-value">The Kraken Pep is an active Protokol X affiliate with discount code KRAKENMB. This Vendor Intelligence Brief represents one of the most structured documentation frameworks The Kraken Pep has been assessed under. The Tier 3 classification and 6.2/10 score are honest assessments of the publicly verifiable evidence base at this stage — not a negative editorial position on the vendor's products or trajectory.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7 -->
+  <div class="card" id="card-7">
+    <div class="card-header" onclick="toggleCard('card-7')">
+      <div class="card-num">07</div>
+      <div class="card-title">Intelligence Assessment</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="assessment-block">
+        <div class="assessment-block-title green">Strengths — Evidence-Supported</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>TikTok-first community — active and intentional</strong> — @thekrakenpep is a live, content-driven community home; the brand is engaging its researcher base through social content, not just listing products on a storefront</li>
+          <li><span class="signal-dot green"></span><strong>Dual trademark registration</strong> — The Kraken Pep™ and The Kraken Merch™ represent formal IP investment; commercial seriousness is evidenced in brand infrastructure</li>
+          <li><span class="signal-dot green"></span><strong>Complete published policy suite</strong> — four public policies including Refunds and Returns; policy completeness matches or exceeds several higher-ranked vendors in the series</li>
+          <li><span class="signal-dot green"></span><strong>Compliance-structured registration</strong> — four researcher categories plus four acknowledgment checkboxes; intentional access design above baseline</li>
+          <li><span class="signal-dot green"></span><strong>IP impersonation transparency</strong> — publicly disclosing copycat threat and directing to official domain is the correct, transparency-forward response</li>
+          <li><span class="signal-dot green"></span><strong>FD&C Act 503A/503B compliance language</strong> — explicit legal positioning consistent with responsible RUO operation</li>
+          <li><span class="signal-dot green"></span><strong>Active promotional and affiliate infrastructure</strong> — BOGO, bulk tiers, Research Team program signal sustained commercial operation</li>
+        </ul>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title gold">Watch Items — Continued Monitoring</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot gold"></span><strong>COA library content depth:</strong> A dedicated COA library exists at /coa-library/ — accessible post-registration. The next transparency upgrade is confirming which compounds are covered, which lab is used, and whether endotoxin testing is included; that detail at the product level would meaningfully lift the Third-Party Testing Depth score</li>
+          <li><span class="signal-dot gold"></span><strong>Testing methodology disclosure:</strong> Lab identity, analytical methods (HPLC, MS, endotoxin) not confirmed in public-facing pages; researchers should request specific methodology detail at account registration</li>
+          <li><span class="signal-dot gold"></span><strong>Corporate entity naming:</strong> No LLC/Inc entity publicly disclosed; naming the underlying legal entity would strengthen the Transparency Practices score</li>
+          <li><span class="signal-dot gold"></span><strong>Traditional platform presence:</strong> Establishing a claimed VialTalk or Trustpilot profile would make community signal accessible to researchers who don't engage via TikTok</li>
+          <li><span class="signal-dot gold"></span><strong>Brand impersonation risk:</strong> Active copycat sites require ongoing vigilance; researchers should always verify thekrakenpep.com domain specifically</li>
+        </ul>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title purple">Path to Higher Classification</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot purple"></span><strong>COA library content expansion</strong> — the library exists at /coa-library/; confirming compound coverage breadth, lab identity, and endotoxin inclusion at the product level is the fastest path from Tier 3 to Tier 2; Third-Party Testing Depth (20% weight) is the highest-leverage score factor to develop</li>
+          <li><span class="signal-dot purple"></span><strong>Testing methodology disclosure</strong> — naming the lab, confirming HPLC + MS + endotoxin on a public page; closes the primary verification architecture gap</li>
+          <li><span class="signal-dot purple"></span><strong>Corporate entity disclosure</strong> — naming the LLC/Inc would strengthen Transparency Practices score</li>
+          <li><span class="signal-dot purple"></span><strong>VialTalk or Trustpilot claimed profile</strong> — bridges the TikTok community to traditional platform assessment for researchers on those channels</li>
+        </ul>
+      </div>
+
+      <!-- Confidence -->
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Confidence Level</div>
+      <div class="confidence">
+        <div class="conf-pip active amber"></div>
+        <div class="conf-pip"></div>
+        <div class="conf-pip"></div>
+        <div class="conf-pip"></div>
+        <div class="conf-label">&nbsp;Low-Moderate — Documentation Access Limited</div>
+      </div>
+      <div class="field-value" style="font-size:13px; color:var(--text-secondary);">Confidence is Low-Moderate. The publicly accessible evidence base is constrained — COA library exists post-registration but lab identity and testing methodology are unconfirmed in public data, no corporate entity disclosure, and community signal concentrated on TikTok rather than independently searchable platforms. The structural positives (trademark registration, policy suite, compliance registration design, brand investment) are real process signals. Confidence rises directly with confirmed testing methodology and lab identity disclosure.</div>
+
+      <!-- Total score -->
+      <div class="total-score">
+        <div>
+          <div class="total-score-label">Protokol X Trust Score</div>
+          <div class="total-tier">Rank 7 &nbsp;·&nbsp; Tier 3 &nbsp;·&nbsp; 8-Factor Matrix</div>
+        </div>
+        <div>
+          <div class="total-score-num">6.2</div>
+          <div class="total-score-denom">/ 10 &nbsp;·&nbsp; Developing</div>
+        </div>
+      </div>
+
+      <!-- Full 8-factor -->
+      <div style="margin-top:20px;">
+        <div class="score-row">
+          <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:60%"></div></div>
+          <div class="score-num">6.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:58%"></div></div>
+          <div class="score-num">5.8</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:55%"></div></div>
+          <div class="score-num">5.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:62%"></div></div>
+          <div class="score-num">6.2</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:70%"></div></div>
+          <div class="score-num">7.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:68%"></div></div>
+          <div class="score-num">6.8</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:70%"></div></div>
+          <div class="score-num">7.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:68%"></div></div>
+          <div class="score-num">6.8</div>
+        </div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Protokol X Assessment</div>
+      <div class="field-value">The Kraken Pep is an emerging identity brand with a social-first community strategy and commercial infrastructure that signals long-term intent. Dual trademark registration, a compliance-structured registration system, a complete policy suite, active affiliate infrastructure, and a TikTok community that is the primary home of the brand's researcher engagement — these are real structural investments. The brand has sufficient market visibility to attract impersonators, which is a form of validation.<br><br>The gap between Tier 3 and Tier 2 is primarily a documentation depth gap. A dedicated COA library exists at /coa-library/ — accessible post-registration. The highest-leverage development is what's inside that library: lab identity, analytical methods (HPLC, MS, endotoxin), and compound coverage breadth. Third-Party Testing Depth (20% weight) is the factor with the most room to move — confirming those specifics at the product level is the fastest path to a higher classification.<br><br>The TikTok-first model is a strategic choice, not a transparency gap. The researcher community The Kraken Pep is building lives on TikTok — that community has value even if it does not appear in traditional platform search results. Researchers who engage with that community have access to peer signal that this brief cannot independently assess. The confidence limitation is an assessment constraint, not a judgment on that community's validity.<br><br>The Tier 3 placement is a current documentation assessment. It is not a ceiling on what the vendor can achieve — it is an honest reflection of what can be independently verified from publicly available evidence at this revision date. The quarterly reassessment in July 2026 is the natural moment to evaluate whether the path-to-higher-classification items in Card 7 have been addressed.<br><br><strong>Protokol X assessment: Rank 7, Tier 3. Developing. Strong brand foundation and TikTok-first community strategy. Documentation access is the primary upgrade lever. Reassess Q3 2026.</strong></div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <p>Protokol X Affiliate Code &nbsp;·&nbsp; Research Use Only</p>
+    <a class="cta-btn" href="https://thekrakenpep.com" target="_blank" rel="noopener">Visit The Kraken Pep — Use Code KRAKENMB</a>
+    <div class="cta-note">Always verify you are at thekrakenpep.com — impersonator sites are active. For research purposes only. Not for human or animal use. Not FDA-approved.</div>
+  </div>
+
+  <div class="bottom-line">
+    <div class="bottom-line-label">Bottom Line</div>
+    <p>"No vendor should be trusted because they make claims. Vendors earn confidence through evidence, transparency, verification architecture, and consistency over time. The goal is not certainty. The goal is reducing uncertainty."</p>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Protokol X &nbsp;·&nbsp; Vendor Intelligence Series</div>
+    <div class="footer-doctrine">Clarity Over Noise. Assess. Decide. Execute.</div>
+    <div class="footer-disclosure">Disclosure: Protokol X participates in affiliate programs including The Kraken Pep (code: KRAKENMB). If you purchase through our link, we may earn a commission at no additional cost to you. Vendor Trust Index scores are applied independently of affiliate relationships. All content is for informational purposes only. Not medical advice. Not FDA-approved. For research use only.</div>
+  </footer>
+
+</div>
+<script>
+  function toggleCard(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

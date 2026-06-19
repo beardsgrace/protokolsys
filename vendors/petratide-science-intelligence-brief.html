@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Petratide Science — Vendor Intelligence Brief | Protokol X</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:        #0b0f1a;
+    --navy-2:      #0f1522;
+    --navy-card:   #131926;
+    --navy-raised: #18202f;
+    --blue:        #2e7cf6;
+    --blue-dim:    rgba(46,124,246,0.15);
+    --blue-line:   rgba(46,124,246,0.35);
+    --gold:        #f0b429;
+    --gold-dim:    rgba(240,180,41,0.12);
+    --text:        #c8d4e8;
+    --text-secondary: #6e809a;
+    --text-muted:  #3d4f66;
+    --white:       #e8edf5;
+    --red-dim:     rgba(224,76,76,0.12);
+    --red:         #e04c4c;
+    --green-dim:   rgba(52,199,128,0.12);
+    --green:       #34c780;
+    --amber:       #f59e0b;
+    --amber-dim:   rgba(245,158,11,0.12);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background: var(--navy); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  .page { max-width: 780px; margin: 0 auto; padding: 48px 20px 96px; }
+
+  .header { border-bottom: 1px solid var(--blue-line); padding-bottom: 32px; margin-bottom: 40px; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); }
+  .classification { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(240,180,41,0.25); padding: 4px 12px; border-radius: 4px; }
+  .vendor-name { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 6vw, 42px); font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px; }
+  .vendor-sub { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); letter-spacing: 0.08em; margin-bottom: 20px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 4px; border: 1px solid var(--blue-line); color: var(--blue); background: var(--blue-dim); }
+  .meta-pill.gold  { border-color: rgba(240,180,41,0.3); color: var(--gold); background: var(--gold-dim); }
+  .meta-pill.amber { border-color: rgba(245,158,11,0.3); color: var(--amber); background: var(--amber-dim); }
+  .meta-pill.red   { border-color: rgba(224,76,76,0.3); color: var(--red); background: var(--red-dim); }
+  .meta-pill.green { border-color: rgba(52,199,128,0.3); color: var(--green); background: var(--green-dim); }
+
+  .bluf { background: var(--navy-2); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 20px 22px; margin-bottom: 40px; }
+  .bluf-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .bluf p { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+  .card { background: var(--navy-card); border: 1px solid rgba(46,124,246,0.12); border-radius: 10px; margin-bottom: 16px; overflow: hidden; transition: border-color 0.2s ease; }
+  .card:hover { border-color: rgba(46,124,246,0.28); }
+  .card-header { display: flex; align-items: center; gap: 14px; padding: 18px 22px; border-bottom: 1px solid rgba(46,124,246,0.1); cursor: pointer; user-select: none; }
+  .card-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-dim); border: 1px solid var(--blue-line); width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); flex: 1; }
+  .card-chevron { color: var(--text-muted); font-size: 18px; transition: transform 0.2s ease; flex-shrink: 0; }
+  .card.open .card-chevron { transform: rotate(180deg); }
+  .card-body { display: none; padding: 22px; }
+  .card.open .card-body { display: block; }
+
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; }
+  .field-value { font-size: 14px; color: var(--text); line-height: 1.65; }
+  .field-value strong { color: var(--white); font-weight: 600; }
+  .blue-divider { height: 1px; background: linear-gradient(90deg, var(--blue-line), transparent); margin: 18px 0; }
+
+  .signal-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .signal-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); line-height: 1.55; }
+  .signal-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .signal-dot.blue  { background: var(--blue); }
+  .signal-dot.gold  { background: var(--gold); }
+  .signal-dot.green { background: var(--green); }
+  .signal-dot.red   { background: var(--red); }
+  .signal-dot.amber { background: var(--amber); }
+
+  .tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; vertical-align: middle; }
+  .tag.green { background: var(--green-dim); color: var(--green); }
+  .tag.gold  { background: var(--gold-dim); color: var(--gold); }
+  .tag.blue  { background: var(--blue-dim); color: var(--blue); }
+  .tag.red   { background: var(--red-dim); color: var(--red); }
+  .tag.amber { background: var(--amber-dim); color: var(--amber); }
+
+  .score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); width: 220px; flex-shrink: 0; line-height: 1.3; }
+  .score-weight { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); display: block; }
+  .score-bar-wrap { flex: 1; height: 5px; background: rgba(46,124,246,0.1); border-radius: 3px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 3px; background: var(--gold); }
+  .score-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--gold); width: 36px; text-align: right; flex-shrink: 0; }
+
+  .total-score { display: flex; align-items: center; justify-content: space-between; background: var(--navy-raised); border: 1px solid rgba(240,180,41,0.25); border-radius: 8px; padding: 18px 22px; margin-top: 22px; }
+  .total-score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary); }
+  .total-tier { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); margin-top: 4px; letter-spacing: 0.08em; }
+  .total-score-num { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; text-align: right; }
+  .total-score-denom { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+
+  .assessment-block { background: var(--navy-raised); border-radius: 8px; padding: 16px 18px; margin-bottom: 12px; }
+  .assessment-block-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
+  .assessment-block-title.green { color: var(--green); }
+  .assessment-block-title.gold  { color: var(--gold); }
+  .assessment-block-title.red   { color: var(--red); }
+
+  .warn-block { background: rgba(224,76,76,0.06); border: 1px solid rgba(224,76,76,0.28); border-radius: 8px; padding: 16px 18px; margin: 14px 0; }
+  .warn-block-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+  .warn-block p { font-size: 13px; color: var(--text); line-height: 1.65; }
+
+  .callout { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 13px; line-height: 1.6; }
+  .callout.blue  { background: var(--blue-dim); border: 1px solid var(--blue-line); color: var(--blue); }
+  .callout.amber { background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.25); color: var(--amber); }
+  .callout strong { font-weight: 700; }
+
+  .confidence { display: flex; align-items: center; gap: 6px; margin: 16px 0; }
+  .conf-pip { flex: 1; height: 6px; border-radius: 3px; background: rgba(46,124,246,0.1); }
+  .conf-pip.active.gold  { background: var(--gold); }
+  .conf-pip.active.amber { background: var(--amber); }
+  .conf-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; white-space: nowrap; }
+  .conf-label.gold  { color: var(--gold); }
+
+  .cta-block { background: linear-gradient(135deg, var(--navy-raised) 0%, rgba(46,124,246,0.08) 100%); border: 1px solid var(--blue-line); border-radius: 10px; padding: 24px; margin-top: 40px; text-align: center; }
+  .cta-block p { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 14px; }
+  .cta-btn { display: inline-block; background: var(--blue); color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; padding: 12px 28px; border-radius: 6px; text-decoration: none; transition: background 0.2s ease, transform 0.2s ease; }
+  .cta-btn:hover { background: #1a6ae0; transform: translateY(-1px); }
+  .cta-note { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; }
+
+  .bottom-line { background: var(--navy-2); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 18px 22px; margin-top: 32px; }
+  .bottom-line-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .bottom-line p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; font-style: italic; }
+
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--text-muted); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .footer-brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+  .footer-doctrine { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
+  .footer-disclosure { width: 100%; font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-top: 8px; }
+
+
+
+  /* Protokol X visual alignment layer */
+  body {
+    background:
+      radial-gradient(circle at 50% -20%, rgba(46,124,246,0.16), transparent 34rem),
+      linear-gradient(rgba(46,124,246,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,124,246,0.035) 1px, transparent 1px),
+      #05070b;
+    background-size: auto, 44px 44px, 44px 44px, auto;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.035), transparent 16%, transparent 84%, rgba(240,180,41,0.035)),
+      radial-gradient(circle at 12% 18%, rgba(245,158,11,0.07), transparent 18rem);
+    mix-blend-mode: screen;
+    opacity: 0.75;
+  }
+
+  .page { max-width: 980px; padding: 28px 20px 96px; position: relative; }
+  .top-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+  .back-link,
+  .px-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .back-link { color: var(--blue); text-decoration: none; }
+  .back-link:hover { color: var(--white); }
+  .px-mark { color: var(--text-muted); text-align: right; }
+
+  .header {
+    position: relative;
+    background: linear-gradient(145deg, rgba(13,19,32,0.94), rgba(4,7,12,0.98));
+    border: 1px solid rgba(46,124,246,0.28);
+    border-radius: 14px;
+    padding: 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 22px 70px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.04);
+    overflow: hidden;
+  }
+  .header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(120deg, rgba(46,124,246,0.14), transparent 38%),
+      radial-gradient(circle at 82% 24%, rgba(240,180,41,0.12), transparent 18rem),
+      radial-gradient(circle at 14% 78%, rgba(245,158,11,0.08), transparent 16rem);
+    pointer-events: none;
+  }
+  .header > * { position: relative; z-index: 1; }
+  .vendor-name { font-size: clamp(34px, 7vw, 64px); letter-spacing: -0.045em; text-transform: uppercase; }
+  .vendor-sub { color: #8798b3; }
+  .meta-row { margin-top: 22px; }
+  .meta-pill { border-radius: 999px; background: rgba(46,124,246,0.1); }
+  .meta-pill.red { box-shadow: 0 0 22px rgba(224,76,76,0.1); }
+
+  .hero-score {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 18px;
+    margin-top: 26px;
+    padding: 20px;
+    border: 1px solid rgba(240,180,41,0.34);
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(240,180,41,0.13), rgba(46,124,246,0.06));
+  }
+  .hero-score-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 7px;
+  }
+  .hero-score-copy { color: var(--text-secondary); font-size: 13px; max-width: 58ch; }
+  .hero-score-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 10vw, 82px);
+    font-weight: 700;
+    line-height: 0.85;
+    color: var(--gold);
+    text-align: right;
+  }
+  .hero-score-denom {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 8px;
+  }
+
+  .bluf, .bottom-line {
+    border-radius: 12px;
+    border: 1px solid rgba(46,124,246,0.24);
+    border-left: 4px solid var(--blue);
+    background: rgba(9,14,24,0.92);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.28);
+  }
+  .bottom-line { border-color: rgba(240,180,41,0.24); border-left-color: var(--gold); }
+  .card {
+    background: linear-gradient(180deg, rgba(19,25,38,0.92), rgba(9,14,24,0.92));
+    border-color: rgba(46,124,246,0.18);
+    border-radius: 12px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.22);
+  }
+  .card:hover { border-color: rgba(46,124,246,0.48); transform: translateY(-1px); }
+  .card-header { min-height: 76px; }
+  .card-num {
+    color: #06101d;
+    background: linear-gradient(135deg, var(--gold), #d99618);
+    border: 0;
+    box-shadow: 0 0 26px rgba(240,180,41,0.16);
+  }
+  .card-title { font-size: 16px; letter-spacing: 0.01em; }
+  .score-bar-wrap { background: rgba(255,255,255,0.08); }
+  .score-bar { background: linear-gradient(90deg, #b98519, var(--gold), #ffe199); }
+  .total-score {
+    background: linear-gradient(135deg, rgba(240,180,41,0.12), rgba(11,15,26,0.9));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .warn-block {
+    border-radius: 12px;
+    border-color: rgba(245,158,11,0.38);
+    border-left: 4px solid var(--amber);
+    background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(9,14,24,0.95));
+    box-shadow: 0 18px 48px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .warn-block-label { color: #ffc46b; line-height: 1.45; }
+  .warn-block p { color: #d4deee; }
+  .callout.blue, .callout.amber {
+    border-radius: 12px;
+    background: rgba(18,25,38,0.92);
+  }
+  .callout.blue { border-left: 4px solid var(--blue); }
+  .callout.amber { border-left: 4px solid var(--amber); }
+  .assessment-block {
+    border: 1px solid rgba(46,124,246,0.14);
+    background: rgba(18,25,38,0.9);
+  }
+  .assessment-block:has(.assessment-block-title.red) { border-color: rgba(245,158,11,0.28); }
+  .assessment-block-title.green { color: #42d991; }
+  .assessment-block-title.gold { color: var(--gold); }
+  .assessment-block-title.red { color: #ffc46b; }
+  .confidence {
+    padding: 14px;
+    border: 1px solid rgba(240,180,41,0.24);
+    border-radius: 10px;
+    background: rgba(240,180,41,0.06);
+  }
+  .cta-block {
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(46,124,246,0.16), rgba(5,7,11,0.96));
+    box-shadow: 0 20px 60px rgba(0,0,0,0.34);
+  }
+  .cta-btn {
+    border-radius: 999px;
+    background: linear-gradient(135deg, #4f96ff, var(--blue));
+    box-shadow: 0 12px 34px rgba(46,124,246,0.32);
+  }
+  .cta-btn:hover { background: linear-gradient(135deg, #76adff, #2e7cf6); }
+  footer { border-top-color: rgba(46,124,246,0.22); }
+
+  @media (max-width: 640px) {
+    .page { padding: 22px 14px 72px; }
+    .top-nav { align-items: flex-start; flex-direction: column; }
+    .px-mark { text-align: left; }
+    .header { padding: 22px 18px; }
+    .header-top { align-items: flex-start; }
+    .hero-score { grid-template-columns: 1fr; }
+    .hero-score-num, .hero-score-denom { text-align: left; }
+    .card-header { padding: 16px; }
+    .card-body { padding: 18px 16px; }
+    .score-row { align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+    .score-label { width: calc(100% - 48px); }
+    .score-bar-wrap { order: 3; flex-basis: 100%; }
+    .conf-label { white-space: normal; }
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 28px 16px 72px; }
+    .score-label { width: 160px; font-size: 9px; }
+    .total-score-num { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="top-nav" aria-label="Vendor brief navigation">
+    <a class="back-link" href="index.html" aria-label="Back to Vendor Index">&larr; Back to Vendor Index</a>
+    <div class="px-mark">Protokol X // Vendor Intelligence Brief // Clarity Over Noise</div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="brand">Protokol X // Vendor Intelligence</div>
+      <div class="classification">Research Use Only</div>
+    </div>
+    <div class="vendor-name">Petratide Science</div>
+    <div class="vendor-sub">petratidescience.com &nbsp;·&nbsp; Brief Date: June 2026 &nbsp;·&nbsp; Revision: 1.0</div>
+    <div class="meta-row">
+      <span class="meta-pill">US-Based</span>
+      <span class="meta-pill">Third-Party COA on Every Batch</span>
+      <span class="meta-pill">85,000+ Researchers Claimed</span>
+      <span class="meta-pill">Discord Community</span>
+      <span class="meta-pill red">Endotoxin Report — Watch Item</span>
+      <span class="meta-pill gold">Rank 4 · Tier 1 · 8.2 / 10</span>
+    </div>
+    <div class="hero-score" aria-label="Protokol X Trust Score">
+      <div>
+        <div class="hero-score-label">Protokol X Trust Score</div>
+        <div class="hero-score-copy">Rank 4 &middot; Tier 1 &middot; 8.2 / 10. Conditional Recommendation with every-batch COA positioning and endotoxin watch item disclosed.</div>
+      </div>
+      <div>
+        <div class="hero-score-num">8.2</div>
+        <div class="hero-score-denom">/ 10</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLUF -->
+  <div class="bluf">
+    <div class="bluf-label">BLUF — Bottom Line Up Front</div>
+    <p>This assessment evaluates publicly available evidence, documentation, verification architecture, operational transparency, and community signals for Petratide Science. Petratide presents a value-forward, accessibility-first positioning — third-party COAs on every batch, ≥99% purity stated, aggressive pricing, fast shipping, and a Discord-based community. A 85,000+ researcher claim is on-site. Primary watch item requiring elevated attention: a Trustpilot report (April 2026) documents an independent third-party endotoxin test result of 5 EU/kg on Petratide products — a significant contamination finding if accurate. That report is a single data point, vendor-unclaimed profile, and not independently corroborated in available data at time of brief. It cannot be dismissed and must be disclosed. Protokol X evaluates evidence, not intent. Architecture before conclusions. Questions before answers.</p>
+  </div>
+
+  <!-- CARD 1 -->
+  <div class="card open" id="card-1">
+    <div class="card-header" onclick="toggleCard('card-1')">
+      <div class="card-num">01</div>
+      <div class="card-title">Executive Summary</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Who They Are</div>
+        <div class="field-value">Petratide Science is a US-based research compound vendor positioning on the intersection of affordability and documentation quality — "where affordability meets authenticity" per their stated brand tagline. They claim third-party COA verification on every batch, ≥99% purity across their catalog, and a researcher community of 85,000+. The operation runs a Discord server for community engagement, active TikTok presence, and an affiliate/creator program (via GoAffPro). WordPress-based storefront with account-gated product access. Domain is relatively new (~7 months at April 2026 analysis). Affiliate link: petratidescience.com/?ref=mikeyb7189.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Primary Strengths</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Third-party COA on every batch — stated policy</strong> — not a select-product COA model; every batch is stated as independently verified with publicly downloadable COAs on each product page</li>
+          <li><span class="signal-dot green"></span><strong>≥99% purity stated across catalog</strong> — standard is declared on-site with batch-specific COA backing</li>
+          <li><span class="signal-dot green"></span><strong>Aggressive value positioning</strong> — "no inflated markups" pricing with up to 35% off promotions; accessibility is a core brand pillar</li>
+          <li><span class="signal-dot green"></span><strong>Fast, discreet shipping stated</strong> — described as a primary value proposition alongside COA transparency</li>
+          <li><span class="signal-dot green"></span><strong>Discord community</strong> — active researcher community for peer engagement and support; cited by community members as a differentiating accessibility feature</li>
+          <li><span class="signal-dot green"></span><strong>Responsive customer service</strong> — cited positively in community feedback; quick response times noted independently</li>
+          <li><span class="signal-dot blue"></span>COA library accessible and downloadable directly from product pages — low-friction documentation access</li>
+          <li><span class="signal-dot blue"></span>256-bit SSL, encrypted payments, discreet packaging — site-stated security and privacy commitments</li>
+          <li><span class="signal-dot blue"></span>Finnrick Analytics has 1 sample on record — present in the independent testing database, unlike SwissChems</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Notable Limitations</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot red"></span><strong>Independent endotoxin test report (Trustpilot, April 2026)</strong> — a purchaser reported independent third-party testing revealing endotoxin levels of 5 EU/kg; see Card 7 for full treatment</li>
+          <li><span class="signal-dot amber"></span>Domain is relatively new (~7 months at April 2026) — operational track record is limited</li>
+          <li><span class="signal-dot amber"></span>Trustpilot profile is unclaimed — vendor has not engaged with the review platform; limits observable dispute resolution behavior</li>
+          <li><span class="signal-dot amber"></span>Community review volume is low — 2 Trustpilot reviews (1 positive, 1 negative); limited data set</li>
+          <li><span class="signal-dot amber"></span>Account-gated product access — catalog and full COA library require registration; limits third-party independent verification without account creation</li>
+          <li><span class="signal-dot amber"></span>85,000+ researcher claim is a large number for a ~7-month-old operation — requires independent corroboration</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Best Fit Audience</div>
+        <div class="field-value">Price-conscious researchers who prioritize COA access alongside competitive pricing. Those who value community-supported research via Discord for peer knowledge sharing. Researchers who verify COA documentation independently before use. Protokol X Rank 4, Tier 1 reflects the vendor's documentation architecture and accessibility positioning — evaluated alongside the endotoxin watch item as a disclosed known risk requiring researcher awareness.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card" id="card-2">
+    <div class="card-header" onclick="toggleCard('card-2')">
+      <div class="card-num">02</div>
+      <div class="card-title">Verification Architecture</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Stated Testing Model</div>
+        <div class="field-value">Petratide Science states that <strong>every batch is independently tested</strong> with a third-party Certificate of Analysis confirming purity, identity, and batch-specific results. COAs are stated as available directly on each product page via a COA library and downloadable at any time. This is a strong documentation commitment on paper — every-batch independent testing at public accessibility is the architecture researchers should look for and that most vendors do not fully deliver.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Stated Purity Standard</div>
+        <div class="field-value">≥99% purity claimed across the catalog via independent batch testing. COAs are batch-specific, not generic. The stated architecture — batch-specific COA, independent lab, downloadable from product page — is the documentation standard Protokol X values and evaluates.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Finnrick Analytics Presence</div>
+        <div class="field-value">Petratide Science has <strong>1 sample on record</strong> in the Finnrick Analytics independent testing database — across 1 product. Finnrick is a community-trusted independent lab database with public batch-ID lookup. Petratide's presence in Finnrick, even with a single sample, places them ahead of SwissChems (no Finnrick presence) on this specific independent verifiability axis. The single-sample data set is too limited to draw quality conclusions from but confirms the vendor is visible to independent testing channels.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Endotoxin Testing — Critical Gap</div>
+        <div class="field-value">A Trustpilot report (April 2026) documents an independent third-party endotoxin test result of <strong>5 EU/kg</strong> on Petratide products. This is a material documentation gap: if Petratide's stated "third-party COA on every batch" includes endotoxin screening, the reported result would represent either a batch failure or a significant variance from vendor-stated specifications. If endotoxin testing is not included in Petratide's COA methodology, the "every batch independently tested" claim carries a meaningful gap relative to vendors (Axon: endotoxin at Phase I via ARS Labs; Ramp: endotoxin confirmed) who explicitly test for this contamination class. The endotoxin report is treated in full in Card 7.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:14px;">Protokol X 8-Factor Subscores</div>
+      <div class="score-row">
+        <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+        <div class="score-num">8.5</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:75%"></div></div>
+        <div class="score-num">7.5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card" id="card-3">
+    <div class="card-header" onclick="toggleCard('card-3')">
+      <div class="card-num">03</div>
+      <div class="card-title">Transparency & Documentation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Public Documentation Architecture</div>
+        <div class="field-value">Petratide's stated documentation model is strong on paper: every-batch COA, downloadable from product page, batch-specific, third-party sourced. The on-site FAQ explicitly confirms "every product comes with a third-party Certificate of Analysis confirming purity, identity, and batch-specific test results — COAs are available directly on each product page via our COA library and can be downloaded at any time." This is a clear, documented commitment that is above the median for the vendor category.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Site Accessibility</div>
+        <div class="field-value">Product access and COA library access require account registration. This is a partial friction point — researchers cannot independently verify COA availability and testing methodology for specific compounds without creating an account. The stated policy is accessible once registered; the verification pathway requires a barrier to entry that other vendors (Axon's AxonVerified, ION's QR-linked COAs) do not impose.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Trustpilot Profile Status</div>
+        <div class="field-value">Petratide's Trustpilot profile is <strong>unclaimed</strong>. The vendor has not engaged with the platform — no response to either the positive or negative reviews on record. An unclaimed Trustpilot profile is not a quality signal on its own, but it means the vendor's observable dispute resolution behavior on public platforms is zero. Combined with the endotoxin report being the most significant item in the current review data, the absence of a vendor response on public record is a transparency gap.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">RUO Compliance Posture</div>
+        <div class="field-value">Standard RUO language is present throughout the site and at point of purchase. Products are designated Research Use Only with appropriate disclaimers. The purchase confirmation requires acknowledgment that all materials are for research purposes only and will be handled in a controlled laboratory setting in compliance with applicable laws. Compliance posture is appropriate and clearly stated.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+        <div class="score-num">8.0</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+        <div class="score-num">8.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="card" id="card-4">
+    <div class="card-header" onclick="toggleCard('card-4')">
+      <div class="card-num">04</div>
+      <div class="card-title">Customer Experience</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Shipping & Fulfillment</div>
+        <div class="field-value">Fast and discreet shipping is cited as a primary value proposition on-site. 256-bit SSL encryption and protected packaging are stated on every order. No specific fulfillment time window is publicly documented in available data, but community references describe the operational experience positively where product receipt is concerned. Shipping claims are vendor-stated; independent community corroboration is limited by low review volume.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Customer Service</div>
+        <div class="field-value">"Knowledgeable team ready to assist with your research needs. Always On." is the stated support positioning. The positive Trustpilot review (April 2026) independently confirms: "Customer service is quick and responsive." A Discord community provides a peer-to-peer support layer beyond standard vendor support channels — community members help each other navigate research questions and product use.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Pricing & Value</div>
+        <div class="field-value">Petratide positions on value — "affordable meets authentic." Up to 35% off promotions observed. "No inflated markups" is the stated pricing philosophy. Account registration unlocks exclusive pricing, bulk discounts, and full COA access. A 10% affiliate discount is available via Protokol X code mikeyb7189. Pricing is competitive relative to the Protokol X vendor series — consistent with Petratide's market positioning as the accessibility-forward Tier 1 option.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Community Platform</div>
+        <div class="field-value">Discord server is an active community feature. Community members cite it as a differentiating support resource — the ability to communicate with other researchers experiencing the same questions, compounds, and protocols. TikTok presence is active with affiliate/creator content. GoAffPro-powered affiliate program is running. Community engagement infrastructure is more developed than most vendors at a comparable operational age.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:83%"></div></div>
+        <div class="score-num">8.3</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+        <div class="score-num">8.5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5 -->
+  <div class="card" id="card-5">
+    <div class="card-header" onclick="toggleCard('card-5')">
+      <div class="card-num">05</div>
+      <div class="card-title">Operations & Catalog</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Catalog Overview</div>
+        <div class="field-value">
+          Full catalog requires account access. From available site data and community references, the catalog includes:<br><br>
+          <span class="tag blue">Recovery</span>&nbsp; BPC-157 · TB-500<br><br>
+          <span class="tag blue">GH Axis</span>&nbsp; Ipamorelin · CJC-1295 · GHRP variants<br><br>
+          <span class="tag blue">Metabolic / GLP</span>&nbsp; Semaglutide · Tirzepatide · Retatrutide<br><br>
+          <span class="tag blue">Longevity</span>&nbsp; GHK-Cu · Epithalon · NAD+<br><br>
+          <span class="tag blue">Cognitive</span>&nbsp; Semax · Selank<br><br>
+          <span class="tag gold">Blends</span>&nbsp; Compound blend formulations available<br><br>
+          <span class="tag blue">Supplies</span>&nbsp; Bacteriostatic water and reconstitution materials
+        </div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Operational Maturity</div>
+        <div class="field-value">Domain registered approximately 7 months prior to April 2026 analysis — placing founding around late 2025. This makes Petratide one of the newer operations in the Protokol X series, comparable to Ramp in operational age. The 85,000+ researcher claim is a large number for a ~7-month operation. It cannot be independently verified from available public data and should be treated as a vendor-stated metric rather than an independently confirmed figure.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Infrastructure Notes</div>
+        <div class="field-value">WordPress platform. Cloudflare-hosted. GoAffPro affiliate management. Klaviyo email marketing integration. These are standard e-commerce infrastructure components. Account-gated access to products and COA library. Pricing tiers available at registration (exclusive pricing, bulk discounts). The infrastructure is appropriate for the vendor's scale and positioning.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:82%"></div></div>
+        <div class="score-num">8.2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:75%"></div></div>
+        <div class="score-num">7.5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6 -->
+  <div class="card" id="card-6">
+    <div class="card-header" onclick="toggleCard('card-6')">
+      <div class="card-num">06</div>
+      <div class="card-title">Community & Reputation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Trustpilot Signal — 2 Reviews, 3.4 / 5</div>
+        <div class="field-value">Two reviews on record at time of brief — a 50/50 split between 5-star and 1-star. The 5-star review (February 2026, verified purchase): "Customer service is quick and responsive. The products appear to work as they should." The 1-star review (March 2026): "This is a scam don't fall for it." Additionally, a separate Trustpilot text report describes an independent endotoxin test result of 5 EU/kg — the most material item in the available community signal. Trustpilot profile is unclaimed; no vendor responses on record.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">TikTok Community Signal</div>
+        <div class="field-value">Active TikTok presence with affiliate and organic content. Community members cite the Discord as a genuine differentiator — "a lovely community" where researchers help each other and discuss product questions openly. The TikTok discussion around Petratide includes both positive affiliate-driven content and independent commentary on genuine vs. affiliate review authenticity — a nuance that is consistent with an early-stage brand building social proof through creator partnerships.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Finnrick Analytics</div>
+        <div class="field-value">1 sample tested across 1 product. The sample exists in the Finnrick database — meaning an independent community-submitted test has been conducted on at least one Petratide product. The single sample is an insufficient data set to draw conclusions about catalog-wide quality but confirms the vendor is within the independent testing ecosystem's visibility.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Reputation Risk Context</div>
+        <div class="field-value">The endotoxin report is the dominant reputation event in Petratide's available community signal. A new domain (~7 months), low community review volume, and an unclaimed Trustpilot profile mean the endotoxin report carries disproportionate evidential weight relative to what it would carry for a vendor with years of corroborating positive community data. This is not an assessment of guilt — it is a calibration of the evidence landscape.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7 -->
+  <div class="card" id="card-7">
+    <div class="card-header" onclick="toggleCard('card-7')">
+      <div class="card-num">07</div>
+      <div class="card-title">Intelligence Assessment</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <!-- Endotoxin Warning -->
+      <div class="warn-block">
+        <div class="warn-block-label">⚠ Endotoxin Report — Trustpilot · April 2026 · Single Data Point · Unresolved</div>
+        <p>A Trustpilot reviewer (April 2026) reported that independent third-party testing of products purchased from Petratide Science on April 6, 2026 revealed <strong>endotoxin levels of 5 EU/kg</strong>. The reviewer described the result as "MORTIFYING" and issued a clear avoid recommendation. Context for this data point: (1) It is a single report from a single purchaser — not a pattern of multiple independent reports. (2) The Trustpilot platform does not verify specific testing claims. (3) Petratide's Trustpilot profile is unclaimed — no vendor response to the claim exists on public record. (4) The endotoxin result cannot be corroborated or disproved from available public data at time of brief. What is documented: the report exists, it is specific and detailed, and it involves an independent third-party test result with a named metric (5 EU/kg). Protokol X discloses this report in full because it is relevant to researcher safety evaluation and cannot be dismissed without independent resolution. Researchers who require endotoxin-screened compounds should verify endotoxin testing methodology directly with Petratide before ordering and consider requesting independent testing of received product.</p>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title green">Strengths — Evidence-Supported</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Every-batch third-party COA — stated policy</strong> — strongest COA access commitment in the series on a per-unit basis; downloadable from product pages</li>
+          <li><span class="signal-dot green"></span><strong>≥99% purity stated with batch-specific documentation</strong> — purity standard is clear, batch-anchored, and publicly committed</li>
+          <li><span class="signal-dot green"></span><strong>Finnrick Analytics presence</strong> — 1 independent sample in the community testing database; ahead of SwissChems on this specific independent verifiability axis</li>
+          <li><span class="signal-dot green"></span><strong>Discord community infrastructure</strong> — active peer researcher community; cited positively as a differentiating support and transparency resource</li>
+          <li><span class="signal-dot green"></span><strong>Customer service responsiveness independently confirmed</strong> — positive Trustpilot review (verified purchase) cites quick and responsive support</li>
+          <li><span class="signal-dot green"></span><strong>Value pricing with COA access</strong> — the combination of low price point and every-batch COA commitment addresses the most common trade-off in the vendor category</li>
+        </ul>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title red">Critical Watch Item — Endotoxin Report</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot red"></span><strong>Single independent endotoxin test report showing 5 EU/kg:</strong> Documented on Trustpilot April 2026; specific, detailed, named metric; cannot be dismissed without vendor response or independent corroboration</li>
+          <li><span class="signal-dot red"></span><strong>No vendor response on record:</strong> Unclaimed Trustpilot profile means no documented vendor acknowledgment, dispute, or resolution of the endotoxin claim exists publicly</li>
+          <li><span class="signal-dot red"></span><strong>COA methodology gap:</strong> If Petratide's stated "every batch independently tested" does not include endotoxin screening specifically, the testing commitment has a material scope limitation that researchers should confirm before ordering</li>
+        </ul>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title gold">Additional Watch Items</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot gold"></span><strong>New domain (~7 months):</strong> Limited operational track record; positive early signals have not yet been stress-tested across multiple order cycles</li>
+          <li><span class="signal-dot gold"></span><strong>85,000+ researcher claim:</strong> Large number for the operational age; not independently verifiable from public data</li>
+          <li><span class="signal-dot gold"></span><strong>Account-gated verification:</strong> Full COA library and pricing require registration; reduces independent third-party assessment capability</li>
+          <li><span class="signal-dot gold"></span><strong>Low public review volume:</strong> 2 Trustpilot reviews; insufficient to establish a sustained quality pattern in either direction</li>
+        </ul>
+      </div>
+
+      <!-- Confidence -->
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Confidence Level</div>
+      <div class="confidence">
+        <div class="conf-pip active gold"></div>
+        <div class="conf-pip active gold" style="opacity:0.55;"></div>
+        <div class="conf-pip"></div>
+        <div class="conf-pip"></div>
+        <div class="conf-label gold">&nbsp;Moderate — Endotoxin Report Unresolved</div>
+      </div>
+      <div class="field-value" style="font-size:13px; color:var(--text-secondary);">Confidence is Moderate. The endotoxin report is the dominant uncertainty. Until it is independently resolved — either corroborated by additional reports or addressed by vendor documentation showing endotoxin testing in their COA methodology — the confidence level cannot rise above Moderate regardless of the strength of other positive signals. Confidence would move to High if: (a) additional independent tests show no endotoxin issue, or (b) Petratide publicly documents that endotoxin testing is part of every COA and provides methodology evidence.</div>
+
+      <!-- Total score -->
+      <div class="total-score">
+        <div>
+          <div class="total-score-label">Protokol X Trust Score</div>
+          <div class="total-tier">Rank 4 &nbsp;·&nbsp; Tier 1 &nbsp;·&nbsp; 8-Factor Matrix</div>
+        </div>
+        <div>
+          <div class="total-score-num">8.2</div>
+          <div class="total-score-denom">/ 10 &nbsp;·&nbsp; Conditional Recommendation</div>
+        </div>
+      </div>
+
+      <!-- Full 8-factor breakdown -->
+      <div style="margin-top:20px;">
+        <div class="score-row">
+          <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+          <div class="score-num">8.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:75%"></div></div>
+          <div class="score-num">7.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+          <div class="score-num">8.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:82%"></div></div>
+          <div class="score-num">8.2</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+          <div class="score-num">8.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:83%"></div></div>
+          <div class="score-num">8.3</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+          <div class="score-num">8.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:75%"></div></div>
+          <div class="score-num">7.5</div>
+        </div>
+      </div>
+
+      <!-- Final -->
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Protokol X Assessment</div>
+      <div class="field-value">Petratide Science's documentation architecture is one of the strongest stated commitments in the series — every-batch third-party COA, downloadable from product pages, batch-specific, ≥99% purity. If that architecture performs as stated, it competes favorably with Axon and ION on documentation quality while significantly undercutting them on price. That combination, if verified, would place Petratide among the stronger value propositions in the series.<br><br>The endotoxin report cannot be set aside. A single independent third-party test result of 5 EU/kg is a material finding. It does not establish a pattern — it establishes a question. The question is: does Petratide's testing model include endotoxin screening, and if so, how does a batch that passed vendor testing produce an independent result that raises significant concern? That question is unanswered in the public record at time of brief.<br><br>Protokol X's responsibility is to disclose that question completely, not to resolve it on behalf of the researcher. The Rank 4, Tier 1 classification reflects the vendor's stated documentation infrastructure and accessibility positioning — it is not an endorsement of the endotoxin report as definitively accurate, nor a dismissal of it. Both conditions exist simultaneously in the evidence record.<br><br>The appropriate posture is a <strong>Conditional Recommendation</strong> with elevated researcher responsibility for independent verification on endotoxin specifically before use.<br><br><strong>Protokol X assessment: Rank 4, Tier 1. Strong stated documentation architecture. Endotoxin report is disclosed and unresolved — researchers should independently confirm endotoxin testing methodology before ordering.</strong></div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <p>Protokol X Affiliate Link &nbsp;·&nbsp; Research Use Only</p>
+    <a class="cta-btn" href="https://petratidescience.com/?ref=mikeyb7189" target="_blank" rel="noopener">Visit Petratide Science — Use Code mikeyb7189 for 10% Off</a>
+    <div class="cta-note">For research purposes only. Not for human or animal use. Not FDA-approved.</div>
+  </div>
+
+  <!-- Bottom Line -->
+  <div class="bottom-line">
+    <div class="bottom-line-label">Bottom Line</div>
+    <p>"No vendor should be trusted because they make claims. Vendors earn confidence through evidence, transparency, verification architecture, and consistency over time. The goal is not certainty. The goal is reducing uncertainty."</p>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Protokol X &nbsp;·&nbsp; Vendor Intelligence Series</div>
+    <div class="footer-doctrine">Clarity Over Noise. Assess. Decide. Execute.</div>
+    <div class="footer-disclosure">Disclosure: Protokol X participates in affiliate programs including Petratide Science (ref=mikeyb7189). If you purchase through our link, we may earn a commission at no additional cost to you. Vendor Trust Index scores are applied independently of affiliate relationships. All content is for informational purposes only. Not medical advice. Not FDA-approved. For research use only.</div>
+  </footer>
+
+</div>
+<script>
+  function toggleCard(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

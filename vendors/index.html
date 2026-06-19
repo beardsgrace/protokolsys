@@ -3,14 +3,689 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Redirects an older PROTOKOL X URL to the current canonical page." />
-  <meta name="robots" content="noindex, follow" />
-  <meta http-equiv="refresh" content="0; url=/#vendors" />
-  <link rel="canonical" href="https://www.protokolx.com/#vendors" />
-  <title>Redirect | PROTOKOL X</title>
+  <meta name="description" content="Protokol X Vendor Intelligence Index: evidence-based research vendor briefs ranked by Trust Score, documentation architecture, transparency, and operational signal." />
+  <meta name="keywords" content="Protokol X, vendor intelligence, Trust Score, research vendor brief, RUO, SwissChems, ION Peptide, Axon Peptide, Petratide Science, Peptipura, Ramp Peptides, Kraken Pep" />
+  <meta property="og:title" content="Protokol X Vendor Intelligence Index" />
+  <meta property="og:description" content="Evidence-weighted vendor intelligence briefs built around clarity, documentation, and accountability." />
+  <meta property="og:type" content="website" />
+  <title>Protokol X Vendor Intelligence Index</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #05070b;
+      --navy: #0b0f1a;
+      --panel: #111827;
+      --panel-2: #151d2b;
+      --blue: #2e7cf6;
+      --blue-soft: rgba(46,124,246,0.14);
+      --blue-line: rgba(46,124,246,0.34);
+      --gold: #f0b429;
+      --gold-soft: rgba(240,180,41,0.13);
+      --green: #34c780;
+      --green-soft: rgba(52,199,128,0.12);
+      --amber: #f59e0b;
+      --text: #c8d4e8;
+      --muted: #788aa5;
+      --dim: #42536a;
+      --white: #edf4ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 50% -18%, rgba(46,124,246,0.2), transparent 34rem),
+        radial-gradient(circle at 92% 14%, rgba(240,180,41,0.1), transparent 24rem),
+        linear-gradient(rgba(46,124,246,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46,124,246,0.035) 1px, transparent 1px),
+        var(--bg);
+      background-size: auto, auto, 44px 44px, 44px 44px, auto;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(5,7,11,0.18), rgba(5,7,11,0.84)),
+        radial-gradient(circle at 18% 28%, rgba(46,124,246,0.08), transparent 22rem),
+        radial-gradient(circle at 82% 74%, rgba(240,180,41,0.065), transparent 26rem);
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 72px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 0 18px;
+      border-bottom: 1px solid rgba(46,124,246,0.2);
+    }
+
+    .brand,
+    .topbar span,
+    .kicker,
+    .metric-label,
+    .brief-rank,
+    .brief-tier,
+    .brief-status,
+    .brief-link,
+    .tag-row,
+    footer {
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .brand {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      text-shadow: 0 0 18px rgba(46,124,246,0.35);
+    }
+
+    .topbar span {
+      color: var(--muted);
+      font-size: 10px;
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) 360px;
+      gap: 28px;
+      align-items: stretch;
+      padding: 52px 0 34px;
+    }
+
+    .hero-panel,
+    .score-panel,
+    .brief-card,
+    .doctrine-strip,
+    .disclosure {
+      border: 1px solid rgba(46,124,246,0.2);
+      border-radius: 18px;
+      background:
+        linear-gradient(145deg, rgba(17,24,39,0.96), rgba(7,10,18,0.98));
+      box-shadow: 0 24px 78px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.035);
+    }
+
+    .hero-panel {
+      padding: clamp(26px, 5vw, 44px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(46,124,246,0.72), rgba(240,180,41,0.58), transparent);
+    }
+
+    .kicker {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(42px, 8vw, 82px);
+      line-height: 0.94;
+      letter-spacing: -0.055em;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 22px 0 0;
+      color: var(--text);
+      font-size: clamp(16px, 2vw, 19px);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(46,124,246,0.32);
+      background: rgba(46,124,246,0.12);
+      color: var(--white);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .button.primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      box-shadow: 0 14px 34px rgba(46,124,246,0.24);
+    }
+
+    .button:hover,
+    .brief-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(240,180,41,0.56);
+    }
+
+    .score-panel {
+      padding: 24px;
+      display: grid;
+      align-content: center;
+      background:
+        linear-gradient(145deg, rgba(240,180,41,0.105), rgba(46,124,246,0.065)),
+        rgba(9,13,22,0.96);
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .metric-number {
+      margin-top: 10px;
+      color: var(--gold);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 78px;
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+    }
+
+    .metric-copy {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .doctrine-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      overflow: hidden;
+      margin: 0 0 24px;
+      background: rgba(46,124,246,0.18);
+    }
+
+    .doctrine-strip span {
+      padding: 16px;
+      color: var(--gold);
+      background: rgba(9,13,22,0.94);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+      margin: 36px 0 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(26px, 4vw, 42px);
+      letter-spacing: -0.035em;
+    }
+
+    .section-head p {
+      max-width: 430px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .brief-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .brief-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 410px;
+      padding: 22px;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .brief-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(46,124,246,0.08), transparent 46%),
+        radial-gradient(circle at 85% 12%, rgba(240,180,41,0.1), transparent 12rem);
+      opacity: 0.78;
+      pointer-events: none;
+    }
+
+    .brief-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(46,124,246,0.45);
+      box-shadow: 0 26px 86px rgba(0,0,0,0.34);
+    }
+
+    .brief-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .brief-card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .brief-rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      color: #07101b;
+      background: linear-gradient(135deg, var(--gold), #ffe18a);
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 0 26px rgba(240,180,41,0.2);
+    }
+
+    .brief-tier {
+      color: var(--blue);
+      border: 1px solid rgba(46,124,246,0.28);
+      border-radius: 999px;
+      background: var(--blue-soft);
+      padding: 6px 10px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .score-lockup {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin: 0 0 14px;
+    }
+
+    .score-lockup strong {
+      color: var(--gold);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 56px;
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+    }
+
+    .score-lockup span {
+      color: var(--dim);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .brief-card h2 {
+      margin: 0;
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 27px;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    .brief-card p {
+      margin: 14px 0 0;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .brief-status {
+      margin: 18px 0 0;
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .brief-card[data-tier="Tier 2"] .brief-status {
+      color: var(--gold);
+    }
+
+    .brief-card[data-tier="Tier 3"] .brief-status {
+      color: var(--amber);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 18px 0 22px;
+    }
+
+    .tag-row span {
+      border: 1px solid rgba(46,124,246,0.18);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.025);
+      color: var(--muted);
+      padding: 5px 8px;
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .brief-link {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid rgba(46,124,246,0.34);
+      border-radius: 999px;
+      background: rgba(46,124,246,0.13);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .disclosure {
+      margin-top: 28px;
+      padding: 22px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .disclosure strong {
+      color: var(--white);
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 38px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(46,124,246,0.18);
+      color: var(--dim);
+      font-size: 10px;
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .brief-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page {
+        width: min(100% - 24px, 1180px);
+        padding-top: 20px;
+      }
+
+      .topbar,
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .topbar span {
+        text-align: left;
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      .hero-panel,
+      .score-panel,
+      .brief-card,
+      .disclosure {
+        border-radius: 14px;
+      }
+
+      h1 {
+        font-size: clamp(38px, 14vw, 64px);
+      }
+
+      .doctrine-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .brief-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .brief-card {
+        min-height: auto;
+      }
+    }
+  </style>
 </head>
 <body>
-  <p>Redirecting to <a href="/#vendors">/#vendors</a>.</p>
-  <script>window.location.replace('/#vendors');</script>
+  <main class="page">
+    <nav class="topbar" aria-label="Vendor index navigation">
+      <a class="brand" href="index.html" aria-label="Protokol X Vendor Intelligence Index">Protokol X // Vendor Intelligence</a>
+      <span>Research Use Only // Clarity Over Noise // Updated June 2026</span>
+    </nav>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-panel">
+        <div class="kicker">Vendor Brief Library / Trust Index</div>
+        <h1 id="page-title">Evidence before conclusions.</h1>
+        <p class="hero-copy">A Protokol X intelligence index for research vendor briefs. Each profile is ranked by documentation architecture, verification quality, transparency, support signal, and operational consistency.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#briefs">Review Vendor Briefs</a>
+          <a class="button" href="#method">Read Evidence Boundary</a>
+        </div>
+      </div>
+
+      <aside class="score-panel" aria-label="Library summary">
+        <div class="metric-label">Current Library</div>
+        <div class="metric-number">07</div>
+        <p class="metric-copy">Seven completed vendor intelligence briefs, ranked from strongest current Trust Score to developing classification.</p>
+      </aside>
+    </section>
+
+    <div class="doctrine-strip" aria-label="Protokol X doctrine">
+      <span>Clarity Over Noise</span>
+      <span>Architecture Before Conclusions</span>
+      <span>Questions Before Answers</span>
+    </div>
+
+    <section id="briefs" aria-labelledby="briefs-title">
+      <div class="section-head">
+        <h2 id="briefs-title">Vendor Intelligence Briefs</h2>
+        <p>Open each dossier for BLUF, Trust Score, score bars, watch items, disclosures, and the full Protokol X assessment.</p>
+      </div>
+
+      <div class="brief-grid">
+        <article class="brief-card" data-tier="Tier 1" data-rank="01">
+          <div class="brief-card-top">
+            <span class="brief-rank">01</span>
+            <span class="brief-tier">Tier 1</span>
+          </div>
+          <div class="score-lockup" aria-label="SwissChems trust score">
+            <strong>9.3</strong>
+            <span>/ 10</span>
+          </div>
+          <h2>SwissChems</h2>
+          <p>Evidence-forward leader with the strongest Trust Score in the current library.</p>
+          <div class="brief-status">Recommended</div>
+          <div class="tag-row">
+            <span>Trust Score 9.3</span><span>Rank 1</span><span>FDA Watch Item Preserved</span>
+          </div>
+          <a class="brief-link" href="swisschems-intelligence-brief.html" aria-label="Open SwissChems Brief">Open SwissChems Brief</a>
+        </article>
+        <article class="brief-card" data-tier="Tier 1" data-rank="02">
+          <div class="brief-card-top">
+            <span class="brief-rank">02</span>
+            <span class="brief-tier">Tier 1</span>
+          </div>
+          <div class="score-lockup" aria-label="ION Peptide trust score">
+            <strong>8.8</strong>
+            <span>/ 10</span>
+          </div>
+          <h2>ION Peptide</h2>
+          <p>Raw chromatogram transparency, UPLC/MS documentation, and broad support signal.</p>
+          <div class="brief-status">Recommended</div>
+          <div class="tag-row">
+            <span>Trust Score 8.8</span><span>Rank 2</span><span>Raw Data Transparency</span>
+          </div>
+          <a class="brief-link" href="ion-peptide-intelligence-brief-v2.html" aria-label="Open ION Brief">Open ION Brief</a>
+        </article>
+        <article class="brief-card" data-tier="Tier 1" data-rank="03">
+          <div class="brief-card-top">
+            <span class="brief-rank">03</span>
+            <span class="brief-tier">Tier 1</span>
+          </div>
+          <div class="score-lockup" aria-label="Axon Peptide trust score">
+            <strong>8.6</strong>
+            <span>/ 10</span>
+          </div>
+          <h2>Axon Peptide</h2>
+          <p>Formal verification architecture, public AxonVerified records, and physician-led accountability.</p>
+          <div class="brief-status">Recommended</div>
+          <div class="tag-row">
+            <span>Trust Score 8.6</span><span>Rank 3</span><span>AxonVerified</span>
+          </div>
+          <a class="brief-link" href="axon-peptide-intelligence-brief-v2.html" aria-label="Open AXON Brief">Open AXON Brief</a>
+        </article>
+        <article class="brief-card" data-tier="Tier 1" data-rank="04">
+          <div class="brief-card-top">
+            <span class="brief-rank">04</span>
+            <span class="brief-tier">Tier 1</span>
+          </div>
+          <div class="score-lockup" aria-label="Petratide Science trust score">
+            <strong>8.2</strong>
+            <span>/ 10</span>
+          </div>
+          <h2>Petratide Science</h2>
+          <p>Every-batch COA posture with a professional endotoxin watch-item analysis preserved.</p>
+          <div class="brief-status">Conditional Recommendation</div>
+          <div class="tag-row">
+            <span>Trust Score 8.2</span><span>Rank 4</span><span>Endotoxin Watch Item</span>
+          </div>
+          <a class="brief-link" href="petratide-science-intelligence-brief.html" aria-label="Open Petratide Brief">Open Petratide Brief</a>
+        </article>
+        <article class="brief-card" data-tier="Tier 2" data-rank="05">
+          <div class="brief-card-top">
+            <span class="brief-rank">05</span>
+            <span class="brief-tier">Tier 2</span>
+          </div>
+          <div class="score-lockup" aria-label="Peptipura trust score">
+            <strong>8.1</strong>
+            <span>/ 10</span>
+          </div>
+          <h2>Peptipura</h2>
+          <p>Founder-operated boutique profile with Bridge Research heritage and open COA access.</p>
+          <div class="brief-status">Non-Affiliate Profile</div>
+          <div class="tag-row">
+            <span>Trust Score 8.1</span><span>Rank 5</span><span>No Affiliate Framing</span>
+          </div>
+          <a class="brief-link" href="peptipura-intelligence-brief.html" aria-label="Open Peptipura Brief">Open Peptipura Brief</a>
+        </article>
+        <article class="brief-card" data-tier="Tier 2" data-rank="06">
+          <div class="brief-card-top">
+            <span class="brief-rank">06</span>
+            <span class="brief-tier">Tier 2</span>
+          </div>
+          <div class="score-lockup" aria-label="Ramp Peptides trust score">
+            <strong>7.6</strong>
+            <span>/ 10</span>
+          </div>
+          <h2>Ramp Peptides</h2>
+          <p>Founder-operated value profile with VialTalk context and corrected timeline analysis.</p>
+          <div class="brief-status">Conditional Recommendation</div>
+          <div class="tag-row">
+            <span>Trust Score 7.6</span><span>Rank 6</span><span>Timeline Clarified</span>
+          </div>
+          <a class="brief-link" href="ramp-peptides-intelligence-brief-v2.html" aria-label="Open Ramp Brief">Open Ramp Brief</a>
+        </article>
+        <article class="brief-card" data-tier="Tier 3" data-rank="07">
+          <div class="brief-card-top">
+            <span class="brief-rank">07</span>
+            <span class="brief-tier">Tier 3</span>
+          </div>
+          <div class="score-lockup" aria-label="The Kraken Pep trust score">
+            <strong>6.2</strong>
+            <span>/ 10</span>
+          </div>
+          <h2>The Kraken Pep</h2>
+          <p>TikTok-first community signal with impersonation warning and Q3 reassessment preserved.</p>
+          <div class="brief-status">Developing Classification</div>
+          <div class="tag-row">
+            <span>Trust Score 6.2</span><span>Rank 7</span><span>Reassessment Pending</span>
+          </div>
+          <a class="brief-link" href="kraken-pep-intelligence-brief-v2.html" aria-label="Open Kraken Brief">Open Kraken Brief</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="disclosure" id="method" aria-label="Evidence boundary and disclosure">
+      <strong>Evidence Boundary:</strong> Protokol X evaluates publicly available documentation, vendor transparency, third-party testing posture, fulfillment/support signals, community references, and stated disclosures. These briefs are informational research-use-only assessments. They are not medical advice, treatment guidance, dosing guidance, product endorsement, or FDA approval language. Affiliate relationships, where present, do not determine Trust Score placement. Peptipura is included as a non-affiliate profile.
+    </section>
+
+    <footer>
+      <span>Protokol X Vendor Intelligence Series</span>
+      <span>Evaluate evidence, not assumptions.</span>
+    </footer>
+  </main>
 </body>
 </html>

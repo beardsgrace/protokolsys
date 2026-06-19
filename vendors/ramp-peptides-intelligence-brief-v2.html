@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ramp Peptides — Vendor Intelligence Brief | Protokol X</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:        #0b0f1a;
+    --navy-2:      #0f1522;
+    --navy-card:   #131926;
+    --navy-raised: #18202f;
+    --blue:        #2e7cf6;
+    --blue-dim:    rgba(46,124,246,0.15);
+    --blue-line:   rgba(46,124,246,0.35);
+    --gold:        #f0b429;
+    --gold-dim:    rgba(240,180,41,0.12);
+    --text:        #c8d4e8;
+    --text-secondary: #6e809a;
+    --text-muted:  #3d4f66;
+    --white:       #e8edf5;
+    --red-dim:     rgba(224,76,76,0.12);
+    --red:         #e04c4c;
+    --green-dim:   rgba(52,199,128,0.12);
+    --green:       #34c780;
+    --amber:       #f59e0b;
+    --amber-dim:   rgba(245,158,11,0.12);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background: var(--navy); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  .page { max-width: 780px; margin: 0 auto; padding: 48px 20px 96px; }
+
+  .header { border-bottom: 1px solid var(--blue-line); padding-bottom: 32px; margin-bottom: 40px; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); }
+  .classification { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(240,180,41,0.25); padding: 4px 12px; border-radius: 4px; }
+  .vendor-name { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 6vw, 42px); font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px; }
+  .vendor-sub { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); letter-spacing: 0.08em; margin-bottom: 20px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 4px; border: 1px solid var(--blue-line); color: var(--blue); background: var(--blue-dim); }
+  .meta-pill.gold  { border-color: rgba(240,180,41,0.3); color: var(--gold); background: var(--gold-dim); }
+  .meta-pill.green { border-color: rgba(52,199,128,0.3); color: var(--green); background: var(--green-dim); }
+  .meta-pill.amber { border-color: rgba(245,158,11,0.3); color: var(--amber); background: var(--amber-dim); }
+
+  .bluf { background: var(--navy-2); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 20px 22px; margin-bottom: 40px; }
+  .bluf-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .bluf p { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+  .card { background: var(--navy-card); border: 1px solid rgba(46,124,246,0.12); border-radius: 10px; margin-bottom: 16px; overflow: hidden; transition: border-color 0.2s ease; }
+  .card:hover { border-color: rgba(46,124,246,0.28); }
+  .card-header { display: flex; align-items: center; gap: 14px; padding: 18px 22px; border-bottom: 1px solid rgba(46,124,246,0.1); cursor: pointer; user-select: none; }
+  .card-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-dim); border: 1px solid var(--blue-line); width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); flex: 1; }
+  .card-chevron { color: var(--text-muted); font-size: 18px; transition: transform 0.2s ease; flex-shrink: 0; }
+  .card.open .card-chevron { transform: rotate(180deg); }
+  .card-body { display: none; padding: 22px; }
+  .card.open .card-body { display: block; }
+
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; }
+  .field-value { font-size: 14px; color: var(--text); line-height: 1.65; }
+  .field-value strong { color: var(--white); font-weight: 600; }
+  .blue-divider { height: 1px; background: linear-gradient(90deg, var(--blue-line), transparent); margin: 18px 0; }
+
+  .signal-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .signal-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); line-height: 1.55; }
+  .signal-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .signal-dot.blue  { background: var(--blue); }
+  .signal-dot.gold  { background: var(--gold); }
+  .signal-dot.green { background: var(--green); }
+  .signal-dot.amber { background: var(--amber); }
+
+  .tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; vertical-align: middle; }
+  .tag.green { background: var(--green-dim); color: var(--green); }
+  .tag.gold  { background: var(--gold-dim); color: var(--gold); }
+  .tag.blue  { background: var(--blue-dim); color: var(--blue); }
+  .tag.amber { background: var(--amber-dim); color: var(--amber); }
+
+  /* Review quote */
+  .review-quote { background: var(--navy-raised); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 12px 0; }
+  .review-quote p { font-size: 13px; color: var(--text); line-height: 1.65; font-style: italic; }
+  .review-meta { margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); }
+
+  /* Value callout */
+  .callout { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 13px; line-height: 1.6; }
+  .callout.green { background: var(--green-dim); border: 1px solid rgba(52,199,128,0.2); color: var(--green); }
+  .callout.amber { background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.22); color: var(--amber); }
+  .callout strong { font-weight: 700; }
+
+  .score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); width: 230px; flex-shrink: 0; line-height: 1.3; }
+  .score-weight { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); display: block; }
+  .score-bar-wrap { flex: 1; height: 5px; background: rgba(46,124,246,0.1); border-radius: 3px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 3px; background: var(--gold); }
+  .score-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--gold); width: 36px; text-align: right; flex-shrink: 0; }
+
+  .total-score { display: flex; align-items: center; justify-content: space-between; background: var(--navy-raised); border: 1px solid rgba(240,180,41,0.25); border-radius: 8px; padding: 18px 22px; margin-top: 22px; }
+  .total-score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary); }
+  .total-tier { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); margin-top: 4px; letter-spacing: 0.08em; }
+  .total-score-num { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; text-align: right; }
+  .total-score-denom { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+
+  .assessment-block { background: var(--navy-raised); border-radius: 8px; padding: 16px 18px; margin-bottom: 12px; }
+  .assessment-block-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
+  .assessment-block-title.green { color: var(--green); }
+  .assessment-block-title.gold  { color: var(--gold); }
+  .assessment-block-title.amber { color: var(--amber); }
+
+  .confidence { display: flex; align-items: center; gap: 6px; margin: 16px 0; }
+  .conf-pip { flex: 1; height: 6px; border-radius: 3px; background: rgba(46,124,246,0.1); }
+  .conf-pip.active.amber { background: var(--amber); }
+  .conf-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; white-space: nowrap; color: var(--amber); }
+
+  .cta-block { background: linear-gradient(135deg, var(--navy-raised) 0%, rgba(46,124,246,0.08) 100%); border: 1px solid var(--blue-line); border-radius: 10px; padding: 24px; margin-top: 40px; text-align: center; }
+  .cta-block p { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 14px; }
+  .cta-btn { display: inline-block; background: var(--blue); color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; padding: 12px 28px; border-radius: 6px; text-decoration: none; transition: background 0.2s ease, transform 0.2s ease; }
+  .cta-btn:hover { background: #1a6ae0; transform: translateY(-1px); }
+  .cta-note { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; }
+
+  .bottom-line { background: var(--navy-2); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 18px 22px; margin-top: 32px; }
+  .bottom-line-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .bottom-line p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; font-style: italic; }
+
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--text-muted); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .footer-brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+  .footer-doctrine { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
+  .footer-disclosure { width: 100%; font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-top: 8px; }
+
+
+
+  /* Protokol X vendor brief alignment layer */
+  body {
+    background:
+      radial-gradient(circle at 48% -14%, rgba(46,124,246,0.16), transparent 34rem),
+      radial-gradient(circle at 92% 18%, rgba(240,180,41,0.08), transparent 24rem),
+      linear-gradient(rgba(46,124,246,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,124,246,0.035) 1px, transparent 1px),
+      #05070b;
+    background-size: auto, auto, 44px 44px, 44px 44px, auto;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(5,7,11,0.12), rgba(5,7,11,0.72)),
+      radial-gradient(circle at 18% 26%, rgba(46,124,246,0.08), transparent 21rem),
+      radial-gradient(circle at 82% 74%, rgba(240,180,41,0.055), transparent 22rem);
+    z-index: -1;
+  }
+
+  .page {
+    max-width: 980px;
+    position: relative;
+  }
+
+  .top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 22px;
+    padding: 12px 0 18px;
+    border-bottom: 1px solid rgba(46,124,246,0.2);
+  }
+
+  .back-link,
+  .px-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .back-link {
+    color: var(--blue);
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .back-link:hover {
+    color: var(--white);
+    transform: translateX(-2px);
+  }
+
+  .px-mark {
+    color: var(--text-secondary);
+    text-align: right;
+  }
+
+  .header {
+    position: relative;
+    border: 1px solid rgba(46,124,246,0.22);
+    border-radius: 14px;
+    padding: 30px;
+    margin-bottom: 24px;
+    background:
+      linear-gradient(135deg, rgba(19,25,38,0.96), rgba(8,12,20,0.98)),
+      radial-gradient(circle at 86% 18%, rgba(240,180,41,0.12), transparent 18rem);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.035);
+    overflow: hidden;
+  }
+
+  .header::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(46,124,246,0.7), rgba(240,180,41,0.55), transparent);
+  }
+
+  .brand {
+    color: var(--blue);
+    text-shadow: 0 0 18px rgba(46,124,246,0.3);
+  }
+
+  .classification {
+    border-radius: 999px;
+    box-shadow: 0 0 24px rgba(240,180,41,0.08);
+  }
+
+  .vendor-name {
+    font-size: clamp(38px, 8vw, 72px);
+    letter-spacing: -0.045em;
+  }
+
+  .vendor-sub,
+  .meta-pill {
+    letter-spacing: 0.1em;
+  }
+
+  .meta-pill {
+    border-radius: 999px;
+    background: rgba(46,124,246,0.09);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+
+  .hero-score {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+    margin: 0 0 22px;
+    padding: 22px 24px;
+    border: 1px solid rgba(240,180,41,0.28);
+    border-radius: 14px;
+    background:
+      linear-gradient(135deg, rgba(240,180,41,0.1), rgba(46,124,246,0.06)),
+      rgba(9,13,22,0.92);
+    box-shadow: 0 18px 58px rgba(0,0,0,0.24);
+  }
+
+  .hero-score-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .hero-score-copy {
+    color: var(--text);
+    font-size: 14px;
+    max-width: 640px;
+  }
+
+  .hero-score-num {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--gold);
+    font-size: clamp(46px, 9vw, 78px);
+    font-weight: 700;
+    line-height: 0.9;
+    text-align: right;
+  }
+
+  .hero-score-denom {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-secondary);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-align: right;
+    text-transform: uppercase;
+  }
+
+  .bluf,
+  .bottom-line {
+    border: 1px solid rgba(46,124,246,0.24);
+    border-left-width: 4px;
+    border-radius: 12px;
+    background:
+      linear-gradient(135deg, rgba(46,124,246,0.075), rgba(5,7,11,0.25)),
+      rgba(12,17,28,0.94);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.22);
+  }
+
+  .bottom-line {
+    border-color: rgba(240,180,41,0.26);
+    border-left-color: var(--gold);
+  }
+
+  .card {
+    position: relative;
+    border-color: rgba(46,124,246,0.18);
+    border-radius: 14px;
+    background:
+      linear-gradient(145deg, rgba(19,25,38,0.97), rgba(8,12,20,0.98));
+    box-shadow: 0 16px 52px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.025);
+  }
+
+  .card:hover {
+    border-color: rgba(46,124,246,0.42);
+    transform: translateY(-1px);
+    box-shadow: 0 22px 70px rgba(0,0,0,0.28), 0 0 0 1px rgba(46,124,246,0.05);
+  }
+
+  .card-header {
+    padding: 20px 24px;
+  }
+
+  .card-num {
+    color: #07101b;
+    background: linear-gradient(135deg, var(--gold), #ffe18a);
+    border-color: rgba(240,180,41,0.42);
+    box-shadow: 0 0 26px rgba(240,180,41,0.18);
+  }
+
+  .card-title {
+    font-size: 16px;
+    letter-spacing: 0.01em;
+  }
+
+  .card-body {
+    padding: 24px;
+  }
+
+  .field-label {
+    color: var(--blue);
+  }
+
+  .field-value {
+    color: #cbd7ea;
+  }
+
+  .blue-divider {
+    background: linear-gradient(90deg, rgba(46,124,246,0.55), rgba(240,180,41,0.18), transparent);
+  }
+
+  .signal-list li {
+    background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(46,124,246,0.08);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+
+  .review-quote {
+    border: 1px solid rgba(46,124,246,0.25);
+    border-left: 4px solid var(--blue);
+    border-radius: 12px;
+    background:
+      linear-gradient(135deg, rgba(46,124,246,0.105), rgba(240,180,41,0.035)),
+      rgba(13,19,31,0.96);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+
+  .review-quote p {
+    color: var(--white);
+    font-style: normal;
+  }
+
+  .review-meta {
+    color: var(--gold);
+  }
+
+  .callout {
+    border-radius: 12px;
+  }
+
+  .callout.green {
+    background: rgba(52,199,128,0.08);
+  }
+
+  .callout.amber {
+    background: rgba(245,158,11,0.09);
+  }
+
+  .score-row {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(46,124,246,0.07);
+  }
+
+  .score-bar-wrap {
+    height: 7px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(46,124,246,0.1);
+  }
+
+  .score-bar {
+    background: linear-gradient(90deg, var(--blue), var(--gold));
+    box-shadow: 0 0 18px rgba(240,180,41,0.22);
+  }
+
+  .total-score,
+  .assessment-block,
+  .cta-block {
+    border-radius: 14px;
+    background:
+      linear-gradient(135deg, rgba(240,180,41,0.105), rgba(46,124,246,0.055)),
+      rgba(12,17,28,0.96);
+    box-shadow: 0 18px 52px rgba(0,0,0,0.22);
+  }
+
+  .assessment-block {
+    border: 1px solid rgba(46,124,246,0.14);
+  }
+
+  .assessment-block-title.gold,
+  .assessment-block-title.amber,
+  .assessment-block-title.green {
+    letter-spacing: 0.18em;
+  }
+
+  .confidence {
+    padding: 14px;
+    border: 1px solid rgba(245,158,11,0.18);
+    border-radius: 12px;
+    background: rgba(245,158,11,0.055);
+  }
+
+  .cta-block {
+    border-color: rgba(46,124,246,0.32);
+  }
+
+  .cta-btn {
+    border-radius: 999px;
+    box-shadow: 0 12px 32px rgba(46,124,246,0.22);
+  }
+
+  .footer-disclosure {
+    border: 1px solid rgba(46,124,246,0.12);
+    border-radius: 12px;
+    padding: 14px;
+    background: rgba(255,255,255,0.018);
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 28px 16px 72px; }
+    .score-label { width: 160px; font-size: 9px; }
+    .total-score-num { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="top-nav" aria-label="Vendor brief navigation">
+    <a class="back-link" href="index.html" aria-label="Back to Vendor Index">&larr; Back to Vendor Index</a>
+    <div class="px-mark">Protokol X // Vendor Intelligence Brief // Clarity Over Noise</div>
+  </nav>
+
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="brand">Protokol X // Vendor Intelligence</div>
+      <div class="classification">Research Use Only</div>
+    </div>
+    <div class="vendor-name">Ramp Peptides</div>
+    <div class="vendor-sub">ramppeptides.com &nbsp;·&nbsp; Brief Date: June 2026 &nbsp;·&nbsp; Revision: 2.0</div>
+    <div class="meta-row">
+      <span class="meta-pill">US Domestic Only</span>
+      <span class="meta-pill">Founder-Operated · James</span>
+      <span class="meta-pill">Mass Spec + Endotoxin Confirmed</span>
+      <span class="meta-pill">25 Compounds</span>
+      <span class="meta-pill green">WhatsApp Direct Access</span>
+      <span class="meta-pill gold">Rank 6 · Tier 2 · 7.6 / 10</span>
+    </div>
+  </div>
+
+
+  <div class="hero-score" aria-label="Protokol X Trust Score">
+    <div>
+      <div class="hero-score-label">Protokol X Trust Score</div>
+      <div class="hero-score-copy">Rank 6 &middot; Tier 2 &middot; 7.6 / 10. Conditional Recommendation with founder-operated accountability, Mass Spec + Endotoxin confirmation, VialTalk context, and revised timeline analysis preserved.</div>
+    </div>
+    <div>
+      <div class="hero-score-num">7.6</div>
+      <div class="hero-score-denom">/ 10</div>
+    </div>
+  </div>
+
+  <!-- BLUF -->
+  <div class="bluf">
+    <div class="bluf-label">BLUF — Bottom Line Up Front</div>
+    <p>This assessment evaluates publicly available evidence, documentation, verification architecture, operational transparency, and community signals for Ramp Peptides. Ramp is a founder-operated, value-first US vendor run by James, listed on VialTalk as a Founding Vendor in April 2026. Protokol X identified public Ramp social media activity dating to at least January 2025 — earlier than the VialTalk listing date would suggest on its own. The confirmed launch date of the underlying business has not been established; the VialTalk listing date and the earliest observed public activity date are two distinct data points, and this brief treats them accordingly rather than collapsing them into a single age estimate. Mass Spectrometry and endotoxin testing are independently confirmed on the VialTalk profile. COA documentation uses a hybrid model: manufacturer COAs on most products with independent third-party testing being added incrementally. Gated storefront access is standard RUO compliance posture and is not scored. Community feedback is uniformly positive across 2 verified purchaser reviews. Near-wholesale pricing is the primary market differentiator — "Home of the $25 Reta 10mg" is community-corroborated. Primary watch items are documentation depth, single-lab preliminary COA data, and the inherent risk profile of a single-operator business. Protokol X evaluates evidence, not intent. Architecture before conclusions. Questions before answers.</p>
+  </div>
+
+  <!-- CARD 1 -->
+  <div class="card open" id="card-1">
+    <div class="card-header" onclick="toggleCard('card-1')">
+      <div class="card-num">01</div>
+      <div class="card-title">Executive Summary</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Who They Are</div>
+        <div class="field-value">Ramp Peptides is a US-based, founder-operated research compound vendor run by <strong>James</strong>. Ramp was listed as a VialTalk Founding Vendor in April 2026; separately, Protokol X identified public Ramp social media activity dating to at least January 2025, indicating an observed public presence considerably earlier than the VialTalk listing date alone would suggest. The confirmed founding date of the business has not been established from available evidence — what is documented is the earliest observed public activity (January 2025) and the VialTalk listing date (April 2026), and these should not be treated as equivalent. James's stated operating philosophy: "I value affordable pricing with verifiable COAs. My intent was an approachable, trustworthy, and transparent business model that values customer satisfaction and affordability over higher profits." WordPress storefront at ramppeptides.com — product catalog is registration-gated, standard RUO compliance posture. Active WhatsApp community group provides direct researcher-to-founder communication. Listed as a VialTalk Founding Vendor with Elite tier status — VialTalk is referenced here as an independent community platform for research context only. Free priority shipping on orders over $200. Next business day processing, 2–4 day domestic delivery.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Primary Strengths</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Near-wholesale pricing — community-corroborated</strong> — $25 Retatrutide 10mg, BPC-157 from $22.49 per VialTalk live pricing; pricing claim is independently confirmed by multiple purchaser reviews, not just vendor-stated</li>
+          <li><span class="signal-dot green"></span><strong>Mass Spectrometry + Endotoxin — independently confirmed</strong> — both testing methods confirmed on VialTalk vendor profile; not self-reported marketing claims</li>
+          <li><span class="signal-dot green"></span><strong>Uniformly positive community feedback</strong> — 5/5 across both verified purchaser reviews; shipping, quality, and communication all rated maximum</li>
+          <li><span class="signal-dot green"></span><strong>Direct founder access via WhatsApp</strong> — real-time communication routes to the decision-maker; accountability is personal and direct</li>
+          <li><span class="signal-dot green"></span><strong>Vial toppers and branded packaging included</strong> — above-minimum fulfillment detail at this price point; independently noted by community reviewers</li>
+          <li><span class="signal-dot green"></span><strong>Vendor response active on VialTalk</strong> — James personally responded to community review; founder engagement is confirmed</li>
+          <li><span class="signal-dot green"></span><strong>FD&C Act 503A/503B disclaimer present</strong> — explicit legal positioning consistent with responsible RUO vendor operation</li>
+          <li><span class="signal-dot green"></span><strong>25-compound catalog</strong> — covers core recovery, GLP, longevity, and specialty compounds including Kisspeptin and CAG</li>
+          <li><span class="signal-dot blue"></span>Frequent sales cadence — active promotional activity independently cited by community reviewers</li>
+          <li><span class="signal-dot blue"></span>VialTalk Founding Vendor · Elite tier — community platform investment signals</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Notable Limitations</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot amber"></span><strong>Operational history not fully established</strong> — VialTalk listing dates to April 2026, but Protokol X identified earlier public social activity dating to at least January 2025; the confirmed founding date remains unverified, and a multi-cycle operational track record under sustained scrutiny has not yet been documented either way</li>
+          <li><span class="signal-dot amber"></span><strong>Hybrid COA model</strong> — manufacturer COAs on most products; independent third-party testing being added incrementally; documentation standard is uneven across catalog at time of brief</li>
+          <li><span class="signal-dot amber"></span><strong>HPLC confirmation not yet independently confirmed</strong> — Mass Spec and Endotoxin are confirmed; HPLC purity testing status is not confirmed in available independent data</li>
+          <li><span class="signal-dot amber"></span><strong>Single-operator structure</strong> — all sourcing, fulfillment, and quality decisions rest on one person; no organizational buffer for scaling events or disruptions</li>
+          <li><span class="signal-dot amber"></span><strong>Low community review volume</strong> — 2 verified purchaser reviews; uniformly positive but insufficient to establish a sustained pattern</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Best Fit Audience</div>
+        <div class="field-value">Price-sensitive researchers prioritizing value over established vendor longevity. Those comfortable with founder-operated vendors with a documentation record still building under Protokol X review, and who understand the associated risk profile. Researchers who benefit from direct WhatsApp access to the operator for questions and support. Those ordering compounds in Ramp's catalog (Retatrutide analog, BPC-157, KLOW, MOTS-c, Kisspeptin, CAG) at near-wholesale price points. Best used as a complementary option alongside a more established primary vendor at this stage of documentation maturity.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card" id="card-2">
+    <div class="card-header" onclick="toggleCard('card-2')">
+      <div class="card-num">02</div>
+      <div class="card-title">Verification Architecture</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="callout amber">
+        <strong>Assessment context:</strong> Ramp's verification architecture is in active development. Testing infrastructure is real and independently confirmed — evaluated here as a preliminary data set building toward a more complete documentation record. The Protokol X score reflects what is independently verifiable at this stage, not a ceiling on what the vendor may achieve.
+      </div>
+
+      <div class="field">
+        <div class="field-label">Confirmed Testing Methods</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Mass Spectrometry</strong> — molecular identity confirmation; confirms compound is what it claims to be. Confirmed on VialTalk vendor profile — independently verified, not self-reported.</li>
+          <li><span class="signal-dot green"></span><strong>Endotoxin Screening</strong> — bacterial contamination testing. Confirmed on VialTalk vendor profile. Meaningful safety-layer test that many budget-tier vendors omit.</li>
+          <li><span class="signal-dot amber"></span><strong>HPLC purity testing</strong> — not yet independently confirmed in available data at time of brief. Vendor states testing and verification across catalog; HPLC confirmation specifically requires additional independent corroboration.</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">COA Model — Hybrid, In Transition</div>
+        <div class="field-value">Ramp's site states: "Every product goes through strict testing and verification before being listed. Most items include a clear Certificate of Analysis (COA) from the manufacturer, with more being independently tested and confirmed by us being added daily." This is an honest characterization of a documentation model in active development. <strong>Manufacturer-supplied COAs carry less evidential weight than independently commissioned third-party testing</strong> — this distinction is factored into the scoring. The trajectory is toward broader independent testing coverage; the current state is mixed across the catalog.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">No Dedicated Public COA Repository</div>
+        <div class="field-value">Ramp does not currently operate a dedicated public COA library equivalent to Axon's AxonVerified, ION's Lab Results page, or Peptipura's /coas/ page. COA access requires registration and is available at the product level post-login. This is standard RUO compliance posture for the storefront — it is not scored as a limitation. The absence of an open pre-purchase COA library is noted as a documentation transparency observation, not a policy violation.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:14px;">Protokol X 8-Factor Subscores</div>
+      <div class="score-row">
+        <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:68%"></div></div>
+        <div class="score-num">6.8</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:65%"></div></div>
+        <div class="score-num">6.5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card" id="card-3">
+    <div class="card-header" onclick="toggleCard('card-3')">
+      <div class="card-num">03</div>
+      <div class="card-title">Transparency & Documentation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Storefront Access</div>
+        <div class="field-value">Ramp operates a registration-gated storefront — full product catalog and pricing require account creation. This is <strong>standard RUO compliance posture</strong> across the current vendor landscape, driven by FDA enforcement pressure and age verification requirements. Not scored. Not flagged as a limitation.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Founder Transparency</div>
+        <div class="field-value">James is directly named and actively engaged in community platforms — responding to VialTalk reviews personally, running the WhatsApp group, and communicating proactively with researchers on order status. This is a meaningful accountability signal. The founder's identity is not anonymized — questions and concerns route directly to the decision-maker. The absence of formal professional credentials or corporate background documentation is consistent with the vendor's value-first, small-operator positioning.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Legal Compliance Language</div>
+        <div class="field-value">Site includes explicit FD&C Act Section 503A and 503B disclaimer: "Ramp Peptides is not a compounding pharmacy or outsourcing facility as described under sections 503A and 503B of the Federal Food, Drug, and Cosmetic Act." Age verification (18+) required at registration. Standard RUO disclaimers applied throughout. Compliance posture is appropriate and clearly stated for the vendor's operating category.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Payment Transparency</div>
+        <div class="field-value">Multiple payment channels accepted and disclosed: Zelle, Venmo, Cash App, credit cards, Apple Cash, Amazon Pay, Google Pay via CyberOc. Transparent payment method disclosure is above-baseline for small-operator vendors in this category. The inclusion of peer-to-peer payment apps (Zelle, Venmo, Cash App) reflects the operational reality of single-operator vendor payment processing — a practical accommodation, not a trust signal in either direction.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:65%"></div></div>
+        <div class="score-num">6.5</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:75%"></div></div>
+        <div class="score-num">7.5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="card" id="card-4">
+    <div class="card-header" onclick="toggleCard('card-4')">
+      <div class="card-num">04</div>
+      <div class="card-title">Customer Experience</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="callout green">
+        <strong>Strongest evidence category for Ramp:</strong> Both verified purchaser reviews are 5/5 across shipping, quality, and communication — the only category in this brief where the available evidence is unambiguously strong without caveats.
+      </div>
+
+      <div class="field">
+        <div class="field-label">Shipping Performance</div>
+        <div class="field-value">Next business day processing. 2–4 day domestic US delivery window. Free priority shipping on orders over $200. Packaging independently described as "very secure" with vial toppers included — an above-minimum detail at this price point. Both community reviewers note orders arriving faster than anticipated. No pattern of delayed shipments or fulfillment issues in available community data.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Communication</div>
+        <div class="field-value">Proactive order status communication is independently confirmed: "They keep you updated every step of the process." WhatsApp group provides real-time direct access to James. VialTalk vendor response confirmed — James personally thanked reviewers. Communication rated 5/5 across both verified reviews. Single-operator model means communication resolves directly to the person making decisions — high accountability, no routing delays.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Verified Community Reviews</div>
+
+        <div class="review-quote">
+          <p>"Pricing is near wholesale, frequent sales, affiliate program, quick inexpensive shipping! James is just a good guy running a good little business that's customer centered. Check out the website and join the WhatsApp group. Won't take long to figure out what kind of ship you're on!"</p>
+          <div class="review-meta">jwright · VialTalk · 5/25/2026 · Reta, KLOW, MOTS-c · Shipping 5/5 · Quality 5/5 · Communication 5/5</div>
+        </div>
+
+        <div class="review-quote">
+          <p>"Prices are really affordable. They keep you updated every step of the process. My order came faster than was anticipated and the packaging was very secure. You even get toppers for your vials. And stickers. I have been looking for a good vendor for a while and I have found my favorite."</p>
+          <div class="review-meta">harpool44 · VialTalk · 5/22/2026 · Reta 30mg, KLOW, CAG, Kisspeptin · Shipping 5/5 · Quality 5/5 · Communication 5/5</div>
+        </div>
+
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div>
+        <div class="score-num">9.0</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+        <div class="score-num">8.5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5 -->
+  <div class="card" id="card-5">
+    <div class="card-header" onclick="toggleCard('card-5')">
+      <div class="card-num">05</div>
+      <div class="card-title">Operations & Catalog</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Catalog — 25 Compounds</div>
+        <div class="field-value">
+          <span class="tag blue">GLP / Metabolic</span>&nbsp; GLP3-R (Retatrutide analog) · $25/10mg — "Home of the $25 Reta" · best price from $22.49 per VialTalk live pricing<br><br>
+          <span class="tag blue">Recovery</span>&nbsp; BPC-157 · TB-500<br><br>
+          <span class="tag blue">Longevity</span>&nbsp; MOTS-c<br><br>
+          <span class="tag blue">Hormonal Research</span>&nbsp; Kisspeptin · CAG<br><br>
+          <span class="tag gold">Blends</span>&nbsp; KLOW (KPV + BPC-157 anti-inflammatory formulation)<br><br>
+          Full catalog of 25 compounds available via registration at ramppeptides.com
+        </div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Pricing Position — Primary Differentiator</div>
+        <div class="field-value">Near-wholesale pricing is Ramp's defining market position and its most independently corroborated attribute. The $25 Retatrutide 10mg price point — "Home of the $25 Reta 10mg" — is the flagship claim, confirmed by multiple independent community purchasers. VialTalk live affiliate pricing shows best price from $22.49. Frequent sales cadence reduces effective pricing further. For researchers comparing the series on value per documented compound, Ramp is the strongest option at this price tier.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Single-Operator Model</div>
+        <div class="field-value">All operational functions — sourcing, fulfillment, quality verification, customer service, and community engagement — are currently managed by James. This is simultaneously Ramp's greatest accountability strength (direct personal responsibility, fast decision-making, genuine customer-centered orientation) and its primary operational risk (no organizational redundancy, single point of failure on sourcing and quality decisions). The WhatsApp group functions as both a community and a direct operational feedback channel — James receives and responds to researcher experience in real time.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:75%"></div></div>
+        <div class="score-num">7.5</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:70%"></div></div>
+        <div class="score-num">7.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6 -->
+  <div class="card" id="card-6">
+    <div class="card-header" onclick="toggleCard('card-6')">
+      <div class="card-num">06</div>
+      <div class="card-title">Community & Reputation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">VialTalk Profile — Community Signal</div>
+        <div class="field-value">Ramp Peptides holds VialTalk Elite tier status as a Founding Vendor, <strong>listed on VialTalk since April 2026</strong>. This is the platform listing date only — it is not evidence of when Ramp's underlying business began operating. Protokol X identified separate public social media activity for Ramp dating to at least January 2025, suggesting an observed public presence considerably predating the VialTalk listing. <strong>VialTalk community data is treated as community signal only in this brief — it does not drive Protokol X scoring.</strong> What the VialTalk profile provides: independent confirmation of testing methods (Mass Spec + Endotoxin), independently verified purchaser reviews, and vendor engagement data. Two verified purchaser reviews, both 5/5. James has personally responded to at least one review on the platform. No negative reviews on record at time of brief.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">WhatsApp Community</div>
+        <div class="field-value">The WhatsApp group is Ramp's primary community platform. Researcher jwright (VialTalk, 5/25/2026) specifically recommends joining: "Check out the website and join the WhatsApp group. Won't take long to figure out what kind of ship you're on!" The WhatsApp community functions simultaneously as a support channel, peer community, and accountability mechanism — researchers in the group have direct visibility into operational consistency in ways that platform reviews alone don't provide.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Market Timing Context</div>
+        <div class="field-value">Ramp's VialTalk Founding Vendor listing dates to April 2026 — the same general window as Peptide Sciences shutting down (March 2026) and Science.bio's exit (January 2026). However, Protokol X identified public Ramp social media activity dating to at least January 2025, which predates the VialTalk listing by well over a year. This is a material distinction: the vendor's public-facing presence appears to have a longer history than the VialTalk listing date alone would suggest, and the original characterization of Ramp as a vendor that emerged during the 2026 consolidation window is not well-supported once the January 2025 activity is accounted for. Protokol X has not confirmed an exact founding date for the underlying business — the evidence available supports "earliest observed public activity of at least January 2025," not a precise launch date. Researchers should treat Ramp's operational history as longer than the VialTalk listing date implies, while recognizing that the full extent of that history remains undocumented.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7 -->
+  <div class="card" id="card-7">
+    <div class="card-header" onclick="toggleCard('card-7')">
+      <div class="card-num">07</div>
+      <div class="card-title">Intelligence Assessment</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="assessment-block">
+        <div class="assessment-block-title green">Strengths — Evidence-Supported</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Near-wholesale pricing independently corroborated</strong> — multiple community purchasers confirm the pricing claim; $25 Retatrutide 10mg is not a marketing headline, it's a verified price point</li>
+          <li><span class="signal-dot green"></span><strong>Mass Spec + Endotoxin — independently confirmed</strong> — VialTalk vendor profile confirmation means these testing methods are not self-reported; both methods carry meaningful analytical weight, especially endotoxin at this price tier</li>
+          <li><span class="signal-dot green"></span><strong>Customer experience metrics uniformly strong</strong> — 5/5 across shipping, quality, and communication in both verified reviews; packaging above baseline; faster-than-expected delivery noted independently</li>
+          <li><span class="signal-dot green"></span><strong>Direct founder access and accountability</strong> — James is named, responsive, and personally engaged via WhatsApp and VialTalk; accountability is direct and personal</li>
+          <li><span class="signal-dot green"></span><strong>FD&C Act compliance language present and specific</strong> — explicit 503A/503B disclaimer places Ramp in the appropriate legal RUO posture</li>
+          <li><span class="signal-dot green"></span><strong>VialTalk Founding Vendor · Elite tier</strong> — community platform investment and engagement are real signals even at early stage</li>
+        </ul>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title gold">Watch Items — Continued Monitoring</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot gold"></span><strong>Operational history not fully resolved:</strong> VialTalk listing dates to April 2026, but Protokol X identified earlier public social activity dating to at least January 2025 — a material gap between the two data points. The confirmed founding date remains unestablished; this brief does not assume January 2025 is the launch date, only the earliest observed public activity. A documented multi-cycle track record under sustained independent scrutiny has not yet accumulated regardless of how the timeline resolves</li>
+          <li><span class="signal-dot gold"></span><strong>HPLC confirmation pending:</strong> Mass Spec and Endotoxin are confirmed; HPLC purity testing — the primary quantitative purity method — is not yet independently confirmed; verify for specific compounds before ordering</li>
+          <li><span class="signal-dot gold"></span><strong>Hybrid COA model:</strong> Manufacturer COAs for most products, independent testing being added incrementally; documentation standard is uneven across catalog; confirm COA source for specific compounds</li>
+          <li><span class="signal-dot gold"></span><strong>Single-operator risk:</strong> Scaling events, sourcing changes, or personal disruptions carry no organizational buffer; monitor for operational consistency as volume increases</li>
+          <li><span class="signal-dot gold"></span><strong>Review volume:</strong> 2 verified reviews is a positive but narrow data set; reassess at 10+ reviews for a statistically meaningful pattern</li>
+        </ul>
+      </div>
+
+      <!-- Confidence -->
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Confidence Level</div>
+      <div class="confidence">
+        <div class="conf-pip active amber"></div>
+        <div class="conf-pip active amber" style="opacity:0.6;"></div>
+        <div class="conf-pip"></div>
+        <div class="conf-pip"></div>
+        <div class="conf-label">&nbsp;Moderate</div>
+      </div>
+      <div class="field-value" style="font-size:13px; color:var(--text-secondary);">Confidence is Moderate. The positive signals are real and independently corroborated — pricing, testing method confirmation, customer experience. The data set available for independent review (two verified VialTalk reviews, one preliminary COA) remains narrow regardless of how the operational timeline resolves. Protokol X identified earlier public social activity (at least January 2025) than the VialTalk listing date (April 2026) would suggest on its own — this indicates the vendor's actual operational history may be longer than initially characterized, which is a positive directional signal for confidence, but it does not resolve the underlying documentation gaps. Confidence is expected to rise materially as COA submissions accumulate, HPLC confirmation comes through independent channels, founding timeline clarity improves, and community review volume increases over the next 3–6 months.</div>
+
+      <!-- Total score -->
+      <div class="total-score">
+        <div>
+          <div class="total-score-label">Protokol X Trust Score</div>
+          <div class="total-tier">Rank 6 &nbsp;·&nbsp; Tier 2 &nbsp;·&nbsp; 8-Factor Matrix</div>
+        </div>
+        <div>
+          <div class="total-score-num">7.6</div>
+          <div class="total-score-denom">/ 10 &nbsp;·&nbsp; Conditional Recommendation</div>
+        </div>
+      </div>
+
+      <!-- Full 8-factor -->
+      <div style="margin-top:20px;">
+        <div class="score-row">
+          <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:68%"></div></div>
+          <div class="score-num">6.8</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:65%"></div></div>
+          <div class="score-num">6.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:65%"></div></div>
+          <div class="score-num">6.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:75%"></div></div>
+          <div class="score-num">7.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+          <div class="score-num">8.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div>
+          <div class="score-num">9.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:75%"></div></div>
+          <div class="score-num">7.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:70%"></div></div>
+          <div class="score-num">7.0</div>
+        </div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Protokol X Assessment</div>
+      <div class="field-value">Ramp Peptides presents a value-first positioning that is independently corroborated where it matters most — price point and customer experience. Near-wholesale Retatrutide pricing is not marketing copy; it's confirmed by independent purchasers who ordered, received, and reviewed the experience. Mass Spec and Endotoxin testing are independently confirmed on VialTalk. The two available verified reviews are uniformly positive across every measured dimension.<br><br>A content audit identified a timeline inconsistency in the original assessment. Ramp's VialTalk Founding Vendor listing dates to April 2026, and the original brief characterized the vendor as approximately 9 weeks old on that basis. Protokol X has since identified public Ramp social media activity dating to at least January 2025 — over a year earlier than the VialTalk listing date. This does not confirm a January 2025 founding date; it establishes only that public activity existed at that point, which is distinct from a confirmed launch date. What it does establish is that the "newly launched" framing in the original brief was not well-supported by the full evidence available, and observed public history appears longer than originally assessed. Protokol X corrects this characterization here rather than asserting a specific founding date it cannot verify.<br><br>The remaining gaps are structural and do not depend on resolving the exact timeline: a hybrid COA model in transition toward fuller independent testing coverage, HPLC confirmation still pending independent corroboration, a single-operator structure with no organizational redundancy, and a community review set on VialTalk specifically that remains too small to establish a sustained pattern on that platform. These gaps reflect documentation maturity, not vendor age — and documentation maturity is what the Protokol X Trust Matrix evaluates.<br><br>The appropriate posture remains a <strong>Conditional Recommendation</strong> at Tier 2. The timeline correction does not, on its own, change the Trust Score — the 8-factor matrix scores documentation and verification evidence, not vendor age directly, and the underlying COA, testing, and community review evidence base is unchanged by this correction. It does meaningfully change the narrative framing: Ramp should not be characterized as an unproven, just-launched operation. Researchers who understand the documentation-maturity profile and are seeking near-wholesale access to core and specialty compounds with direct founder accountability will find Ramp a viable option. The recommendation sharpens materially as HPLC confirmation comes through independent channels, COA coverage expands across the catalog, founding timeline clarity improves, and community review volume accumulates. Reassess at the next quarterly cycle.<br><br><strong>Protokol X assessment: Rank 6, Tier 2. Conditional Recommendation. Strong value proposition with positive signals independently corroborated. Operational history appears longer than originally characterized; documentation architecture — not vendor age — remains the primary development gap. Best used alongside a more established primary vendor at this stage of documentation maturity.</strong></div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <p>Protokol X Affiliate Link &nbsp;·&nbsp; Research Use Only</p>
+    <a class="cta-btn" href="https://ramppeptides.com/?ref=mikeyb7189" target="_blank" rel="noopener">Visit Ramp Peptides — Use Code mikeyb7189 for 10% Off</a>
+    <div class="cta-note">For research purposes only. Not for human or animal use. Not FDA-approved.</div>
+  </div>
+
+  <div class="bottom-line">
+    <div class="bottom-line-label">Bottom Line</div>
+    <p>"No vendor should be trusted because they make claims. Vendors earn confidence through evidence, transparency, verification architecture, and consistency over time. The goal is not certainty. The goal is reducing uncertainty."</p>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Protokol X &nbsp;·&nbsp; Vendor Intelligence Series</div>
+    <div class="footer-doctrine">Clarity Over Noise. Assess. Decide. Execute.</div>
+    <div class="footer-disclosure">Disclosure: Protokol X participates in affiliate programs including Ramp Peptides. If you purchase through our link, we may earn a commission at no additional cost to you. Vendor Trust Index scores are applied independently of affiliate relationships. All content is for informational purposes only. Not medical advice. Not FDA-approved. For research use only.</div>
+  </footer>
+
+</div>
+<script>
+  function toggleCard(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

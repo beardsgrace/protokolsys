@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SwissChems — Vendor Intelligence Brief | Protokol X</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:        #0b0f1a;
+    --navy-2:      #0f1522;
+    --navy-card:   #131926;
+    --navy-raised: #18202f;
+    --blue:        #2e7cf6;
+    --blue-dim:    rgba(46,124,246,0.15);
+    --blue-line:   rgba(46,124,246,0.35);
+    --gold:        #f0b429;
+    --gold-dim:    rgba(240,180,41,0.12);
+    --text:        #c8d4e8;
+    --text-secondary: #6e809a;
+    --text-muted:  #3d4f66;
+    --white:       #e8edf5;
+    --red-dim:     rgba(224,76,76,0.12);
+    --red:         #e04c4c;
+    --green-dim:   rgba(52,199,128,0.12);
+    --green:       #34c780;
+    --amber:       #f59e0b;
+    --amber-dim:   rgba(245,158,11,0.12);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background: var(--navy); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  .page { max-width: 780px; margin: 0 auto; padding: 48px 20px 96px; }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--blue-line); padding-bottom: 32px; margin-bottom: 40px; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); }
+  .classification { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(240,180,41,0.25); padding: 4px 12px; border-radius: 4px; }
+  .vendor-name { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 6vw, 42px); font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px; }
+  .vendor-sub { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); letter-spacing: 0.08em; margin-bottom: 20px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 4px; border: 1px solid var(--blue-line); color: var(--blue); background: var(--blue-dim); }
+  .meta-pill.gold  { border-color: rgba(240,180,41,0.3); color: var(--gold); background: var(--gold-dim); }
+  .meta-pill.green { border-color: rgba(52,199,128,0.3); color: var(--green); background: var(--green-dim); }
+  .meta-pill.red   { border-color: rgba(224,76,76,0.3); color: var(--red); background: var(--red-dim); }
+
+  /* BLUF */
+  .bluf { background: var(--navy-2); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 20px 22px; margin-bottom: 40px; }
+  .bluf-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .bluf p { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+  /* CARDS */
+  .card { background: var(--navy-card); border: 1px solid rgba(46,124,246,0.12); border-radius: 10px; margin-bottom: 16px; overflow: hidden; transition: border-color 0.2s ease; }
+  .card:hover { border-color: rgba(46,124,246,0.28); }
+  .card-header { display: flex; align-items: center; gap: 14px; padding: 18px 22px; border-bottom: 1px solid rgba(46,124,246,0.1); cursor: pointer; user-select: none; }
+  .card-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-dim); border: 1px solid var(--blue-line); width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); flex: 1; }
+  .card-chevron { color: var(--text-muted); font-size: 18px; transition: transform 0.2s ease; flex-shrink: 0; }
+  .card.open .card-chevron { transform: rotate(180deg); }
+  .card-body { display: none; padding: 22px; }
+  .card.open .card-body { display: block; }
+
+  /* BODY ELEMENTS */
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; }
+  .field-value { font-size: 14px; color: var(--text); line-height: 1.65; }
+  .field-value strong { color: var(--white); font-weight: 600; }
+  .blue-divider { height: 1px; background: linear-gradient(90deg, var(--blue-line), transparent); margin: 18px 0; }
+
+  /* Signal list */
+  .signal-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .signal-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); line-height: 1.55; }
+  .signal-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .signal-dot.blue  { background: var(--blue); }
+  .signal-dot.gold  { background: var(--gold); }
+  .signal-dot.green { background: var(--green); }
+  .signal-dot.red   { background: var(--red); }
+  .signal-dot.amber { background: var(--amber); }
+
+  /* Tags */
+  .tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; vertical-align: middle; }
+  .tag.green { background: var(--green-dim); color: var(--green); }
+  .tag.gold  { background: var(--gold-dim); color: var(--gold); }
+  .tag.blue  { background: var(--blue-dim); color: var(--blue); }
+  .tag.red   { background: var(--red-dim); color: var(--red); }
+  .tag.amber { background: var(--amber-dim); color: var(--amber); }
+
+  /* Score bars — 8-factor Protokol X matrix */
+  .score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); width: 220px; flex-shrink: 0; line-height: 1.3; }
+  .score-weight { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); display: block; }
+  .score-bar-wrap { flex: 1; height: 5px; background: rgba(46,124,246,0.1); border-radius: 3px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 3px; background: var(--gold); }
+  .score-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--gold); width: 36px; text-align: right; flex-shrink: 0; }
+
+  /* Total score badge */
+  .total-score { display: flex; align-items: center; justify-content: space-between; background: var(--navy-raised); border: 1px solid rgba(240,180,41,0.25); border-radius: 8px; padding: 18px 22px; margin-top: 22px; }
+  .total-left { }
+  .total-score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary); }
+  .total-tier { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); margin-top: 4px; letter-spacing: 0.08em; }
+  .total-score-num { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; text-align: right; }
+  .total-score-denom { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+
+  /* Assessment blocks */
+  .assessment-block { background: var(--navy-raised); border-radius: 8px; padding: 16px 18px; margin-bottom: 12px; }
+  .assessment-block-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
+  .assessment-block-title.green { color: var(--green); }
+  .assessment-block-title.gold  { color: var(--gold); }
+  .assessment-block-title.red   { color: var(--red); }
+
+  /* FDA warning block */
+  .fda-block { background: rgba(224,76,76,0.06); border: 1px solid rgba(224,76,76,0.28); border-radius: 8px; padding: 16px 18px; margin: 14px 0; }
+  .fda-block-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+  .fda-block p { font-size: 13px; color: var(--text); line-height: 1.65; }
+
+  /* Callout */
+  .callout { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 13px; line-height: 1.6; }
+  .callout.green { background: var(--green-dim); border: 1px solid rgba(52,199,128,0.2); color: var(--green); }
+  .callout.blue  { background: var(--blue-dim); border: 1px solid var(--blue-line); color: var(--blue); }
+  .callout strong { font-weight: 700; }
+
+  /* Confidence */
+  .confidence { display: flex; align-items: center; gap: 6px; margin: 16px 0; }
+  .conf-pip { flex: 1; height: 6px; border-radius: 3px; background: rgba(46,124,246,0.1); }
+  .conf-pip.active.green { background: var(--green); }
+  .conf-pip.active.gold  { background: var(--gold); }
+  .conf-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; white-space: nowrap; }
+  .conf-label.green { color: var(--green); }
+
+  /* CTA */
+  .cta-block { background: linear-gradient(135deg, var(--navy-raised) 0%, rgba(46,124,246,0.08) 100%); border: 1px solid var(--blue-line); border-radius: 10px; padding: 24px; margin-top: 40px; text-align: center; }
+  .cta-block p { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 14px; }
+  .cta-btn { display: inline-block; background: var(--blue); color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.04em; padding: 12px 28px; border-radius: 6px; text-decoration: none; transition: background 0.2s ease, transform 0.2s ease; }
+  .cta-btn:hover { background: #1a6ae0; transform: translateY(-1px); }
+  .cta-note { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; }
+
+  /* Bottom line */
+  .bottom-line { background: var(--navy-2); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 18px 22px; margin-top: 32px; }
+  .bottom-line-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .bottom-line p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; font-style: italic; }
+
+  /* Footer */
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--text-muted); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .footer-brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+  .footer-doctrine { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
+  .footer-disclosure { width: 100%; font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-top: 8px; }
+
+
+
+  /* Protokol X visual alignment layer */
+  body {
+    background:
+      radial-gradient(circle at 50% -20%, rgba(46,124,246,0.16), transparent 34rem),
+      linear-gradient(rgba(46,124,246,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,124,246,0.035) 1px, transparent 1px),
+      #05070b;
+    background-size: auto, 44px 44px, 44px 44px, auto;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.035), transparent 16%, transparent 84%, rgba(240,180,41,0.035)),
+      radial-gradient(circle at 12% 18%, rgba(240,180,41,0.08), transparent 18rem);
+    mix-blend-mode: screen;
+    opacity: 0.75;
+  }
+
+  .page { max-width: 980px; padding: 28px 20px 96px; position: relative; }
+  .top-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+  .back-link,
+  .px-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .back-link { color: var(--blue); text-decoration: none; }
+  .back-link:hover { color: var(--white); }
+  .px-mark { color: var(--text-muted); text-align: right; }
+
+  .header {
+    position: relative;
+    background: linear-gradient(145deg, rgba(13,19,32,0.94), rgba(4,7,12,0.98));
+    border: 1px solid rgba(46,124,246,0.28);
+    border-radius: 14px;
+    padding: 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 22px 70px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.04);
+    overflow: hidden;
+  }
+  .header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(120deg, rgba(46,124,246,0.14), transparent 38%),
+      radial-gradient(circle at 82% 24%, rgba(240,180,41,0.12), transparent 18rem);
+    pointer-events: none;
+  }
+  .header > * { position: relative; z-index: 1; }
+  .vendor-name { font-size: clamp(34px, 7vw, 64px); letter-spacing: -0.045em; text-transform: uppercase; }
+  .vendor-sub { color: #8798b3; }
+  .meta-row { margin-top: 22px; }
+  .meta-pill { border-radius: 999px; background: rgba(46,124,246,0.1); }
+  .meta-pill.red { box-shadow: 0 0 22px rgba(224,76,76,0.1); }
+
+  .hero-score {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 18px;
+    margin-top: 26px;
+    padding: 20px;
+    border: 1px solid rgba(240,180,41,0.34);
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(240,180,41,0.13), rgba(46,124,246,0.06));
+  }
+  .hero-score-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 7px;
+  }
+  .hero-score-copy { color: var(--text-secondary); font-size: 13px; max-width: 58ch; }
+  .hero-score-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 10vw, 82px);
+    font-weight: 700;
+    line-height: 0.85;
+    color: var(--gold);
+    text-align: right;
+  }
+  .hero-score-denom {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 8px;
+  }
+
+  .bluf, .bottom-line {
+    border-radius: 12px;
+    border: 1px solid rgba(46,124,246,0.24);
+    border-left: 4px solid var(--blue);
+    background: rgba(9,14,24,0.92);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.28);
+  }
+  .bottom-line { border-color: rgba(240,180,41,0.24); border-left-color: var(--gold); }
+  .card {
+    background: linear-gradient(180deg, rgba(19,25,38,0.92), rgba(9,14,24,0.92));
+    border-color: rgba(46,124,246,0.18);
+    border-radius: 12px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.22);
+  }
+  .card:hover { border-color: rgba(46,124,246,0.48); transform: translateY(-1px); }
+  .card-header { min-height: 76px; }
+  .card-num {
+    color: #06101d;
+    background: linear-gradient(135deg, var(--gold), #d99618);
+    border: 0;
+    box-shadow: 0 0 26px rgba(240,180,41,0.16);
+  }
+  .card-title { font-size: 16px; letter-spacing: 0.01em; }
+  .score-bar-wrap { background: rgba(255,255,255,0.08); }
+  .score-bar { background: linear-gradient(90deg, #b98519, var(--gold), #ffe199); }
+  .total-score {
+    background: linear-gradient(135deg, rgba(240,180,41,0.12), rgba(11,15,26,0.9));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .fda-block {
+    border-radius: 12px;
+    border-color: rgba(224,76,76,0.38);
+    border-left: 4px solid var(--red);
+    background: linear-gradient(135deg, rgba(224,76,76,0.12), rgba(9,14,24,0.95));
+    box-shadow: 0 18px 48px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .fda-block-label { color: #ff7777; line-height: 1.45; }
+  .fda-block p { color: #d4deee; }
+  .assessment-block {
+    border: 1px solid rgba(46,124,246,0.14);
+    background: rgba(18,25,38,0.9);
+  }
+  .assessment-block:has(.assessment-block-title.red) { border-color: rgba(224,76,76,0.24); }
+  .cta-block {
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(46,124,246,0.16), rgba(5,7,11,0.96));
+    box-shadow: 0 20px 60px rgba(0,0,0,0.34);
+  }
+  .cta-btn {
+    border-radius: 999px;
+    background: linear-gradient(135deg, #4f96ff, var(--blue));
+    box-shadow: 0 12px 34px rgba(46,124,246,0.32);
+  }
+  .cta-btn:hover { background: linear-gradient(135deg, #76adff, #2e7cf6); }
+  footer { border-top-color: rgba(46,124,246,0.22); }
+
+  @media (max-width: 640px) {
+    .page { padding: 22px 14px 72px; }
+    .top-nav { align-items: flex-start; flex-direction: column; }
+    .px-mark { text-align: left; }
+    .header { padding: 22px 18px; }
+    .header-top { align-items: flex-start; }
+    .hero-score { grid-template-columns: 1fr; }
+    .hero-score-num, .hero-score-denom { text-align: left; }
+    .card-header { padding: 16px; }
+    .card-body { padding: 18px 16px; }
+    .score-row { align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+    .score-label { width: calc(100% - 48px); }
+    .score-bar-wrap { order: 3; flex-basis: 100%; }
+    .conf-label { white-space: normal; }
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 28px 16px 72px; }
+    .score-label { width: 160px; font-size: 9px; }
+    .header-top { flex-direction: column; align-items: flex-start; }
+    .total-score-num { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="top-nav" aria-label="Vendor brief navigation">
+    <a class="back-link" href="index.html" aria-label="Back to Vendor Index">&larr; Back to Vendor Index</a>
+    <div class="px-mark">Protokol X // Intelligence Brief // Clarity Over Noise</div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="brand">Protokol X // Vendor Intelligence</div>
+      <div class="classification">Research Use Only</div>
+    </div>
+    <div class="vendor-name">SwissChems</div>
+    <div class="vendor-sub">swisschems.is &nbsp;·&nbsp; Brief Date: June 2026 &nbsp;·&nbsp; Revision: 1.0</div>
+    <div class="meta-row">
+      <span class="meta-pill">Founded 2018</span>
+      <span class="meta-pill">International Shipping</span>
+      <span class="meta-pill">60+ Compounds</span>
+      <span class="meta-pill">HPLC + MS Testing</span>
+      <span class="meta-pill red">FDA Warning Letter — Dec 2024</span>
+      <span class="meta-pill gold">Rank 1 · Tier 1 · 9.3 / 10</span>
+    </div>
+    <div class="hero-score" aria-label="Protokol X Trust Score">
+      <div>
+        <div class="hero-score-label">Protokol X Trust Score</div>
+        <div class="hero-score-copy">Rank 1 &middot; Tier 1 &middot; 9.3 / 10. Recommended with disclosures, with the FDA warning letter preserved as a material watch item in the assessment.</div>
+      </div>
+      <div>
+        <div class="hero-score-num">9.3</div>
+        <div class="hero-score-denom">/ 10</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLUF -->
+  <div class="bluf">
+    <div class="bluf-label">BLUF — Bottom Line Up Front</div>
+    <p>This assessment evaluates publicly available evidence, documentation, verification architecture, operational transparency, and community signals for SwissChems. SwissChems is the longest-standing vendor in the Protokol X series — active since 2018, domain registered through 2029, broad compound catalog spanning peptides, SARMs, nootropics, and PCTs, with international shipping capability. Testing infrastructure includes HPLC and mass spectrometry; COAs are available on select product pages with an independent test results section on-site. The primary watch item requiring elevated attention is a December 2024 FDA Warning Letter for marketing Semaglutide and Retatrutide as unapproved new drugs — the first published FDA enforcement action explicitly targeting GLP-1 grey-market sales. That letter remains open and unclosed as of this brief date. Protokol X evaluates evidence, not intent. Architecture before conclusions. Questions before answers.</p>
+  </div>
+
+  <!-- CARD 1 — EXECUTIVE SUMMARY -->
+  <div class="card open" id="card-1">
+    <div class="card-header" onclick="toggleCard('card-1')">
+      <div class="card-num">01</div>
+      <div class="card-title">Executive Summary</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Who They Are</div>
+        <div class="field-value">SwissChems is a US-based research compound vendor operating since 2018 — making it one of the longer-tenured operations in the grey-market research compound space. Despite the European-sounding brand name, <strong>SwissChems operates from New York</strong> (confirmed by both company contact page and FDA correspondence). The domain swisschems.is is registered through 2029 — a operational longevity signal in a category where vendor exits are frequent. Catalog spans peptides, SARMs, nootropics, post-cycle therapy compounds, and bioregulators. International shipping to most markets. Multiple payment options including cryptocurrency with an additional discount. Protokol X affiliate code: SWISSMB (10% off) — swisschems.is/ref/6720/.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Primary Strengths</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Longest operational track record in the Protokol X series</strong> — active since 2018; years of community signal, verified orders, and documented operational history</li>
+          <li><span class="signal-dot green"></span><strong>Broadest catalog in the series</strong> — 60+ peptide products plus SARMs, nootropics, bioregulators, PCTs; multiple compound formats (lyophilized powder, oral capsules, nasal sprays, pre-mixed solutions)</li>
+          <li><span class="signal-dot green"></span><strong>HPLC + mass spectrometry testing</strong> — both methods applied; independent test results section published on-site</li>
+          <li><span class="signal-dot green"></span><strong>International shipping capability</strong> — ships to most international markets including markets with strict import regulations</li>
+          <li><span class="signal-dot green"></span><strong>Same-day shipping</strong> — orders placed before noon EST ship same business day</li>
+          <li><span class="signal-dot green"></span><strong>Quality-backed refund policy</strong> — refund offered if outside HPLC testing reveals impurities; one of the stronger buyer-protection postures in the vendor category</li>
+          <li><span class="signal-dot green"></span><strong>Domain registered through 2029</strong> — meaningful operational continuity signal in a category prone to sudden exits</li>
+          <li><span class="signal-dot blue"></span>Multiple payment options including cryptocurrency (additional discount for Bitcoin payments)</li>
+          <li><span class="signal-dot blue"></span>Unique compounds not widely available elsewhere (SLU-pp-332 at high dose cited by community; multiple rare bioregulators)</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Notable Limitations</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot red"></span><strong>FDA Warning Letter — December 10, 2024</strong> — open and unclosed; GLP-1 marketing language triggered formal enforcement action; see Card 7 for full analysis</li>
+          <li><span class="signal-dot gold"></span>COA availability is inconsistent across catalog — prominently available on some products, requires direct request on others; peptide COA consistency is weaker than SARMs COA consistency</li>
+          <li><span class="signal-dot gold"></span>Testing laboratory not always named in public-facing COA references — limits independent lab verification</li>
+          <li><span class="signal-dot gold"></span>Pricing runs above budget-tier vendors — premium positioning with corresponding cost; not the lowest-cost option in the series</li>
+          <li><span class="signal-dot gold"></span>Community feedback is mixed — predominantly positive on SARMs; peptide-specific quality consistency receives more varied reviews</li>
+          <li><span class="signal-dot gold"></span>Not found in Finnrick Analytics or Janoshik Analytical public databases as of May 2026 — testing claims rely on vendor's own published documentation</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Best Fit Audience</div>
+        <div class="field-value">Researchers requiring broad catalog access — multiple compound categories in a single vendor relationship. International researchers where other vendors don't ship. Those seeking SARMs alongside peptides from a single source. Researchers who have established an existing relationship with SwissChems and have verified quality on specific compounds. Protokol X Rank 1 reflects operational maturity, catalog depth, and trust infrastructure — evaluated alongside the FDA warning letter watch item as a disclosed known risk.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2 — VERIFICATION ARCHITECTURE -->
+  <div class="card" id="card-2">
+    <div class="card-header" onclick="toggleCard('card-2')">
+      <div class="card-num">02</div>
+      <div class="card-title">Verification Architecture</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Testing Methods</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>HPLC</strong> — High-Performance Liquid Chromatography for purity analysis; published on-site with an independent test results section</li>
+          <li><span class="signal-dot green"></span><strong>Mass Spectrometry</strong> — molecular identity confirmation; applied alongside HPLC</li>
+          <li><span class="signal-dot gold"></span>Testing laboratory identity is not consistently named in public-facing COA documentation — this limits independent cross-reference of the lab's accreditation status</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">COA Availability — Catalog-Variable</div>
+        <div class="field-value">SwissChems publishes an independent test results section on-site. COA availability is product-dependent — more consistently present and linked on SARMs product pages; peptide COA access is less uniform and in some cases available on request rather than directly on product pages. This is a documentation consistency gap relative to vendors like Axon (AxonVerified portal) and ION (QR-linked lot-specific COAs on every product). The gap is a known limitation, not a disqualifier — SwissChems' testing infrastructure predates many of the current documentation standards that newer vendors are building from the ground up.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Stated Purity Standard</div>
+        <div class="field-value">99%+ purity claimed across peptide catalog. Community data presents a range of reported outcomes — some independent analyses cite variance across batches. Third-party review sources note purity consistently testing in the 97–99% range on HPLC through independent verification sources. The quality-backed refund policy (refund if outside HPLC testing reveals impurities) functions as an implicit confidence signal in the vendor's purity claims.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Independent Database Presence</div>
+        <div class="field-value">SwissChems is not found in Finnrick Analytics or Janoshik Analytical public databases as of May 2026. These are the two community-trusted independent labs with public batch-ID lookup used by the peptide community for dispute resolution and longitudinal vendor tracking. Absence is not a quality red flag on its own — many legitimate vendors are not in either database. It does mean SwissChems' testing claims rely on the vendor's own published documentation and labs that cannot always be independently identified and verified.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:14px;">Protokol X 8-Factor Subscores</div>
+      <div class="score-row">
+        <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:82%"></div></div>
+        <div class="score-num">8.2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:88%"></div></div>
+        <div class="score-num">8.8</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3 — TRANSPARENCY & DOCUMENTATION -->
+  <div class="card" id="card-3">
+    <div class="card-header" onclick="toggleCard('card-3')">
+      <div class="card-num">03</div>
+      <div class="card-title">Transparency & Documentation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Public Documentation</div>
+        <div class="field-value">SwissChems maintains a well-organized website with product details, an independent test results section, and COA access for select products. Peer-reviewed studies are referenced on relevant product pages — a transparency-forward educational design choice. Multiple contact channels are available: phone, email, and chat. Site is described across community sources as clean, fast, and user-friendly relative to peer vendors.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Batch Traceability</div>
+        <div class="field-value">Batch-level testing is not guaranteed across the full catalog. COAs are available for many products but the level of detail varies by product. Lot-number correlation between what is tested and what is shipped is cited by some community members as a gap — specifically the concern that without lot number matching on COAs, the certificate may not correspond to the specific batch received. This is a documentation precision gap rather than evidence of misconduct, but it is a meaningful evidential limitation for researchers requiring strict batch traceability.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Refund & Quality Policy</div>
+        <div class="field-value">SwissChems publishes a quality-backed refund policy: if outside HPLC testing results don't align with stated purity, a refund is offered. This is a meaningful buyer-protection commitment — one of the stronger such policies observed in the vendor series. Peptide products are non-returnable once opened (standard industry practice), but the HPLC-based refund pathway provides documented recourse for quality disputes.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Corporate Identity</div>
+        <div class="field-value">SwissChems operates from <strong>New York, USA</strong> — confirmed by both company contact information and the FDA warning letter (which lists the US address). The "Swiss" branding is a naming convention, not an operational location. Domain swisschems.is is a .is (Iceland) TLD; the operation is US-based. BBB listed in Dover, DE. Not BBB accredited. Entity transparency is present but the brand name — implying Swiss-standard precision and European operation — does not align with the actual US domestic operating reality.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+        <div class="score-num">8.5</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:88%"></div></div>
+        <div class="score-num">8.8</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4 — CUSTOMER EXPERIENCE -->
+  <div class="card" id="card-4">
+    <div class="card-header" onclick="toggleCard('card-4')">
+      <div class="card-num">04</div>
+      <div class="card-title">Customer Experience</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Ordering & Shipping</div>
+        <div class="field-value">Same-day shipping for orders placed before noon EST. Multiple payment options including crypto, cards, and wire transfer. Bitcoin payments receive an additional percentage discount. Free shipping thresholds available. Orders reported to arrive within 2 days domestically with cold-pack packaging where appropriate. International shipping available with compound-specific and destination-specific considerations.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Support Responsiveness</div>
+        <div class="field-value">Phone, email, and chat contact options are available and clearly listed. Community feedback on support responsiveness is predominantly positive — with noted slowdowns during high-volume periods such as sale events. Response time cited as hours in positive community reports. Support channels are more accessible than most vendors in the series.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Community Feedback Pattern</div>
+        <div class="field-value">Community signal is <strong>mixed overall, positive on SARMs, more variable on peptides</strong>. SARMs quality is consistently praised — HPLC data showing 98%+ purity on SARMs is commonly cited. Peptide-specific quality reviews are more varied — some reviewers report consistent excellent quality matching COA; others cite batch-to-batch variance concerns. Long-tenured community members cite SwissChems as a reliable anchor vendor with multi-year repeat order history. The Reddit footprint is described as "genuinely mixed" — positive signal with documented concerns that should be weighted proportionally.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Pricing Position</div>
+        <div class="field-value">Pricing is above budget-tier vendors — described as "on par with other high quality vendors" by community reviewers. Not the lowest cost option in the series. Crypto discount and bulk purchase discounts can reduce effective pricing. For researchers comparing on price alone, lower-cost alternatives exist in the Protokol X series. For researchers comparing on catalog depth, format variety, and operational maturity, SwissChems' premium is positioned as a reliability offset.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+        <div class="score-num">9.2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div>
+        <div class="score-num">9.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5 — OPERATIONS & CATALOG -->
+  <div class="card" id="card-5">
+    <div class="card-header" onclick="toggleCard('card-5')">
+      <div class="card-num">05</div>
+      <div class="card-title">Operations & Catalog</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="callout green">
+        <strong>Catalog differentiator:</strong> SwissChems carries the broadest multi-category compound library in the Protokol X series — 60+ peptides plus SARMs, nootropics, bioregulators, and PCTs. Multiple formats per compound. No other vendor in the series matches this catalog breadth.
+      </div>
+
+      <div class="field">
+        <div class="field-label">Compound Categories</div>
+        <div class="field-value">
+          <span class="tag blue">Peptides</span>&nbsp; 60+ including BPC-157, TB-500, GHK-Cu, Ipamorelin, CJC-1295, Melanotan 2, PT-141, Selank, Semax, Epithalon, Semaglutide, Tirzepatide, Retatrutide, AOD-9604 and more<br><br>
+          <span class="tag blue">SARMs</span>&nbsp; RAD-140, MK-677, YK-11, S-23 and others (LGD-4033 excluded due to trademark; Ostarine absent)<br><br>
+          <span class="tag blue">Nootropics</span>&nbsp; Cognitive and focus research compounds<br><br>
+          <span class="tag blue">Bioregulators</span>&nbsp; Including rare compounds not widely available (SLU-pp-332 at high dose cited by community)<br><br>
+          <span class="tag gold">Formats</span>&nbsp; Lyophilized powder · Oral capsules · Nasal sprays · Pre-mixed solutions<br><br>
+          <span class="tag blue">PCT</span>&nbsp; Post-cycle therapy compounds
+        </div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Operational Maturity</div>
+        <div class="field-value">Founded 2018. Domain registered through 2029. New York-based operation with international shipping infrastructure in place. Multi-year track record of order fulfillment, customer service, and community engagement. This is the most operationally mature vendor in the Protokol X series by timeline — predating the 2025-2026 vendor consolidation period that eliminated Peptide Sciences, Science.bio, Amino Asylum, and others. Survival and continued operation through that consolidation period is an implicit operational resilience signal.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Catalog Consistency Note</div>
+        <div class="field-value">Catalog breadth comes with catalog variability. Community reports note some compounds that are difficult to find elsewhere are stocked by SwissChems consistently. Catalog availability can vary — specific compounds should be confirmed in-stock at time of order. The multi-format availability (capsules, sprays, solutions) adds research flexibility not available at most peptide-only vendors.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:95%"></div></div>
+        <div class="score-num">9.5</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+        <div class="score-num">9.2</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6 — COMMUNITY & REPUTATION -->
+  <div class="card" id="card-6">
+    <div class="card-header" onclick="toggleCard('card-6')">
+      <div class="card-num">06</div>
+      <div class="card-title">Community & Reputation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Community Footprint</div>
+        <div class="field-value">SwissChems has the deepest community footprint in the Protokol X series by timeline. Multiple years of Reddit presence, forum discussion, and verified purchaser reviews. Community feedback is documented across peptide forums, Reddit r/peptides, Trustpilot, and third-party review platforms. The volume of available signal — positive and critical — is significantly larger than any other vendor in the series.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Signal Pattern — SARMs</div>
+        <div class="field-value">SARMs quality signal is consistently positive across community sources. HPLC data showing 98%+ purity is commonly referenced. Long-term repeat purchasers in the SARMs category cite SwissChems as their anchor vendor. The referral program is praised as among the strongest in the industry by multiple community members.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Signal Pattern — Peptides</div>
+        <div class="field-value">Peptide-specific signal is more varied. Positive reviews cite consistent purity, fast shipping, and COA documentation matching labeled concentrations. Critical reviews raise concerns about batch-to-batch variance and COA access consistency specifically for peptides. The divergence between SARMs quality signal (strong) and peptide quality signal (mixed) is a documented pattern across independent review sources — not an isolated complaint.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Longevity as Reputation Signal</div>
+        <div class="field-value">Eight years of operation in a category that has seen major vendor exits (Peptide Sciences March 2026, Science.bio January 2026, Amino Asylum FDA raid June 2025) is an operational resilience signal that carries real evidential weight. Vendors that survive multiple enforcement cycles and market consolidations while maintaining an active customer base have demonstrated a different risk profile than newer operations. The FDA warning letter (December 2024) is the most significant reputation event in SwissChems' documented history and is addressed in full in Card 7.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7 — INTELLIGENCE ASSESSMENT -->
+  <div class="card" id="card-7">
+    <div class="card-header" onclick="toggleCard('card-7')">
+      <div class="card-num">07</div>
+      <div class="card-title">Intelligence Assessment</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <!-- FDA Warning Letter — elevated treatment -->
+      <div class="fda-block">
+        <div class="fda-block-label">⚠ FDA Warning Letter — MARCS-CMS 695663 · December 10, 2024 · Status: Open / Unclosed</div>
+        <p>The FDA reviewed SwissChems' website in October 2024 and issued a formal Warning Letter on December 10, 2024. The letter cited SwissChems' marketing of Semaglutide and Retatrutide as violations of Sections 505(a) and 301(d) of the FD&C Act — specifically, introducing unapproved new drugs into interstate commerce. The enforcement trigger was marketing language on product pages and social media (Facebook, Instagram) that the FDA determined crossed from research-use framing into drug claim territory — including peer-reviewed study citations linked to specific health outcomes, and promotional posts referencing metabolic and weight regulation effects. This was the <strong>first published FDA warning letter explicitly framing GLP-1 grey-market sales as unapproved new drug commerce</strong> — it set the enforcement direction that has since accelerated across the vendor category. The letter is not closed as of this brief date. A buyer chargeback, insurance review, customs hold, or bank-level KYC check may reference this letter even when the buyer is not directly involved in a dispute. Researchers should factor this into their sourcing decisions.</p>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title green">Strengths — Evidence-Supported</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Longest operational track record in the series</strong> — 2018 founding; 8 years of operation; survival through two major enforcement cycles and multiple vendor exits</li>
+          <li><span class="signal-dot green"></span><strong>Broadest catalog by far</strong> — 60+ peptides, SARMs, nootropics, bioregulators, PCTs; multiple formats; rare compounds not available elsewhere</li>
+          <li><span class="signal-dot green"></span><strong>HPLC + MS testing with published on-site results section</strong> — testing infrastructure is present and publicly documented</li>
+          <li><span class="signal-dot green"></span><strong>Quality-backed refund policy</strong> — HPLC-based refund if purity doesn't align; strongest buyer-protection policy observed in the series</li>
+          <li><span class="signal-dot green"></span><strong>International shipping</strong> — serving markets no other vendor in the series reaches</li>
+          <li><span class="signal-dot green"></span><strong>Same-day shipping before noon EST</strong> — operational fulfillment speed is a genuine differentiator</li>
+          <li><span class="signal-dot green"></span><strong>Domain registered through 2029</strong> — operational continuity signal</li>
+        </ul>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title red">Critical Watch Item — FDA Warning Letter</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot red"></span><strong>Open enforcement action:</strong> The December 2024 FDA warning letter is not closed. SwissChems has not published a public response or FDA close-out letter as of this brief date. The regulatory status is active</li>
+          <li><span class="signal-dot red"></span><strong>First GLP-1 enforcement precedent:</strong> The letter established the enforcement direction for the entire grey-market GLP-1 vendor category — the industry consequences of this action extend beyond SwissChems alone</li>
+          <li><span class="signal-dot red"></span><strong>Third-party exposure risk:</strong> Chargebacks, customs holds, and banking KYC checks may reference a public FDA warning letter associated with a vendor even for unrelated orders</li>
+        </ul>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title gold">Additional Watch Items</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot gold"></span><strong>COA consistency gap — peptides vs SARMs:</strong> Documentation quality and access are more reliable on SARMs products than peptides; verify COA availability for specific peptide compounds before ordering</li>
+          <li><span class="signal-dot gold"></span><strong>Lab identity in COAs:</strong> Testing laboratory not consistently named in public-facing documentation; limits independent accreditation verification</li>
+          <li><span class="signal-dot gold"></span><strong>Not in Finnrick or Janoshik databases:</strong> Community-trusted independent lab databases don't include SwissChems batch data; verification relies on vendor-published documentation</li>
+          <li><span class="signal-dot gold"></span><strong>Peptide batch variance:</strong> Community signal on peptide-specific quality is more mixed than SARMs signal; batch-to-batch consistency concerns documented</li>
+        </ul>
+      </div>
+
+      <!-- Confidence -->
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Confidence Level</div>
+      <div class="confidence">
+        <div class="conf-pip active green"></div>
+        <div class="conf-pip active green"></div>
+        <div class="conf-pip active green"></div>
+        <div class="conf-pip active green"></div>
+        <div class="conf-label green">&nbsp;Very High — With Disclosed FDA Watch Item</div>
+      </div>
+      <div class="field-value" style="font-size:13px; color:var(--text-secondary);">Confidence in the assessment itself is Very High — SwissChems has the deepest community signal, longest operational history, and most documented evidence base of any vendor in the series. Confidence in the vendor's current regulatory standing is lower — the open FDA warning letter is a material uncertainty that cannot be assessed to closure from available public data. Both conditions are disclosed and factored into the Protokol X Rank 1 placement.</div>
+
+      <!-- Total score -->
+      <div class="total-score">
+        <div class="total-left">
+          <div class="total-score-label">Protokol X Trust Score</div>
+          <div class="total-tier">Rank 1 &nbsp;·&nbsp; Tier 1 &nbsp;·&nbsp; 8-Factor Matrix</div>
+        </div>
+        <div>
+          <div class="total-score-num">9.3</div>
+          <div class="total-score-denom">/ 10 &nbsp;·&nbsp; Recommended with Disclosures</div>
+        </div>
+      </div>
+
+      <!-- 8-factor matrix summary -->
+      <div style="margin-top:20px;">
+        <div class="score-row">
+          <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:82%"></div></div>
+          <div class="score-num">8.2</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:88%"></div></div>
+          <div class="score-num">8.8</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+          <div class="score-num">8.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:95%"></div></div>
+          <div class="score-num">9.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div>
+          <div class="score-num">9.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+          <div class="score-num">9.2</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:88%"></div></div>
+          <div class="score-num">8.8</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+          <div class="score-num">9.2</div>
+        </div>
+      </div>
+
+      <!-- Final assessment -->
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Protokol X Assessment</div>
+      <div class="field-value">SwissChems earns Protokol X Rank 1 on the strength of what is, by observable evidence, the most operationally mature profile in the series. Eight years of operation. The broadest catalog. International shipping. Same-day fulfillment. HPLC + mass spectrometry testing. A quality-backed refund policy that functions as stated buyer protection. Multiple compound formats. A community signal base deeper than any other vendor in the series.<br><br>The FDA warning letter (December 2024) is material and is disclosed in full. It does not change SwissChems' Rank 1 placement — it is a watch item that must be factored into researcher decision-making, not a disqualifying event. The letter targeted specific marketing language on GLP-1 products; it was not an operational raid, product seizure, or evidence of product adulteration. SwissChems continues to operate. The letter is, however, open and unclosed — and it established the enforcement precedent that has reshaped the entire vendor category. Researchers who are risk-averse to FDA regulatory exposure should weigh this accordingly.<br><br>The peptide-versus-SARMs quality signal divergence is the other documented limitation. Researchers sourcing SARMs from SwissChems have a stronger evidence base for quality consistency than those sourcing peptides. For peptides specifically, verifying COA availability and testing method for the specific compound of interest before ordering is recommended practice.<br><br><strong>Protokol X assessment: Rank 1, Tier 1. Recommended with disclosures. The FDA warning letter is a known, disclosed risk factor — not a signal to avoid, but a factor to incorporate into sourcing decisions with full information.</strong></div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <p>Protokol X Affiliate Link &nbsp;·&nbsp; Research Use Only</p>
+    <a class="cta-btn" href="https://swisschems.is/ref/6720/" target="_blank" rel="noopener">Visit SwissChems — Use Code SWISSMB for 10% Off</a>
+    <div class="cta-note">For research purposes only. Not for human or animal use. Not FDA-approved.</div>
+  </div>
+
+  <!-- Bottom Line -->
+  <div class="bottom-line">
+    <div class="bottom-line-label">Bottom Line</div>
+    <p>"No vendor should be trusted because they make claims. Vendors earn confidence through evidence, transparency, verification architecture, and consistency over time. The goal is not certainty. The goal is reducing uncertainty."</p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">Protokol X &nbsp;·&nbsp; Vendor Intelligence Series</div>
+    <div class="footer-doctrine">Clarity Over Noise. Assess. Decide. Execute.</div>
+    <div class="footer-disclosure">Disclosure: Protokol X participates in affiliate programs including SwissChems (affiliate code SWISSMB, 10% off). If you purchase through our link, we may earn a commission at no additional cost to you. Vendor Trust Index scores are applied independently of affiliate relationships. All content is for informational purposes only. Not medical advice. Not FDA-approved. For research use only.</div>
+  </footer>
+
+</div>
+
+<script>
+  function toggleCard(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

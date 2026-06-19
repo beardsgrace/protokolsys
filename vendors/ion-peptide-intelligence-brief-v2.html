@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ION Peptide — Vendor Intelligence Brief | Protokol X</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:        #0b0f1a;
+    --navy-2:      #0f1522;
+    --navy-card:   #131926;
+    --navy-raised: #18202f;
+    --blue:        #2e7cf6;
+    --blue-dim:    rgba(46,124,246,0.15);
+    --blue-line:   rgba(46,124,246,0.35);
+    --gold:        #f0b429;
+    --gold-dim:    rgba(240,180,41,0.12);
+    --text:        #c8d4e8;
+    --text-secondary: #6e809a;
+    --text-muted:  #3d4f66;
+    --white:       #e8edf5;
+    --red-dim:     rgba(224,76,76,0.12);
+    --red:         #e04c4c;
+    --green-dim:   rgba(52,199,128,0.12);
+    --green:       #34c780;
+    --amber:       #f59e0b;
+    --amber-dim:   rgba(245,158,11,0.12);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background: var(--navy); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  .page { max-width: 780px; margin: 0 auto; padding: 48px 20px 96px; }
+
+  .header { border-bottom: 1px solid var(--blue-line); padding-bottom: 32px; margin-bottom: 40px; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); }
+  .classification { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(240,180,41,0.25); padding: 4px 12px; border-radius: 4px; }
+  .vendor-name { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 6vw, 42px); font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px; }
+  .vendor-sub { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); letter-spacing: 0.08em; margin-bottom: 20px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 4px; border: 1px solid var(--blue-line); color: var(--blue); background: var(--blue-dim); }
+  .meta-pill.gold  { border-color: rgba(240,180,41,0.3); color: var(--gold); background: var(--gold-dim); }
+  .meta-pill.green { border-color: rgba(52,199,128,0.3); color: var(--green); background: var(--green-dim); }
+  .meta-pill.amber { border-color: rgba(245,158,11,0.3); color: var(--amber); background: var(--amber-dim); }
+
+  .bluf { background: var(--navy-2); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 20px 22px; margin-bottom: 40px; }
+  .bluf-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .bluf p { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+  .card { background: var(--navy-card); border: 1px solid rgba(46,124,246,0.12); border-radius: 10px; margin-bottom: 16px; overflow: hidden; transition: border-color 0.2s ease; }
+  .card:hover { border-color: rgba(46,124,246,0.28); }
+  .card-header { display: flex; align-items: center; gap: 14px; padding: 18px 22px; border-bottom: 1px solid rgba(46,124,246,0.1); cursor: pointer; user-select: none; }
+  .card-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-dim); border: 1px solid var(--blue-line); width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); flex: 1; }
+  .card-chevron { color: var(--text-muted); font-size: 18px; transition: transform 0.2s ease; flex-shrink: 0; }
+  .card.open .card-chevron { transform: rotate(180deg); }
+  .card-body { display: none; padding: 22px; }
+  .card.open .card-body { display: block; }
+
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; }
+  .field-value { font-size: 14px; color: var(--text); line-height: 1.65; }
+  .field-value strong { color: var(--white); font-weight: 600; }
+  .blue-divider { height: 1px; background: linear-gradient(90deg, var(--blue-line), transparent); margin: 18px 0; }
+
+  .signal-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .signal-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); line-height: 1.55; }
+  .signal-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .signal-dot.blue  { background: var(--blue); }
+  .signal-dot.gold  { background: var(--gold); }
+  .signal-dot.green { background: var(--green); }
+  .signal-dot.red   { background: var(--red); }
+  .signal-dot.amber { background: var(--amber); }
+
+  .tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; vertical-align: middle; }
+  .tag.green { background: var(--green-dim); color: var(--green); }
+  .tag.gold  { background: var(--gold-dim); color: var(--gold); }
+  .tag.blue  { background: var(--blue-dim); color: var(--blue); }
+  .tag.amber { background: var(--amber-dim); color: var(--amber); }
+
+  .callout { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 13px; line-height: 1.6; }
+  .callout.green { background: var(--green-dim); border: 1px solid rgba(52,199,128,0.2); color: var(--green); }
+  .callout strong { font-weight: 700; }
+
+  .score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); width: 230px; flex-shrink: 0; line-height: 1.3; }
+  .score-weight { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); display: block; }
+  .score-bar-wrap { flex: 1; height: 5px; background: rgba(46,124,246,0.1); border-radius: 3px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 3px; background: var(--gold); }
+  .score-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--gold); width: 36px; text-align: right; flex-shrink: 0; }
+
+  .total-score { display: flex; align-items: center; justify-content: space-between; background: var(--navy-raised); border: 1px solid rgba(240,180,41,0.25); border-radius: 8px; padding: 18px 22px; margin-top: 22px; }
+  .total-score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary); }
+  .total-tier { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); margin-top: 4px; letter-spacing: 0.08em; }
+  .total-score-num { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; text-align: right; }
+  .total-score-denom { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+
+  .assessment-block { background: var(--navy-raised); border-radius: 8px; padding: 16px 18px; margin-bottom: 12px; }
+  .assessment-block-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
+  .assessment-block-title.green { color: var(--green); }
+  .assessment-block-title.gold  { color: var(--gold); }
+
+  .confidence { display: flex; align-items: center; gap: 6px; margin: 16px 0; }
+  .conf-pip { flex: 1; height: 6px; border-radius: 3px; background: rgba(46,124,246,0.1); }
+  .conf-pip.active.green { background: var(--green); }
+  .conf-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; white-space: nowrap; color: var(--green); }
+
+  .cta-block { background: linear-gradient(135deg, var(--navy-raised) 0%, rgba(46,124,246,0.08) 100%); border: 1px solid var(--blue-line); border-radius: 10px; padding: 24px; margin-top: 40px; text-align: center; }
+  .cta-block p { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 14px; }
+  .cta-btn { display: inline-block; background: var(--blue); color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; padding: 12px 28px; border-radius: 6px; text-decoration: none; transition: background 0.2s ease, transform 0.2s ease; }
+  .cta-btn:hover { background: #1a6ae0; transform: translateY(-1px); }
+  .cta-note { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; }
+
+  .bottom-line { background: var(--navy-2); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 18px 22px; margin-top: 32px; }
+  .bottom-line-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .bottom-line p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; font-style: italic; }
+
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--text-muted); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .footer-brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+  .footer-doctrine { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
+  .footer-disclosure { width: 100%; font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-top: 8px; }
+
+
+
+  /* Protokol X visual alignment layer */
+  body {
+    background:
+      radial-gradient(circle at 50% -20%, rgba(46,124,246,0.16), transparent 34rem),
+      linear-gradient(rgba(46,124,246,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,124,246,0.035) 1px, transparent 1px),
+      #05070b;
+    background-size: auto, 44px 44px, 44px 44px, auto;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.035), transparent 16%, transparent 84%, rgba(240,180,41,0.035)),
+      radial-gradient(circle at 12% 18%, rgba(240,180,41,0.08), transparent 18rem);
+    mix-blend-mode: screen;
+    opacity: 0.75;
+  }
+
+  .page { max-width: 980px; padding: 28px 20px 96px; position: relative; }
+  .top-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+  .back-link,
+  .px-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .back-link { color: var(--blue); text-decoration: none; }
+  .back-link:hover { color: var(--white); }
+  .px-mark { color: var(--text-muted); text-align: right; }
+
+  .header {
+    position: relative;
+    background: linear-gradient(145deg, rgba(13,19,32,0.94), rgba(4,7,12,0.98));
+    border: 1px solid rgba(46,124,246,0.28);
+    border-radius: 14px;
+    padding: 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 22px 70px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.04);
+    overflow: hidden;
+  }
+  .header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(120deg, rgba(46,124,246,0.14), transparent 38%),
+      radial-gradient(circle at 82% 24%, rgba(240,180,41,0.12), transparent 18rem);
+    pointer-events: none;
+  }
+  .header > * { position: relative; z-index: 1; }
+  .vendor-name { font-size: clamp(34px, 7vw, 64px); letter-spacing: -0.045em; text-transform: uppercase; }
+  .vendor-sub { color: #8798b3; }
+  .meta-row { margin-top: 22px; }
+  .meta-pill { border-radius: 999px; background: rgba(46,124,246,0.1); }
+  .hero-score {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 18px;
+    margin-top: 26px;
+    padding: 20px;
+    border: 1px solid rgba(240,180,41,0.34);
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(240,180,41,0.13), rgba(46,124,246,0.06));
+  }
+  .hero-score-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 7px;
+  }
+  .hero-score-copy { color: var(--text-secondary); font-size: 13px; max-width: 56ch; }
+  .hero-score-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 10vw, 82px);
+    font-weight: 700;
+    line-height: 0.85;
+    color: var(--gold);
+    text-align: right;
+  }
+  .hero-score-denom {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 8px;
+  }
+
+  .bluf, .bottom-line {
+    border-radius: 12px;
+    border: 1px solid rgba(46,124,246,0.24);
+    border-left: 4px solid var(--blue);
+    background: rgba(9,14,24,0.92);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.28);
+  }
+  .bottom-line { border-color: rgba(240,180,41,0.24); border-left-color: var(--gold); }
+  .card {
+    background: linear-gradient(180deg, rgba(19,25,38,0.92), rgba(9,14,24,0.92));
+    border-color: rgba(46,124,246,0.18);
+    border-radius: 12px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.22);
+  }
+  .card:hover { border-color: rgba(46,124,246,0.48); transform: translateY(-1px); }
+  .card-header { min-height: 76px; }
+  .card-num {
+    color: #06101d;
+    background: linear-gradient(135deg, var(--gold), #d99618);
+    border: 0;
+    box-shadow: 0 0 26px rgba(240,180,41,0.16);
+  }
+  .card-title { font-size: 16px; letter-spacing: 0.01em; }
+  .score-bar-wrap { background: rgba(255,255,255,0.08); }
+  .score-bar { background: linear-gradient(90deg, #b98519, var(--gold), #ffe199); }
+  .total-score {
+    background: linear-gradient(135deg, rgba(240,180,41,0.12), rgba(11,15,26,0.9));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .cta-block {
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(46,124,246,0.16), rgba(5,7,11,0.96));
+    box-shadow: 0 20px 60px rgba(0,0,0,0.34);
+  }
+  .cta-btn {
+    border-radius: 999px;
+    background: linear-gradient(135deg, #4f96ff, var(--blue));
+    box-shadow: 0 12px 34px rgba(46,124,246,0.32);
+  }
+  .cta-btn:hover { background: linear-gradient(135deg, #76adff, #2e7cf6); }
+  footer { border-top-color: rgba(46,124,246,0.22); }
+
+  @media (max-width: 640px) {
+    .page { padding: 22px 14px 72px; }
+    .top-nav { align-items: flex-start; flex-direction: column; }
+    .px-mark { text-align: left; }
+    .header { padding: 22px 18px; }
+    .header-top { align-items: flex-start; }
+    .hero-score { grid-template-columns: 1fr; }
+    .hero-score-num, .hero-score-denom { text-align: left; }
+    .card-header { padding: 16px; }
+    .card-body { padding: 18px 16px; }
+    .score-row { align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+    .score-label { width: calc(100% - 48px); }
+    .score-bar-wrap { order: 3; flex-basis: 100%; }
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 28px 16px 72px; }
+    .score-label { width: 160px; font-size: 9px; }
+    .total-score-num { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="top-nav" aria-label="Vendor brief navigation">
+    <a class="back-link" href="index.html" aria-label="Back to Vendor Index">&larr; Back to Vendor Index</a>
+    <div class="px-mark">Protokol X // Clarity Over Noise</div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="brand">Protokol X // Vendor Intelligence</div>
+      <div class="classification">Research Use Only</div>
+    </div>
+    <div class="vendor-name">ION Peptide</div>
+    <div class="vendor-sub">ionpeptide.com &nbsp;·&nbsp; Brief Date: June 2026 &nbsp;·&nbsp; Revision: 2.0</div>
+    <div class="meta-row">
+      <span class="meta-pill">US-Based · Alpharetta, GA</span>
+      <span class="meta-pill">UPLC + MS + Endotoxin</span>
+      <span class="meta-pill">Raw Chromatogram COAs</span>
+      <span class="meta-pill">24/7 Live Chat</span>
+      <span class="meta-pill green">Public Lab Results Page</span>
+      <span class="meta-pill gold">Rank 2 · Tier 1 · 8.8 / 10</span>
+    </div>
+    <div class="hero-score" aria-label="Protokol X Trust Score">
+      <div>
+        <div class="hero-score-label">Protokol X Trust Score</div>
+        <div class="hero-score-copy">Rank 2 &middot; Tier 1 &middot; Recommended. Evidence-weighted assessment based on publicly available verification architecture, transparency practices, support posture, and community signal.</div>
+      </div>
+      <div>
+        <div class="hero-score-num">8.8</div>
+        <div class="hero-score-denom">/ 10</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLUF -->
+  <div class="bluf">
+    <div class="bluf-label">BLUF — Bottom Line Up Front</div>
+    <p>This assessment evaluates publicly available evidence, documentation, verification architecture, operational transparency, and community signals for ION Peptide. ION presents one of the strongest verification postures in the Protokol X series — UPLC/MS testing on every batch, endotoxin screening published per product, and raw chromatogram data in every COA rather than pass/fail summaries. A public Lab Results page is accessible without registration. The operation is newer but building a documented track record across community platforms. Corporate entity: Ion Research, LLC (Alpharetta, GA) with a secondary entity Great Research, LLC (Albuquerque, NM) — dual-entity presentation is a noted transparency watch item. Gated storefront access is standard RUO compliance posture across the current vendor landscape and is not scored. Protokol X evaluates evidence, not intent. Architecture before conclusions. Questions before answers.</p>
+  </div>
+
+  <!-- CARD 1 -->
+  <div class="card open" id="card-1">
+    <div class="card-header" onclick="toggleCard('card-1')">
+      <div class="card-num">01</div>
+      <div class="card-title">Executive Summary</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Who They Are</div>
+        <div class="field-value">ION Peptide is a US-based research supply company operating as <strong>Ion Research, LLC</strong>, headquartered in Alpharetta, Georgia, with a secondary registered address under <strong>Great Research, LLC</strong> in Albuquerque, New Mexico. They supply analytically verified research-grade peptides and compounds for laboratory and in-vitro applications. Their stated framework: GMP/ISO-aligned sourcing, UPLC/MS testing on every batch, lot-specific COAs with raw chromatogram data, endotoxin screening published per product, and same-day dispatch before 3pm PST. 24/7 live chat is available — genuinely uncommon in this vendor category. US domestic shipping only. Affiliate link: ionpeptide.com/?ref=mikeyb7189.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Primary Strengths</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Raw chromatogram COAs — series differentiator</strong> — actual HPLC chromatogram data and MS profiles published, not pass/fail summaries; researchers can audit the lab's analytical work directly, not just trust the vendor's interpretation</li>
+          <li><span class="signal-dot green"></span><strong>UPLC/MS testing on every batch</strong> — Ultra-High Performance Liquid Chromatography plus mass spectrometry; a more rigorous analytical standard than standard HPLC alone</li>
+          <li><span class="signal-dot green"></span><strong>Endotoxin results published per product</strong> — endotoxin testing documented at the product level, publicly accessible; confirmed across multiple product pages</li>
+          <li><span class="signal-dot green"></span><strong>Public Lab Results page</strong> — ionpeptide.com/lab-results/ is accessible without registration; extensive batch-ID history with "NEW" flagging on recent additions</li>
+          <li><span class="signal-dot green"></span><strong>24/7 live chat</strong> — genuinely uncommon in this vendor category; confirmed active with support responses documented in product page chat logs</li>
+          <li><span class="signal-dot green"></span><strong>Same-day dispatch before 3pm PST</strong> — clear, stated fulfillment commitment with defined cutoff</li>
+          <li><span class="signal-dot green"></span><strong>Broad specialty catalog</strong> — includes LL-37, SS-31, Epitalon, semaglutide, retatrutide analogs, GHK-Cu, blend formulations, bacteriostatic water, reconstitution supplies</li>
+          <li><span class="signal-dot green"></span><strong>WHO GMP + ISO 9001:2015-aligned production</strong> — stated quality system framework above baseline for the vendor category</li>
+          <li><span class="signal-dot blue"></span>Net peptide content on COAs — uncommon detail that directly supports dosing precision in research applications</li>
+          <li><span class="signal-dot blue"></span>Wholesale Research Supply Portal — institutional access pathway available</li>
+          <li><span class="signal-dot blue"></span>Community rating 4.6/5 across 11 reviews on Peptide Critic with Lab Verified COA status</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Notable Limitations</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot amber"></span><strong>Dual corporate entity presentation</strong> — Ion Research, LLC (GA) and Great Research, LLC (NM) both associated with the operation without public explanation; a transparency gap inconsistent with the vendor's otherwise strong documentation posture</li>
+          <li><span class="signal-dot amber"></span><strong>Newer operation</strong> — building track record in real time; strong documentation infrastructure established, multi-year community history still accumulating</li>
+          <li><span class="signal-dot amber"></span><strong>US domestic only</strong> — no international shipping; researchers outside the US cannot access ION regardless of documentation quality</li>
+          <li><span class="signal-dot amber"></span><strong>One documented unresolved batch complaint</strong> — a single community report of an ineffective batch with no confirmed customer service resolution; single data point against a predominantly positive pattern</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Best Fit Audience</div>
+        <div class="field-value">Researchers prioritizing the deepest available COA transparency — raw chromatogram data is the highest analytical disclosure standard in the series. Those requiring endotoxin-screened compounds with published per-product results. Researchers needing specialty compounds (LL-37, SS-31, Epitalon, GLP analogs) and blend formulations. Domestic US researchers who want same-day dispatch with 24/7 live support.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card" id="card-2">
+    <div class="card-header" onclick="toggleCard('card-2')">
+      <div class="card-num">02</div>
+      <div class="card-title">Verification Architecture</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="callout green">
+        <strong>Series differentiator:</strong> ION publishes raw HPLC chromatograms and mass spectrometry profiles — not summaries of what the tests returned, the actual underlying analytical data. A researcher with lab access can independently assess whether the test was run competently, not just whether it passed. This inverts the standard trust model and places ION in a distinct documentation tier.
+      </div>
+
+      <div class="field">
+        <div class="field-label">Testing Methodology</div>
+        <div class="field-value"><strong>UPLC/MS</strong> — Ultra-High Performance Liquid Chromatography combined with mass spectrometry. UPLC operates at higher pressure than standard HPLC, producing faster runs with higher resolution and sharper peak separation. Combined with mass spectrometry for identity confirmation, this is a more rigorous analytical standard than the HPLC-only or HPLC+MS protocols used by most peer vendors. All batches undergo comprehensive UPLC/MS testing per the publicly accessible Lab Results page.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Endotoxin Screening</div>
+        <div class="field-value">Endotoxin results are published per product — not as a catalog-level statement but as individual product-page documentation. Confirmed across GLP-2T (ION2-T 20mg and 40mg endotoxin results published), GLP-3R (ION-3R 30mg endotoxin result published), and additional compounds visible in the Lab Results page. This is a meaningful safety layer — endotoxin contamination is a primary concern in research compound quality assessment and is not universally tested across peer vendors.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">COA Architecture</div>
+        <div class="field-value">Lot-specific COAs are linked by QR code on physical product packaging and accessible on-site. The Lab Results page (ionpeptide.com/lab-results/) is publicly accessible and contains an extensive batch-ID history across the full catalog — with "NEW" flagging identifying recently updated batches. Net peptide content is included on COAs — a precision data point that most labs omit and that carries direct relevance to research dosing accuracy.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Quality-Backed Commitment</div>
+        <div class="field-value">ION's published quality commitment states: "Should any Ion Peptide product be independently tested at a licensed HPLC laboratory, Ion will provide the following: Our commitment is simple: verified purity, total transparency, and complete confidence in every product we deliver." This is a standing commitment to stand behind independent testing — a transparency posture that accepts external scrutiny rather than deflecting it.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:14px;">Protokol X 8-Factor Subscores</div>
+      <div class="score-row">
+        <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:94%"></div></div>
+        <div class="score-num">9.4</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:95%"></div></div>
+        <div class="score-num">9.5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card" id="card-3">
+    <div class="card-header" onclick="toggleCard('card-3')">
+      <div class="card-num">03</div>
+      <div class="card-title">Transparency & Documentation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Public Documentation</div>
+        <div class="field-value">ION's public documentation suite is strong: a publicly accessible Lab Results page with extensive batch history, product-level COA and endotoxin result links on individual pages, GMP/ISO quality framework disclosure, and a clearly stated quality commitment with independent testing backing. The site is well-organized with clear RUO labeling throughout.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Gated Storefront</div>
+        <div class="field-value">ION operates a gated storefront — full product catalog and pricing requires account registration. This is <strong>standard RUO compliance posture</strong> across the current vendor landscape, driven by FDA enforcement pressure and age verification requirements. It is not scored and not flagged as a limitation. The Lab Results page and COA documentation remain publicly accessible without registration.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Corporate Entity — Watch Item</div>
+        <div class="field-value">ION Peptide operates under two registered entities: <strong>Ion Research, LLC</strong> (Alpharetta, GA) and <strong>Great Research, LLC</strong> (Albuquerque, NM — 1209 Mountain Rd PL NE, Suite R). Both are associated with the operation. The dual-entity presentation without public explanation is a minor transparency gap — not evidence of misconduct, but inconsistent with the vendor's otherwise comprehensive documentation posture. A clear public explanation of the relationship between the two entities would close this gap.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">RUO Compliance Posture</div>
+        <div class="field-value">Consistent RUO labeling across all product pages, site footer, and at point of purchase. No dosing, administration, or reconstitution guidance is provided. WHO GMP and ISO 9001:2015-aligned sourcing is explicitly cited. Compliance posture is intentional, complete, and consistent throughout the site.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+        <div class="score-num">9.2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+        <div class="score-num">8.5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="card" id="card-4">
+    <div class="card-header" onclick="toggleCard('card-4')">
+      <div class="card-num">04</div>
+      <div class="card-title">Customer Experience</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Shipping & Fulfillment</div>
+        <div class="field-value">Same-day dispatch on in-stock items before 3pm PST. US domestic shipping only — international researchers cannot access ION. Community reports consistently cite 1–2 day fulfillment with secure, professional packaging (individual foam inserts in a box rather than bubble mailers). Free 2-day shipping on qualifying orders. Shipping confirmation and tracking provided promptly.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Support Infrastructure</div>
+        <div class="field-value"><strong>24/7 live chat</strong> is the headline — genuinely uncommon in this vendor category. Active chat logs on product pages confirm real-time support engagement. Multiple community sources cite immediate or same-session response times. Email support also available. The 24/7 availability removes the support access friction that most peer vendors have during off-hours.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Community Feedback Pattern</div>
+        <div class="field-value">Community signal across VialTalk, Trustpilot, and Peptide Critic is predominantly positive. VialTalk reviews cite fast shipping, high-quality packaging, COA quality, and communication responsiveness as consistent strengths. Peptide Critic assigns a 4.6/5 community rating from 11 reviews with Lab Verified COA status. One Trustpilot review describes excellent multi-order experience. One documented batch complaint (ineffective GLP-3R batch with no confirmed support resolution) is a single data point against the broader positive pattern.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Pricing</div>
+        <div class="field-value">Competitive relative to peer vendors with comparable testing infrastructure. Independent pricing analysis places ION as a mid-premium option — not the lowest price point in the series but reflecting the testing depth. Kit discounts and bulk pricing available. 17% affiliate discount available via Protokol X code mikeyb7189.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+        <div class="score-num">9.2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:88%"></div></div>
+        <div class="score-num">8.8</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5 -->
+  <div class="card" id="card-5">
+    <div class="card-header" onclick="toggleCard('card-5')">
+      <div class="card-num">05</div>
+      <div class="card-title">Operations & Catalog</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Catalog Overview</div>
+        <div class="field-value">
+          <span class="tag blue">Recovery</span>&nbsp; BPC-157 · TB-500 · Thymosin Beta-4<br><br>
+          <span class="tag blue">GH Axis</span>&nbsp; Ipamorelin · CJC-1295 (w/ and w/o DAC) · GHRP-2 · GHRP-6<br><br>
+          <span class="tag blue">Metabolic / GLP</span>&nbsp; Semaglutide · Tirzepatide · GLP-3R (Retatrutide analog) · GLP-2T · Cagrilintide<br><br>
+          <span class="tag blue">Longevity / Cellular</span>&nbsp; GHK-Cu · Epitalon · SS-31 · MOTS-c · NAD+<br><br>
+          <span class="tag blue">Specialty / Immune</span>&nbsp; LL-37 · Thymosin Alpha-1 · SLU-PP-32 · DSIP<br><br>
+          <span class="tag gold">Blends</span>&nbsp; Pre-mixed blend formulations (BPC-157+TB-500 Wolverine; GHK-Cu blends; others)<br><br>
+          <span class="tag blue">Topical / Other</span>&nbsp; Drops format available (CJC-1295 Drops confirmed)<br><br>
+          <span class="tag blue">Supplies</span>&nbsp; Bacteriostatic water · Reconstitution kits · Lab accessories
+        </div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Catalog Notes</div>
+        <div class="field-value">Catalog depth is among the broadest in the Protokol X series — specialty compounds (LL-37, SS-31, Epitalon, SLU-PP-32) are not universally available elsewhere. Blend formulations and a Drops format expand utility beyond standard lyophilized vials. Wholesale Research Supply Portal provides an institutional access pathway for volume researchers. Catalog flagged as "among the broader selections tracked" by independent analysis.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Operational Maturity</div>
+        <div class="field-value">WooCommerce storefront. GMP-compliant laboratory partnerships. WHO GMP + ISO 9001:2015-aligned processes cited. Newer operation building its track record — the documentation infrastructure is established and above average for the vendor category regardless of operational age. Lab Results page shows consistent batch cadence with regular new additions.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div>
+        <div class="score-num">9.0</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+        <div class="score-num">8.5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6 -->
+  <div class="card" id="card-6">
+    <div class="card-header" onclick="toggleCard('card-6')">
+      <div class="card-num">06</div>
+      <div class="card-title">Community & Reputation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Multi-Platform Signal — Consistent Positive Pattern</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>VialTalk:</strong> Multiple independent reviewers cite product quality, COA quality, packaging, and support responsiveness as consistent strengths. One reviewer specifically cites ION as the recommended starting vendor for new researchers. Repeat-order reports with sustained satisfaction documented.</li>
+          <li><span class="signal-dot green"></span><strong>Peptide Critic:</strong> 4.6/5 community rating from 11 verified reviews. Lab Verified COA status confirmed on the platform. One reviewer specifically praises COA authenticity versus a competing vendor whose COA could not be verified.</li>
+          <li><span class="signal-dot green"></span><strong>Trustpilot:</strong> Positive pattern — fast shipping, high-quality packaging described as above-baseline (individual foam inserts in a box), product quality matching COA, customer service resolution cited positively.</li>
+          <li><span class="signal-dot amber"></span><strong>One documented batch complaint:</strong> A GLP-3R batch reported as completely ineffective with no confirmed customer service resolution. Single data point — insufficient to establish a pattern, sufficient to track.</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Reputation Signal Quality</div>
+        <div class="field-value">ION's community signal is multi-platform corroborated — the positive pattern appears independently across VialTalk, Trustpilot, and Peptide Critic without cross-platform coordination. This multi-source consistency is a meaningful evidential strength. The 4.6/5 with Lab Verified COA status on Peptide Critic is particularly notable as it reflects both community sentiment and independent platform COA verification.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7 -->
+  <div class="card" id="card-7">
+    <div class="card-header" onclick="toggleCard('card-7')">
+      <div class="card-num">07</div>
+      <div class="card-title">Intelligence Assessment</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="assessment-block">
+        <div class="assessment-block-title green">Strengths — Evidence-Supported</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Raw chromatogram COA publication</strong> — the highest analytical disclosure standard in the series; inverts the standard trust model by putting the underlying lab data in the researcher's hands rather than a vendor summary</li>
+          <li><span class="signal-dot green"></span><strong>UPLC/MS testing</strong> — higher resolution and faster separation than standard HPLC; combined with mass spectrometry for identity confirmation; above-median analytical standard for the vendor category</li>
+          <li><span class="signal-dot green"></span><strong>Endotoxin results published per product</strong> — not a catalog-level claim; individual product-page documentation; one of few vendors in the series with confirmed per-product endotoxin disclosure</li>
+          <li><span class="signal-dot green"></span><strong>Public Lab Results page</strong> — no registration required; extensive batch history with regular updates; net peptide content included on COAs</li>
+          <li><span class="signal-dot green"></span><strong>24/7 live chat — confirmed active</strong> — genuinely uncommon in this segment; product page chat logs confirm real-time engagement</li>
+          <li><span class="signal-dot green"></span><strong>Multi-platform community corroboration</strong> — consistent positive signal across VialTalk, Trustpilot, and Peptide Critic independently</li>
+          <li><span class="signal-dot green"></span><strong>Broad specialty catalog</strong> — LL-37, SS-31, Epitalon, SLU-PP-32, GLP analogs, Drops format, blend formulations; catalog depth exceeds most peer vendors</li>
+        </ul>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title gold">Watch Items — Continued Monitoring</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot gold"></span><strong>Dual corporate entity:</strong> Ion Research, LLC and Great Research, LLC both associated with the operation without public explanation; a transparency gap worth monitoring for resolution or clarification</li>
+          <li><span class="signal-dot gold"></span><strong>Operational age:</strong> Building track record in real time; documentation infrastructure leads community history at this stage — that gap will close with time</li>
+          <li><span class="signal-dot gold"></span><strong>One unresolved batch complaint:</strong> GLP-3R batch reported ineffective with no confirmed resolution; single data point, not a pattern; track for recurrence</li>
+          <li><span class="signal-dot gold"></span><strong>US domestic only:</strong> No international shipping; a structural limitation for the global researcher audience regardless of quality credentials</li>
+        </ul>
+      </div>
+
+      <!-- Confidence -->
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Confidence Level</div>
+      <div class="confidence">
+        <div class="conf-pip active green"></div>
+        <div class="conf-pip active green"></div>
+        <div class="conf-pip active green"></div>
+        <div class="conf-pip active green" style="opacity:0.5;"></div>
+        <div class="conf-label">&nbsp;High — Approaching Very High</div>
+      </div>
+      <div class="field-value" style="font-size:13px; color:var(--text-secondary);">Confidence is High, trending toward Very High. Multi-platform corroborated community signal, raw chromatogram COA publication, confirmed endotoxin screening, and 24/7 live chat support collectively represent the strongest independently verifiable evidence base in the series outside SwissChems' operational longevity. Not yet Very High due to the dual corporate entity transparency gap and the single unresolved batch complaint.</div>
+
+      <!-- Total score -->
+      <div class="total-score">
+        <div>
+          <div class="total-score-label">Protokol X Trust Score</div>
+          <div class="total-tier">Rank 2 &nbsp;·&nbsp; Tier 1 &nbsp;·&nbsp; 8-Factor Matrix</div>
+        </div>
+        <div>
+          <div class="total-score-num">8.8</div>
+          <div class="total-score-denom">/ 10 &nbsp;·&nbsp; Recommended</div>
+        </div>
+      </div>
+
+      <!-- Full 8-factor -->
+      <div style="margin-top:20px;">
+        <div class="score-row">
+          <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:94%"></div></div>
+          <div class="score-num">9.4</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:95%"></div></div>
+          <div class="score-num">9.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+          <div class="score-num">9.2</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:90%"></div></div>
+          <div class="score-num">9.0</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:88%"></div></div>
+          <div class="score-num">8.8</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+          <div class="score-num">9.2</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+          <div class="score-num">8.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+          <div class="score-num">8.5</div>
+        </div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Protokol X Assessment</div>
+      <div class="field-value">ION Peptide's verification architecture earns Rank 2 on the strength of what it actually puts in the researcher's hands — not a summary of what tests showed, but the underlying analytical data. Raw chromatogram publication is the highest transparency standard available in the COA model. The decision to publish the source data rather than the interpretation of it structurally inverts the normal vendor-researcher information dynamic. Very few vendors in this category make that choice.<br><br>UPLC/MS testing exceeds the standard HPLC protocol used across most of the series. Per-product endotoxin results — not a catalog-level statement — are documented and publicly accessible. The Lab Results page is open without registration. 24/7 live chat is confirmed active. Multi-platform community corroboration across VialTalk, Trustpilot, and Peptide Critic is independently consistent.<br><br>The dual corporate entity presentation is a real transparency gap. Ion Research, LLC and Great Research, LLC are both associated with the operation without public explanation. It doesn't disqualify the vendor — the testing architecture is present and independently verifiable regardless of entity structure — but it is inconsistent with the level of documentation transparency ION demonstrates everywhere else. A clear public statement clarifying the relationship between the two entities would close this gap entirely.<br><br><strong>Protokol X assessment: Rank 2, Tier 1. Recommended. The strongest documentation transparency posture in the series based on raw chromatogram COA publication and UPLC/MS + endotoxin testing. Dual entity transparency gap is the primary watch item.</strong></div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <p>Protokol X Affiliate Link &nbsp;·&nbsp; Research Use Only</p>
+    <a class="cta-btn" href="https://ionpeptide.com/?ref=mikeyb7189" target="_blank" rel="noopener">Visit ION Peptide — Use Code mikeyb7189 for 17% Off</a>
+    <div class="cta-note">For research purposes only. Not for human or animal use. Not FDA-approved.</div>
+  </div>
+
+  <div class="bottom-line">
+    <div class="bottom-line-label">Bottom Line</div>
+    <p>"No vendor should be trusted because they make claims. Vendors earn confidence through evidence, transparency, verification architecture, and consistency over time. The goal is not certainty. The goal is reducing uncertainty."</p>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Protokol X &nbsp;·&nbsp; Vendor Intelligence Series</div>
+    <div class="footer-doctrine">Clarity Over Noise. Assess. Decide. Execute.</div>
+    <div class="footer-disclosure">Disclosure: Protokol X participates in affiliate programs including ION Peptide (ref=mikeyb7189). If you purchase through our link, we may earn a commission at no additional cost to you. Vendor Trust Index scores are applied independently of affiliate relationships. All content is for informational purposes only. Not medical advice. Not FDA-approved. For research use only.</div>
+  </footer>
+
+</div>
+<script>
+  function toggleCard(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

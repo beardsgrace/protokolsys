@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Axon Peptide — Vendor Intelligence Brief | Protokol X</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:        #0b0f1a;
+    --navy-2:      #0f1522;
+    --navy-card:   #131926;
+    --navy-raised: #18202f;
+    --blue:        #2e7cf6;
+    --blue-dim:    rgba(46,124,246,0.15);
+    --blue-line:   rgba(46,124,246,0.35);
+    --gold:        #f0b429;
+    --gold-dim:    rgba(240,180,41,0.12);
+    --text:        #c8d4e8;
+    --text-secondary: #6e809a;
+    --text-muted:  #3d4f66;
+    --white:       #e8edf5;
+    --red-dim:     rgba(224,76,76,0.12);
+    --red:         #e04c4c;
+    --green-dim:   rgba(52,199,128,0.12);
+    --green:       #34c780;
+    --amber:       #f59e0b;
+    --amber-dim:   rgba(245,158,11,0.12);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background: var(--navy); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  .page { max-width: 780px; margin: 0 auto; padding: 48px 20px 96px; }
+
+  .header { border-bottom: 1px solid var(--blue-line); padding-bottom: 32px; margin-bottom: 40px; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); }
+  .classification { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(240,180,41,0.25); padding: 4px 12px; border-radius: 4px; }
+  .vendor-name { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 6vw, 42px); font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px; }
+  .vendor-sub { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); letter-spacing: 0.08em; margin-bottom: 20px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 4px; border: 1px solid var(--blue-line); color: var(--blue); background: var(--blue-dim); }
+  .meta-pill.gold  { border-color: rgba(240,180,41,0.3); color: var(--gold); background: var(--gold-dim); }
+  .meta-pill.green { border-color: rgba(52,199,128,0.3); color: var(--green); background: var(--green-dim); }
+  .meta-pill.amber { border-color: rgba(245,158,11,0.3); color: var(--amber); background: var(--amber-dim); }
+
+  .bluf { background: var(--navy-2); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 20px 22px; margin-bottom: 40px; }
+  .bluf-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+  .bluf p { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+  .card { background: var(--navy-card); border: 1px solid rgba(46,124,246,0.12); border-radius: 10px; margin-bottom: 16px; overflow: hidden; transition: border-color 0.2s ease; }
+  .card:hover { border-color: rgba(46,124,246,0.28); }
+  .card-header { display: flex; align-items: center; gap: 14px; padding: 18px 22px; border-bottom: 1px solid rgba(46,124,246,0.1); cursor: pointer; user-select: none; }
+  .card-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--blue); background: var(--blue-dim); border: 1px solid var(--blue-line); width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); flex: 1; }
+  .card-chevron { color: var(--text-muted); font-size: 18px; transition: transform 0.2s ease; flex-shrink: 0; }
+  .card.open .card-chevron { transform: rotate(180deg); }
+  .card-body { display: none; padding: 22px; }
+  .card.open .card-body { display: block; }
+
+  .field { margin-bottom: 18px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; }
+  .field-value { font-size: 14px; color: var(--text); line-height: 1.65; }
+  .field-value strong { color: var(--white); font-weight: 600; }
+  .blue-divider { height: 1px; background: linear-gradient(90deg, var(--blue-line), transparent); margin: 18px 0; }
+
+  .signal-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .signal-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); line-height: 1.55; }
+  .signal-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .signal-dot.blue  { background: var(--blue); }
+  .signal-dot.gold  { background: var(--gold); }
+  .signal-dot.green { background: var(--green); }
+  .signal-dot.red   { background: var(--red); }
+  .signal-dot.amber { background: var(--amber); }
+
+  .tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; vertical-align: middle; }
+  .tag.green { background: var(--green-dim); color: var(--green); }
+  .tag.gold  { background: var(--gold-dim); color: var(--gold); }
+  .tag.blue  { background: var(--blue-dim); color: var(--blue); }
+  .tag.amber { background: var(--amber-dim); color: var(--amber); }
+
+  /* Phase block */
+  .phase-block { background: var(--navy-raised); border: 1px solid rgba(46,124,246,0.15); border-radius: 8px; padding: 16px 18px; margin-bottom: 12px; }
+  .phase-block-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .phase-num-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: var(--blue); background: var(--blue-dim); border: 1px solid var(--blue-line); padding: 3px 10px; border-radius: 4px; white-space: nowrap; }
+  .phase-name { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; color: var(--white); }
+  .phase-sub { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); margin-bottom: 8px; }
+  .phase-detail { font-size: 13px; color: var(--text); line-height: 1.6; }
+
+  /* Resolved conflict block */
+  .resolved-block { background: rgba(52,199,128,0.05); border: 1px solid rgba(52,199,128,0.2); border-radius: 8px; padding: 16px 18px; margin: 14px 0; }
+  .resolved-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+  .resolved-block p { font-size: 13px; color: var(--text); line-height: 1.65; }
+
+  /* Prior concern block */
+  .concern-block { background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.2); border-radius: 8px; padding: 16px 18px; margin: 14px 0; }
+  .concern-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+  .concern-block p { font-size: 13px; color: var(--text); line-height: 1.65; }
+
+  .callout { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 13px; line-height: 1.6; }
+  .callout.green { background: var(--green-dim); border: 1px solid rgba(52,199,128,0.2); color: var(--green); }
+  .callout.blue  { background: var(--blue-dim); border: 1px solid var(--blue-line); color: var(--blue); }
+  .callout strong { font-weight: 700; }
+
+  .score-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); width: 230px; flex-shrink: 0; line-height: 1.3; }
+  .score-weight { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); display: block; }
+  .score-bar-wrap { flex: 1; height: 5px; background: rgba(46,124,246,0.1); border-radius: 3px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 3px; background: var(--gold); }
+  .score-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--gold); width: 36px; text-align: right; flex-shrink: 0; }
+
+  .total-score { display: flex; align-items: center; justify-content: space-between; background: var(--navy-raised); border: 1px solid rgba(240,180,41,0.25); border-radius: 8px; padding: 18px 22px; margin-top: 22px; }
+  .total-score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-secondary); }
+  .total-tier { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); margin-top: 4px; letter-spacing: 0.08em; }
+  .total-score-num { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: var(--gold); line-height: 1; text-align: right; }
+  .total-score-denom { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+
+  .assessment-block { background: var(--navy-raised); border-radius: 8px; padding: 16px 18px; margin-bottom: 12px; }
+  .assessment-block-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
+  .assessment-block-title.green { color: var(--green); }
+  .assessment-block-title.gold  { color: var(--gold); }
+
+  .confidence { display: flex; align-items: center; gap: 6px; margin: 16px 0; }
+  .conf-pip { flex: 1; height: 6px; border-radius: 3px; background: rgba(46,124,246,0.1); }
+  .conf-pip.active.green { background: var(--green); }
+  .conf-pip.partial { background: rgba(52,199,128,0.35); }
+  .conf-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; white-space: nowrap; color: var(--green); }
+
+  .cta-block { background: linear-gradient(135deg, var(--navy-raised) 0%, rgba(46,124,246,0.08) 100%); border: 1px solid var(--blue-line); border-radius: 10px; padding: 24px; margin-top: 40px; text-align: center; }
+  .cta-block p { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 14px; }
+  .cta-btn { display: inline-block; background: var(--blue); color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; padding: 12px 28px; border-radius: 6px; text-decoration: none; transition: background 0.2s ease, transform 0.2s ease; }
+  .cta-btn:hover { background: #1a6ae0; transform: translateY(-1px); }
+  .cta-note { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; }
+
+  .bottom-line { background: var(--navy-2); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 18px 22px; margin-top: 32px; }
+  .bottom-line-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .bottom-line p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; font-style: italic; }
+
+  footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--text-muted); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .footer-brand { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+  .footer-doctrine { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
+  .footer-disclosure { width: 100%; font-size: 11px; color: var(--text-muted); line-height: 1.6; margin-top: 8px; }
+
+  /* Protokol X vendor-brief alignment layer */
+  body {
+    background:
+      radial-gradient(circle at 16% 0%, rgba(46,124,246,0.16), transparent 32rem),
+      radial-gradient(circle at 82% 18%, rgba(240,180,41,0.08), transparent 28rem),
+      linear-gradient(180deg, #030712 0%, #07101d 42%, #030712 100%);
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(46,124,246,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,124,246,0.045) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 86%);
+  }
+  .page {
+    max-width: 980px;
+    padding: 28px 22px 96px;
+  }
+  .top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding: 12px 0 18px;
+    border-bottom: 1px solid rgba(46,124,246,0.22);
+  }
+  .back-link,
+  .px-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .back-link {
+    color: var(--blue);
+    text-decoration: none;
+    transition: color .2s ease, transform .2s ease;
+  }
+  .back-link:hover {
+    color: var(--white);
+    transform: translateX(-2px);
+  }
+  .px-mark {
+    color: var(--text-secondary);
+    text-align: right;
+  }
+  .header {
+    position: relative;
+    padding: 30px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(46,124,246,0.34);
+    border-radius: 14px;
+    background:
+      linear-gradient(135deg, rgba(46,124,246,0.12), transparent 36%),
+      linear-gradient(180deg, rgba(12,18,31,0.96), rgba(7,13,24,0.94));
+    box-shadow: 0 28px 70px rgba(0,0,0,0.42);
+  }
+  .header::before,
+  .header::after {
+    content: "";
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    border-color: var(--blue);
+    pointer-events: none;
+  }
+  .header::before { top: 14px; left: 14px; border-top: 1px solid; border-left: 1px solid; }
+  .header::after { right: 14px; bottom: 14px; border-right: 1px solid; border-bottom: 1px solid; }
+  .brand {
+    color: var(--blue);
+  }
+  .classification {
+    border-color: rgba(240,180,41,0.42);
+    box-shadow: 0 0 24px rgba(240,180,41,0.08);
+  }
+  .vendor-name {
+    font-size: clamp(38px, 7vw, 68px);
+    letter-spacing: -0.04em;
+  }
+  .vendor-sub {
+    color: var(--text-secondary);
+  }
+  .meta-row {
+    gap: 10px;
+  }
+  .meta-pill {
+    border-radius: 999px;
+    background: rgba(46,124,246,0.1);
+  }
+  .hero-score {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 24px;
+    padding: 18px 20px;
+    border: 1px solid rgba(240,180,41,0.34);
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgba(240,180,41,0.14), rgba(240,180,41,0.04));
+  }
+  .hero-score span {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .hero-score strong {
+    display: block;
+    margin-top: 4px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(38px, 8vw, 64px);
+    line-height: .9;
+    color: var(--gold);
+  }
+  .hero-score p {
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .bluf {
+    border: 1px solid rgba(46,124,246,0.3);
+    border-left: 4px solid var(--blue);
+    border-radius: 12px;
+    padding: 24px 26px;
+    background: rgba(11,17,29,0.86);
+    box-shadow: 0 18px 52px rgba(0,0,0,0.28);
+  }
+  .bluf-label {
+    color: var(--blue);
+  }
+  .card {
+    border-color: rgba(46,124,246,0.22);
+    border-radius: 12px;
+    background:
+      linear-gradient(135deg, rgba(46,124,246,0.055), transparent 32%),
+      rgba(14,21,34,0.92);
+    box-shadow: 0 14px 38px rgba(0,0,0,0.18);
+  }
+  .card:hover,
+  .card.open {
+    border-color: rgba(46,124,246,0.48);
+  }
+  .card-header {
+    min-height: 76px;
+    padding: 20px 24px;
+  }
+  .card-num {
+    border-radius: 8px;
+    color: var(--white);
+    background: var(--blue);
+  }
+  .card-title {
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+  .card-body {
+    padding: 24px;
+    border-top: 1px solid rgba(46,124,246,0.12);
+  }
+  .field-label,
+  .assessment-block-title,
+  .bottom-line-label,
+  .bluf-label,
+  .total-score-label {
+    letter-spacing: 0.18em;
+  }
+  .field-value,
+  .bluf p,
+  .signal-list li {
+    color: var(--text);
+  }
+  .blue-divider {
+    background: linear-gradient(90deg, rgba(46,124,246,0.45), transparent);
+  }
+  .phase-block,
+  .assessment-block,
+  .resolved-block,
+  .concern-block {
+    background: rgba(18,27,42,0.82);
+    border-color: rgba(46,124,246,0.22);
+  }
+  .score-bar-wrap,
+  .conf-pip {
+    background: rgba(46,124,246,0.15);
+  }
+  .score-bar {
+    background: linear-gradient(90deg, #b98519, var(--gold));
+    box-shadow: 0 0 18px rgba(240,180,41,0.22);
+  }
+  .total-score {
+    background:
+      linear-gradient(90deg, rgba(240,180,41,0.12), transparent),
+      rgba(18,27,42,0.92);
+    box-shadow: inset 0 0 0 1px rgba(240,180,41,0.08);
+  }
+  .total-score-num {
+    text-shadow: 0 0 24px rgba(240,180,41,0.16);
+  }
+  .cta-block {
+    border-color: rgba(46,124,246,0.44);
+    border-radius: 14px;
+    background:
+      linear-gradient(135deg, rgba(46,124,246,0.16), transparent 44%),
+      rgba(12,18,31,0.96);
+    box-shadow: 0 22px 58px rgba(0,0,0,0.28);
+  }
+  .cta-btn {
+    border: 1px solid rgba(255,255,255,0.08);
+    background: linear-gradient(135deg, #3c8cff, var(--blue));
+    box-shadow: 0 14px 34px rgba(46,124,246,0.22);
+  }
+  .cta-btn:hover {
+    background: linear-gradient(135deg, #5aa0ff, #1f6ee8);
+  }
+  .bottom-line {
+    border: 1px solid rgba(240,180,41,0.28);
+    border-left: 4px solid var(--gold);
+    border-radius: 12px;
+    background: rgba(18,27,42,0.74);
+  }
+  footer {
+    border-top-color: rgba(46,124,246,0.24);
+  }
+  .footer-disclosure {
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 28px 16px 72px; }
+    .top-nav,
+    .hero-score {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    .px-mark,
+    .hero-score p {
+      text-align: left;
+    }
+    .header {
+      padding: 24px 18px;
+    }
+    .score-label { width: 160px; font-size: 9px; }
+    .total-score-num { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- SITE NAV -->
+  <nav class="top-nav" aria-label="Vendor brief navigation">
+    <a class="back-link" href="/vendors/" aria-label="Back to Vendor Index">&larr; Back to Vendor Index</a>
+    <div class="px-mark">Protokol X // Clarity Over Noise</div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="brand">Protokol X // Vendor Intelligence</div>
+      <div class="classification">Research Use Only</div>
+    </div>
+    <div class="vendor-name">Axon Peptide</div>
+    <div class="vendor-sub">axonpeptide.com &nbsp;·&nbsp; Brief Date: June 2026 &nbsp;·&nbsp; Revision: 2.0</div>
+    <div class="meta-row">
+      <span class="meta-pill">US-Based · Axon Research Supply, LLC</span>
+      <span class="meta-pill">Physician-Founded</span>
+      <span class="meta-pill">3-Lab Network</span>
+      <span class="meta-pill green">AxonVerified Portal</span>
+      <span class="meta-pill amber">Kovera Optics Concern — Resolved</span>
+      <span class="meta-pill gold">Rank 3 · Tier 1 · 8.6 / 10</span>
+    </div>
+    <div class="hero-score" aria-label="Protokol X Trust Score">
+      <div>
+        <span>Protokol X Trust Score</span>
+        <strong>8.6</strong>
+      </div>
+      <p>Rank 3 &middot; Tier 1 &middot; Recommended</p>
+    </div>
+  </div>
+
+  <!-- BLUF -->
+  <div class="bluf">
+    <div class="bluf-label">BLUF — Bottom Line Up Front</div>
+    <p>This assessment evaluates publicly available evidence, documentation, verification architecture, operational transparency, and community signals for Axon Peptide. Axon is a physician-founded US vendor — Dr. Nina Jaitly, MD, MPH, MS — built around a three-laboratory verification model with a dedicated public verification portal (AxonVerified). Phase I testing runs every batch through ARS Labs. Phase II randomized verification is split between Kovera Labs and Freedom Diagnostics. A previously noted community optics concern regarding Kovera Labs — Max from Mile High Compounds held a 15% minority equity interest, creating the appearance of vendor equity in a testing lab — was proactively resolved through a full buyback; no actual testing integrity issues were documented. Gated storefront access is standard RUO compliance posture and is not scored. Protokol X evaluates evidence, not intent. Architecture before conclusions. Questions before answers.</p>
+  </div>
+
+  <!-- CARD 1 -->
+  <div class="card open" id="card-1">
+    <div class="card-header" onclick="toggleCard('card-1')">
+      <div class="card-num">01</div>
+      <div class="card-title">Executive Summary</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Who They Are</div>
+        <div class="field-value">Axon Peptide operates as <strong>Axon Research Supply, LLC</strong> — a single, clearly named corporate entity with no dual-entity ambiguity. Founded by <strong>Dr. Nina Jaitly, MD, MPH, MS</strong> — NIH IRTA Fellowship, Novartis medical directorship, Windsor University School of Medicine MD, University of Geneva MS, UMass Amherst MPH, peer-reviewed publications in neurology and psychoneuroendocrinology. The brand's stated positioning: "This industry does not need louder marketing. It needs better documentation, better education, and better accountability." Shopify storefront. Active on Facebook, Instagram, and TikTok (@axonpeptide). Affiliate code AXONMB via Protokol X (20% off). Free shipping over $149. 10% loyalty discount and $10 Axon Cash Rewards program active. Lot release notification system ("Lot Has Been Released" email alerts).</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Primary Strengths</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Three-laboratory verification network</strong> — ARS Labs (Phase I, every batch), Kovera Labs and Freedom Diagnostics (Phase II, randomized) — structural redundancy not found at most peer vendors</li>
+          <li><span class="signal-dot green"></span><strong>AxonVerified public portal</strong> — dedicated batch documentation repository accessible independently; not gated behind purchase or registration</li>
+          <li><span class="signal-dot green"></span><strong>Physician-founded with independently verifiable credentials</strong> — Dr. Jaitly's academic and professional background is confirmable through standard channels; rare in this vendor category</li>
+          <li><span class="signal-dot green"></span><strong>Medical Stewardship Council</strong> — cited oversight body enforcing structural independence between ARS Labs and Axon; adds institutional accountability layer</li>
+          <li><span class="signal-dot green"></span><strong>Batch-gated inventory release</strong> — lots released only after completing full verification; quality-gate prioritization over inventory convenience</li>
+          <li><span class="signal-dot green"></span><strong>Most complete policy architecture in the series</strong> — Terms of Service, Research Conduct & Responsible Use Policy, Shipping Policy, Refund Policy, Privacy Policy, Research Disclaimer, Order Cancellation Policy, Waiver Agreement, and Affiliate T&Cs all publicly accessible</li>
+          <li><span class="signal-dot green"></span><strong>Clean single corporate entity</strong> — Axon Research Supply, LLC; no dual-entity ambiguity</li>
+          <li><span class="signal-dot green"></span><strong>Kovera Labs COI — resolved</strong> — previously raised community concern about lab independence has been addressed through stock repurchase restoring Kovera's independence</li>
+          <li><span class="signal-dot blue"></span>Blend formulations: AXP-KLOW (KPV + BPC-157), AXP-GLOW (GHK-Cu + MOTS-c), AXP Wolverine (BPC-157 + TB-500)</li>
+          <li><span class="signal-dot blue"></span>Competitive pricing — AXP-BPC-157 at $29.99 among lower observed price points</li>
+          <li><span class="signal-dot blue"></span>Bulk and wholesale quote request channel available</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Notable Limitations</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot amber"></span><strong>Newer operation</strong> — building community track record in real time; documentation quality leads community volume at this stage</li>
+          <li><span class="signal-dot amber"></span><strong>Limited independent community review volume</strong> — positive signals where present; volume is still accumulating under the Axon brand</li>
+          <li><span class="signal-dot amber"></span><strong>Medical Stewardship Council — external verification pending</strong> — cited as enforcing ARS Labs independence; council's own independent verification has not been confirmed through external sources at time of brief</li>
+          <li><span class="signal-dot amber"></span><strong>Focused catalog</strong> — curated selection serves specific protocol needs; researchers requiring broad compound access may need to supplement</li>
+        </ul>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Best Fit Audience</div>
+        <div class="field-value">Researchers who prioritize verification architecture depth and physician-led compliance oversight above all other factors. Those running stacked protocols suited to Axon's blend formulations (KLOW, GLOW, Wolverine). Researchers who want batch documentation independently accessible before purchase via AxonVerified. Those who value the accountability signal of a named physician founder with verifiable credentials.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card" id="card-2">
+    <div class="card-header" onclick="toggleCard('card-2')">
+      <div class="card-num">02</div>
+      <div class="card-title">Verification Architecture</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="callout green">
+        <strong>Series differentiator:</strong> Axon operates the most formally structured multi-lab verification model in the Protokol X series — three independent laboratories across two phases, with structural redundancy and a dedicated public verification portal. The architecture is documented and publicly reviewable.
+      </div>
+
+      <div class="field">
+        <div class="field-label">Two-Phase, Three-Lab Model</div>
+        <div class="field-value">No batch releases on a single certificate from a single laboratory. Analytical responsibility is distributed across three independent operations, each serving a distinct and non-redundant function.</div>
+      </div>
+
+      <div class="phase-block">
+        <div class="phase-block-header">
+          <span class="phase-num-badge">Phase I · Every Batch</span>
+          <span class="phase-name">ARS Labs</span>
+        </div>
+        <div class="phase-sub">ars-lab.com &nbsp;·&nbsp; Primary Molecular Validation Partner</div>
+        <div class="phase-detail">HPLC purity analysis, LC-MS identity confirmation, endotoxin screening, and compound-specific analytical review prior to batch release. ARS Labs also performs supplier vetting and ongoing supplier quality assurance — acting as a gate at both supply chain entry and batch exit. Independence from Axon is stated as enforced by the Medical Stewardship Council.</div>
+      </div>
+
+      <div class="phase-block">
+        <div class="phase-block-header">
+          <span class="phase-num-badge">Phase II · Randomized</span>
+          <span class="phase-name">Kovera Labs</span>
+        </div>
+        <div class="phase-sub">koveralabs.com · Buffalo Grove, IL · HPLC/LC-MS · Independent Secondary Validation</div>
+        <div class="phase-detail">HPLC purity and net content testing, LC-MS identity confirmation, COA verification. Randomized application to released batches. Purpose: confirm consistency and reduce single-source analytical bias. Randomization is key — non-random secondary testing can be gamed by selective submission.</div>
+      </div>
+
+      <!-- Kovera COI — full treatment -->
+      <div class="concern-block">
+        <div class="concern-label">Prior Optics Concern — Kovera Labs (Proactively Resolved)</div>
+        <p>Community analysis (Peptide Critic community forum, April 2026) noted that Kovera Labs' IP registration information overlapped with that of Mile High Compounds — a vendor operation whose representative (Max) held a 15% minority equity interest in Kovera Labs. This created an optics concern: even a minority equity stake by a vendor in a testing lab raises the appearance of a conflict of interest regardless of whether operational independence was actually compromised. No evidence of actual testing integrity issues, result manipulation, or operational compromise was documented. The concern was appearance-based — the kind of community-level due diligence that keeps labs accountable to the independence standard the researcher community expects.</p>
+      </div>
+
+      <div class="resolved-block">
+        <div class="resolved-label">Resolution — Proactive Buyback · Clean Ownership · Confirmed via Official Statement</div>
+        <p>Kovera Labs issued a public statement confirming a completed agreement to repurchase the 15% equity interest previously held by Max from Mile High Compounds. Kovera's founder now owns 100% of the company. The statement describes it as "a professional and amicable resolution that allows the company to move forward with a clear and independent ownership structure." Kovera's stated ongoing focus: "transparency, professionalism, quality, and trust." The resolution was proactive — Kovera moved to eliminate the appearance concern before it became an operational one. Protokol X treats this as fully resolved with no residual impact on the assessment.</p>
+      </div>
+
+      <div class="phase-block">
+        <div class="phase-block-header">
+          <span class="phase-num-badge">Phase II · Randomized</span>
+          <span class="phase-name">Freedom Diagnostics</span>
+        </div>
+        <div class="phase-sub">freedomdiagnostics.com · Additional Cross-Verification</div>
+        <div class="phase-detail">Independent analytical redundancy and long-term batch monitoring. Freedom Diagnostics also maintains publicly searchable COA records, enabling independent cross-reference by researchers. Provides an alternative Phase II validation pathway independent of Kovera Labs.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">AxonVerified Public Portal</div>
+        <div class="field-value">Batch documentation is housed at <strong>axonverified.com</strong> — a dedicated public repository where individual lot records can be reviewed independently without requiring account registration or product purchase. This places Axon alongside ION's Lab Results page in the open-access documentation tier. The portal is a structural transparency choice: it separates documentation access from the commercial transaction, removing the information asymmetry that most vendor COA models maintain.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Medical Stewardship Council</div>
+        <div class="field-value">Cited as enforcing structural independence between ARS Labs and Axon Research Supply, LLC. This adds an institutional accountability layer beyond standard vendor-lab arrangements. The Council's own independent existence and governance have not been confirmed through external sources at time of brief — this remains a watch item pending external verification, not a disqualifying concern.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:14px;">Protokol X 8-Factor Subscores</div>
+      <div class="score-row">
+        <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+        <div class="score-num">9.2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:93%"></div></div>
+        <div class="score-num">9.3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card" id="card-3">
+    <div class="card-header" onclick="toggleCard('card-3')">
+      <div class="card-num">03</div>
+      <div class="card-title">Transparency & Documentation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Policy Architecture — Most Complete in the Series</div>
+        <div class="field-value">Nine distinct publicly accessible policies: Terms of Service, Research Conduct & Responsible Use Policy, Shipping Policy, Refund Policy, Privacy Policy, Research Disclaimer, Order Cancellation Policy, Waiver Agreement, and Affiliate Terms & Conditions. Each policy is independently accessible. The breadth and specificity of this policy suite — particularly the Research Conduct & Responsible Use Policy and the Waiver Agreement — signals intentional compliance design rather than reactive documentation. No other vendor in the Protokol X series matches this policy architecture completeness.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Gated Storefront</div>
+        <div class="field-value">Axon operates a gated storefront requiring account registration for product catalog access. This is <strong>standard RUO compliance posture</strong> across the current vendor landscape — driven by FDA enforcement pressure and age verification requirements. It is not scored and not flagged as a limitation. AxonVerified documentation access remains open without registration.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Batch Traceability</div>
+        <div class="field-value">Lot-level verification records housed on AxonVerified. Phase I testing applies to every batch before release. Phase II randomized testing applies to subsets for ongoing consistency verification. Batch-gated inventory release — lots go live only after completing verification, not on a continuous supply basis. "Lot Has Been Released" notification system alerts researchers when new verified lots become available.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Corporate Entity — Clean</div>
+        <div class="field-value"><strong>Axon Research Supply, LLC</strong> — the registered entity name is clearly presented in the site footer and copyright notice. Single entity attribution with no dual-LLC ambiguity observed. This is a meaningful contrast to ION Peptide's dual-entity presentation and represents one of the stronger corporate transparency profiles in the series.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Controlled Access at Entry</div>
+        <div class="field-value">Site entry requires acknowledgment of research-use-only standards, documentation awareness, and lawful handling responsibility. Age confirmation (21+) is required at entry. This is standard RUO compliance posture — not scored, noted for completeness.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:93%"></div></div>
+        <div class="score-num">9.3</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+        <div class="score-num">9.2</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="card" id="card-4">
+    <div class="card-header" onclick="toggleCard('card-4')">
+      <div class="card-num">04</div>
+      <div class="card-title">Customer Experience</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Shipping & Fulfillment</div>
+        <div class="field-value">Fast USA shipping with tracking is cited as a primary value proposition. Free shipping on orders over $149. Batch-gated inventory means availability is tied to lot completion cadence — researchers should monitor "Lot Has Been Released" notifications for compounds of interest. Bulk quote request and wholesale access channels are available for volume researchers. Packaging quality signals are consistent with the vendor's documentation-forward positioning.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Support Channels</div>
+        <div class="field-value">Live chat accessible directly from the product collections page. Email at support@axonpeptide.com. Contact form and FAQ both available. Refund policy covers damaged, defective, or incorrect products — approved issues may qualify for replacement, store credit, or resolution at discretion. Claims must be submitted within 48 hours of delivery with photographic documentation.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Pricing & Value</div>
+        <div class="field-value">AXP-BPC-157 at $29.99 is among the lower price points observed for this compound in the current vendor landscape. 10% loyalty discount program active. $10 Axon Cash Rewards per qualifying order. Protokol X affiliate code AXONMB provides 20% off for Protokol X researchers. Frequent promotional cadence — Memorial Day Weekend Sale, Father's Day Sweepstake ($100 store credit) observed during brief period — signals active commercial operation.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Community Feedback</div>
+        <div class="field-value">Independent community review volume under the Axon brand is building rather than established at time of brief. Where feedback is present it is positive — product quality, documentation accessibility, and support responsiveness cited. The documentation architecture is the primary trust signal at this stage; community volume will close the gap over time. Trustpilot positive patterns noted in available data.</div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+        <div class="score-num">8.5</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:88%"></div></div>
+        <div class="score-num">8.8</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5 -->
+  <div class="card" id="card-5">
+    <div class="card-header" onclick="toggleCard('card-5')">
+      <div class="card-num">05</div>
+      <div class="card-title">Operations & Catalog</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Catalog — Curated with Strategic Depth</div>
+        <div class="field-value">
+          <span class="tag blue">Metabolic / GLP</span>&nbsp; AXP gIp Series R3TA (Retatrutide analog, triple GLP-1/GIP/Glucagon) · $64.99<br><br>
+          <span class="tag blue">GH Axis</span>&nbsp; AXP T Series TESM (Tesamorelin) · $119.99 &nbsp;|&nbsp; AXP-CJC-1295 No DAC · $49.99<br><br>
+          <span class="tag blue">Longevity / Mitochondrial</span>&nbsp; AXP-MOTS-c · $69.99 &nbsp;|&nbsp; AXP-NAD+ · $59.99<br><br>
+          <span class="tag blue">Recovery</span>&nbsp; AXP-BPC-157 · $29.99 &nbsp;|&nbsp; AXP-TB-500 · $39.99<br><br>
+          <span class="tag blue">Skin / Cellular</span>&nbsp; AXP-GHK-Cu · $69.99<br><br>
+          <span class="tag gold">Blends</span>&nbsp; AXP-KLOW (KPV + BPC-157, anti-inflammatory) · $119.99<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AXP-GLOW (GHK-Cu + MOTS-c, skin + cellular) · $99.99<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AXP Wolverine (BPC-157 + TB-500, tissue repair) · $69.99
+        </div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">AXP Naming Convention</div>
+        <div class="field-value">Axon applies a consistent proprietary naming convention across the catalog — AXP-BPC-157, AXP gIp Series R3TA, AXP T Series TESM. This creates clear internal batch-to-product traceability and distinguishes Axon's verified lots from generic compound sourcing. The naming convention is also a consistent cross-reference anchor between product pages and AxonVerified documentation.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Batch-Gated Inventory Release Model</div>
+        <div class="field-value">Inventory is released lot by lot as batches complete the two-phase verification process. This is a quality-gate decision — availability is subordinate to verification completion. Researchers who need compounds on a specific timeline should monitor the "Lot Has Been Released" notification system and plan accordingly. This model reflects operational discipline; it also means out-of-stock periods are expected and intentional rather than fulfillment failures.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="score-row">
+        <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:82%"></div></div>
+        <div class="score-num">8.2</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+        <div class="score-num">8.5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6 -->
+  <div class="card" id="card-6">
+    <div class="card-header" onclick="toggleCard('card-6')">
+      <div class="card-num">06</div>
+      <div class="card-title">Community & Reputation</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="field-label">Community Signal — Building Phase</div>
+        <div class="field-value">Independent community review volume under the Axon Peptide brand is in the building phase at time of brief. This is consistent with the operational age and the brand's documentation-first launch posture — Axon built the verification architecture before scaling the community footprint. Where independent feedback is present it is positive, citing product quality and documentation accessibility. Community volume is expected to accumulate as the brand's lot-release cadence and researcher network expand.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Physician Founder as Reputation Anchor</div>
+        <div class="field-value">Dr. Nina Jaitly's credentials are publicly documented and independently verifiable: NIH IRTA Fellowship, Novartis medical directorship, Windsor University School of Medicine MD, University of Geneva MS, UMass Amherst MPH, peer-reviewed publications in neurology, psychoneuroendocrinology, and health security. Founder credentialing at this level is uncommon in the RUO vendor category. It functions as a structural reputation anchor at this stage — independently assessable, not a marketing claim.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Social & Affiliate Presence</div>
+        <div class="field-value">Active on Facebook (facebook.com/axonpeptide), Instagram (instagram.com/axonpeptide), and TikTok (@axonpeptide). Creator and affiliate network program is open for application with published T&Cs. Active promotional cadence signals ongoing community engagement strategy. Social presence is consistent and brand-aligned across platforms.</div>
+      </div>
+      <div class="blue-divider"></div>
+      <div class="field">
+        <div class="field-label">Kovera Labs — Community Context</div>
+        <div class="field-value">Community analysis (Peptide Critic forum, April 2026) flagged that Max from Mile High Compounds held a 15% minority equity interest in Kovera Labs — creating an optics concern about the appearance of vendor equity in an independent testing lab, even though no actual testing integrity issues were documented. Kovera Labs proactively resolved it: the 15% stake was fully repurchased, and the founder now owns 100% of the company. The concern was appearance-based and the response was professional and preemptive. Protokol X treats this as fully resolved with no residual impact on the Axon assessment.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7 -->
+  <div class="card" id="card-7">
+    <div class="card-header" onclick="toggleCard('card-7')">
+      <div class="card-num">07</div>
+      <div class="card-title">Intelligence Assessment</div>
+      <div class="card-chevron">&#8964;</div>
+    </div>
+    <div class="card-body">
+
+      <div class="assessment-block">
+        <div class="assessment-block-title green">Strengths — Evidence-Supported</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot green"></span><strong>Three-laboratory network — most formally structured in the series</strong> — ARS Labs (Phase I, every batch), Kovera Labs and Freedom Diagnostics (Phase II, randomized); each serving distinct, non-redundant analytical roles</li>
+          <li><span class="signal-dot green"></span><strong>AxonVerified public portal</strong> — batch documentation accessible at a dedicated independent URL without registration; structural transparency that removes information asymmetry at the pre-purchase stage</li>
+          <li><span class="signal-dot green"></span><strong>Physician founder with verifiable credentials</strong> — Dr. Jaitly's academic and professional background is independently confirmable; credentialing at this level is rare in this vendor category and provides a concrete accountability anchor</li>
+          <li><span class="signal-dot green"></span><strong>Most complete policy architecture in the series</strong> — nine distinct public policies including Research Conduct & Responsible Use Policy and Waiver Agreement; compliance posture is intentional, not reactive</li>
+          <li><span class="signal-dot green"></span><strong>Clean single corporate entity</strong> — Axon Research Supply, LLC; no dual-entity ambiguity; strongest corporate transparency profile in the Tier 1 group</li>
+          <li><span class="signal-dot green"></span><strong>Batch-gated inventory release</strong> — quality-gate prioritization; lots available only after full verification cycle completion</li>
+          <li><span class="signal-dot green"></span><strong>Kovera Labs COI resolved</strong> — prior conflict of interest addressed through controlling stake repurchase; both the concern and its resolution are disclosed per evidence standards</li>
+          <li><span class="signal-dot green"></span><strong>ARS Labs endotoxin screening at Phase I</strong> — every batch endotoxin-tested before release; directly relevant to research safety standards</li>
+        </ul>
+      </div>
+
+      <div class="assessment-block">
+        <div class="assessment-block-title gold">Watch Items — Continued Monitoring</div>
+        <ul class="signal-list">
+          <li><span class="signal-dot gold"></span><strong>Medical Stewardship Council — external verification pending:</strong> Cited as enforcing ARS Labs independence; council's independent existence and governance not confirmed through external sources at time of brief; not a disqualifier, an open verification item</li>
+          <li><span class="signal-dot gold"></span><strong>Community review volume:</strong> Documentation quality leads community history at this stage; the gap will close as the operation matures; monitor Trustpilot and Reddit for emerging patterns</li>
+          <li><span class="signal-dot gold"></span><strong>Kovera Labs — ownership structure confirmation:</strong> Resolution is reported and incorporated; researchers who require independent confirmation of current Kovera ownership can contact the lab directly</li>
+          <li><span class="signal-dot gold"></span><strong>Catalog depth:</strong> Curated catalog is a deliberate positioning choice; researchers needing compounds outside the AXP range will need to supplement with other series vendors</li>
+        </ul>
+      </div>
+
+      <!-- Confidence -->
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Confidence Level</div>
+      <div class="confidence">
+        <div class="conf-pip active green"></div>
+        <div class="conf-pip active green"></div>
+        <div class="conf-pip active green"></div>
+        <div class="conf-pip partial"></div>
+        <div class="conf-label">&nbsp;High — Approaching Very High</div>
+      </div>
+      <div class="field-value" style="font-size:13px; color:var(--text-secondary);">Confidence is High, trending toward Very High. The three-lab verification architecture, public AxonVerified portal, verifiable physician founder, clean corporate entity, and most complete policy suite in the series collectively represent a strong independently verifiable evidence base. Not yet Very High due to limited independent community volume and the Medical Stewardship Council pending external verification. Kovera Labs COI is treated as resolved and no longer caps the confidence level.</div>
+
+      <!-- Total score -->
+      <div class="total-score">
+        <div>
+          <div class="total-score-label">Protokol X Trust Score</div>
+          <div class="total-tier">Rank 3 &nbsp;·&nbsp; Tier 1 &nbsp;·&nbsp; 8-Factor Matrix</div>
+        </div>
+        <div>
+          <div class="total-score-num">8.6</div>
+          <div class="total-score-denom">/ 10 &nbsp;·&nbsp; Recommended</div>
+        </div>
+      </div>
+
+      <!-- Full 8-factor -->
+      <div style="margin-top:20px;">
+        <div class="score-row">
+          <div class="score-label">COA Availability<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+          <div class="score-num">9.2</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Third-Party Testing Depth<span class="score-weight">Weight: 20%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:93%"></div></div>
+          <div class="score-num">9.3</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Batch Verification<span class="score-weight">Weight: 15%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:93%"></div></div>
+          <div class="score-num">9.3</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Catalog Consistency<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:82%"></div></div>
+          <div class="score-num">8.2</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Consumer Accessibility<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:88%"></div></div>
+          <div class="score-num">8.8</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Fulfillment & Support<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+          <div class="score-num">8.5</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Transparency Practices<span class="score-weight">Weight: 10%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:92%"></div></div>
+          <div class="score-num">9.2</div>
+        </div>
+        <div class="score-row">
+          <div class="score-label">Operational Reliability<span class="score-weight">Weight: 5%</span></div>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+          <div class="score-num">8.5</div>
+        </div>
+      </div>
+
+      <div class="blue-divider"></div>
+      <div class="field-label" style="margin-bottom:10px;">Protokol X Assessment</div>
+      <div class="field-value">Axon Peptide's verification architecture is the most formally structured in the Protokol X series. The three-lab model with distributed analytical responsibility, the AxonVerified public portal, batch-gated inventory release, and a physician founder whose credentials are independently confirmable collectively represent a documentation posture that is built around accountability rather than marketing.<br><br>The Kovera Labs situation is correctly characterized as an optics concern rather than an actual integrity issue. A 15% minority equity stake held by a vendor representative (Max from Mile High Compounds) created the appearance of a conflict of interest — the kind of optics the research community appropriately flags. No evidence of actual testing integrity compromise was documented. Kovera Labs resolved it proactively through a full buyback, with the founder now owning 100% of the company. The response was professional, preemptive, and transparent — exactly what the accountability standard should produce. Protokol X treats this as fully closed with no residual impact on the Axon assessment.<br><br>The Medical Stewardship Council remains an open verification item. Cited as the institutional mechanism enforcing ARS Labs independence from Axon — if that mechanism is real and functioning, it adds a meaningful accountability layer. If it cannot be independently verified it remains a vendor-stated governance claim. The distinction matters; Protokol X flags it as a watch item rather than resolving it without evidence.<br><br>Community volume will close the documentation-to-community gap as the brand matures. The asymmetry is not a red flag — it's the expected condition of a documentation-first operation that built the architecture before scaling the audience.<br><br><strong>Protokol X assessment: Rank 3, Tier 1. Recommended. Strongest formal verification architecture in the series. Kovera COI resolved. Medical Stewardship Council pending external verification. Community volume is the primary development area to track.</strong></div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <p>Protokol X Affiliate Link &nbsp;·&nbsp; Research Use Only</p>
+    <a class="cta-btn" href="https://axonpeptide.com/?ref=AXONMB" target="_blank" rel="noopener">Visit Axon Peptide — Use Code AXONMB for 20% Off</a>
+    <div class="cta-note">For research purposes only. Not for human or veterinary use. Not FDA-approved.</div>
+  </div>
+
+  <div class="bottom-line">
+    <div class="bottom-line-label">Bottom Line</div>
+    <p>"No vendor should be trusted because they make claims. Vendors earn confidence through evidence, transparency, verification architecture, and consistency over time. The goal is not certainty. The goal is reducing uncertainty."</p>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Protokol X &nbsp;·&nbsp; Vendor Intelligence Series</div>
+    <div class="footer-doctrine">Clarity Over Noise. Assess. Decide. Execute.</div>
+    <div class="footer-disclosure">Disclosure: Protokol X participates in affiliate programs including Axon Peptide (affiliate code AXONMB, 20% off). If you purchase through our link, we may earn a commission at no additional cost to you. Vendor Trust Index scores are applied independently of affiliate relationships. All content is for informational purposes only. Not medical advice. Not FDA-approved. For research use only.</div>
+  </footer>
+
+</div>
+<script>
+  function toggleCard(id) {
+    const card = document.getElementById(id);
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
