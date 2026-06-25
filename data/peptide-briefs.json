@@ -1,9 +1,16 @@
 {
-  "updatedAt": "2026-06-24T15:38:46.893Z",
-  "updatedLabel": "Updated Jun 24, 2026",
+  "updatedAt": "2026-06-25T15:45:42.538Z",
+  "updatedLabel": "Updated Jun 25, 2026",
   "source": "PubMed",
   "query": "peptide[Title] OR peptides[Title] OR GLP-1[Title] OR tirzepatide[Title] OR retatrutide[Title] OR semaglutide[Title]",
   "items": [
+    {
+      "pmid": "42343233",
+      "title": "Effect of pasteurized Akkermansia muciniphila MucT on insulin sensitivity, body composition, and GLP-1 production in subjects with metabolic syndrome: impact of low baseline gut Akkermansia levels",
+      "source": "Gut microbes",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42343233/"
+    },
     {
       "pmid": "42271191",
       "title": "Membrane vesicles associated antimicrobial peptides from PGPR Priestia megaterium VIT-2021 confer in silico efficacy against Pseudomonas syringae virulence protein",
@@ -17,13 +24,6 @@
       "source": "Drug delivery",
       "date": "2026 Dec 31",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42189047/"
-    },
-    {
-      "pmid": "42141999",
-      "title": "Magnetic nanohydroxyapatite-peptide silk fibroin hydrogel induces osteogenesis in canine periodontal ligament stem cells revealed by proteomic analysis",
-      "source": "The veterinary quarterly",
-      "date": "2026 Dec 31",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42141999/"
     }
   ]
 }
