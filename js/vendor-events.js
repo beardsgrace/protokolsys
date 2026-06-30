@@ -35,20 +35,23 @@
   var VENDOR_EVENTS = [
     {
       vendor: "ion",
-      eventId: "ion-weekend-event-2026-06-12",
+      eventId: "ion-july-event-2026-07-03",
       active: true,
-      title: "ION Weekend Event",
+      title: "ION Vendor Event",
       label: "Current Vendor Event",
-      description: "This vendor has an active weekend promotion.",
+      description: "July 3, 8:00 AM EST \u2013 July 6, 11:59 AM EST",
       lines: [
-        "Peptide Cosmetics \u2014 20% Off",
-        "Peptide Drops \u2014 35% Off",
-        "Peptide Raws \u2014 20% Off",
-        "Peptide Dissolvables \u2014 20% Off"
+        "All products \u2014 20% Off",
+        "ION 1-3 (Sema, Tirz, Reta) \u2014 22% Off",
+        "GHK / SS31 / Gluta / NAD / BPC \u2014 35% Off",
+        "Cosmetics \u2014 40% Off",
+        "Oral Drops \u2014 50% Off",
+        "Code mikeyb7189 stacks for an extra 17% Off",
+        "ACH at checkout for 5% Off"
       ],
-      emphasizedLines: [0],
-      startDate: "2026-06-12",
-      endDate: "2026-06-15",
+      emphasizedLines: [3, 4, 5, 6],
+      startDateTime: "2026-07-03T08:00:00-05:00",
+      endDateTime: "2026-07-06T11:59:00-05:00",
       ctaText: "View ION",
       ctaUrl: "/ion/"
     },
