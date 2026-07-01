@@ -90,6 +90,23 @@
       endDateTime: "2026-07-05T08:00:00-06:00",
       ctaText: "View Ramp",
       ctaUrl: "/vendors/ramp-peptides-vendor-profile.html"
+    },
+    {
+      vendor: "kraken",
+      eventId: "kraken-july-sale-2026-07-01",
+      active: true,
+      paths: ["/vendors/kraken-pep-vendor-profile.html"],
+      title: "Kraken Pep Sale",
+      label: "Current Vendor Event",
+      description: "Live now \u2013 July 6, midnight",
+      lines: [
+        "25% Off Sitewide + 10% krakenmb"
+      ],
+      emphasizedLines: [0],
+      startDateTime: "2026-07-01T00:00:00-07:00",
+      endDateTime: "2026-07-06T00:00:00-07:00",
+      ctaText: "View Kraken",
+      ctaUrl: "/vendors/kraken-pep-vendor-profile.html"
     }
   ];
 
