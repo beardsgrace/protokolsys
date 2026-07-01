@@ -72,6 +72,24 @@
       emphasizedLines: [0, 1],
       startDateTime: "2026-07-02T00:00:00-05:00",
       endDateTime: "2026-07-07T23:59:00-05:00"
+    },
+    {
+      vendor: "ramp",
+      eventId: "ramp-july-sale-2026-07-01",
+      active: true,
+      paths: ["/vendors/ramp-peptides-vendor-profile.html"],
+      title: "Ramp Peptides Sale",
+      label: "Current Vendor Event",
+      description: "Live now \u2013 July 5, 8:00 AM MT",
+      lines: [
+        "35% Off (25% Sitewide + 10% mikeyb7189)",
+        "Orders over $300 get free Hospira"
+      ],
+      emphasizedLines: [0, 1],
+      startDateTime: "2026-07-01T00:00:00-06:00",
+      endDateTime: "2026-07-05T08:00:00-06:00",
+      ctaText: "View Ramp",
+      ctaUrl: "/vendors/ramp-peptides-vendor-profile.html"
     }
   ];
 
