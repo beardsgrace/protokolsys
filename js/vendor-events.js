@@ -57,22 +57,21 @@
     },
     {
       vendor: "axon",
-      eventId: "axon-momentum-event-2026-06-15",
+      eventId: "axon-july-sale-2026-07-02",
       active: true,
       theme: "axon-gold",
       storageScope: "session",
-      title: "AXON Momentum Event",
+      paths: ["/axon", "/axon/"],
+      title: "AXON Sale Event",
       label: "Current Vendor Event",
-      description: "June 15, 6:00 AM EST \u2013 June 22, 11:59 PM EST",
+      description: "July 2, 12:00 AM EST \u2013 July 7, 11:59 PM EST",
       lines: [
-        "10% Off Sitewide",
-        "Free Shipping on Orders $149+",
-        "Earn $10 in Axon Rewards for Every $100 Spent",
-        "Save an Additional 20% with Code AXONMB"
+        "Orders up to $200 \u2014 30% Off (10% sitewide + 20% AXONMB)",
+        "Orders over $200 \u2014 35% Off (15% sitewide + 20% AXONMB)"
       ],
-      emphasizedLines: [3],
-      startDateTime: "2026-06-15T06:00:00-05:00",
-      endDateTime: "2026-06-22T23:59:59-05:00"
+      emphasizedLines: [0, 1],
+      startDateTime: "2026-07-02T00:00:00-05:00",
+      endDateTime: "2026-07-07T23:59:00-05:00"
     }
   ];
 
@@ -226,9 +225,26 @@
       return (
         normalizeVendor(event.vendor) === vendor &&
         event.active === true &&
+        doesEventMatchPath(event) &&
         isEventInDateRange(event, now) &&
         !isDismissed(event)
       );
+    });
+  }
+
+  function normalizePath(pathname) {
+    var path = String(pathname || "").toLowerCase();
+    return path && path.charAt(path.length - 1) !== "/" ? path + "/" : path;
+  }
+
+  function doesEventMatchPath(event) {
+    if (!Array.isArray(event.paths) || event.paths.length === 0) {
+      return true;
+    }
+
+    var currentPath = normalizePath(global.location && global.location.pathname);
+    return event.paths.some(function matchAllowedPath(allowedPath) {
+      return currentPath === normalizePath(allowedPath);
     });
   }
 
