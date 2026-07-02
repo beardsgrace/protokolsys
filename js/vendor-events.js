@@ -107,6 +107,28 @@
       endDateTime: "2026-07-06T00:00:00-07:00",
       ctaText: "View Kraken",
       ctaUrl: "/vendors/kraken-pep-vendor-profile.html"
+    },
+    {
+      vendor: "petratide",
+      eventId: "petratide-july-sale-2026-07-01",
+      active: true,
+      paths: ["/vendors/petratide-science-vendor-profile.html"],
+      title: "Petratide Science Sale",
+      label: "Current Vendor Event",
+      description: "Live now \u2013 July 5, 11:59 PM CST",
+      lines: [
+        "BW + GHK-Cu Bundle \u2014 $19.95",
+        "Bundle is free with any $200+ order",
+        "Maximum Savings \u2014 35% Off",
+        "Industry-record stack: 10-15% off sitewide + 10% off with code mikeyb7189",
+        "8-15% off with bulk pricing",
+        "$30 Off any $350+ order, applied automatically at checkout"
+      ],
+      emphasizedLines: [2, 3, 5],
+      startDateTime: "2026-07-01T00:00:00-06:00",
+      endDateTime: "2026-07-05T23:59:00-06:00",
+      ctaText: "View Petratide",
+      ctaUrl: "/vendors/petratide-science-vendor-profile.html"
     }
   ];
 
