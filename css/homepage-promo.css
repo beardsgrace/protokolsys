@@ -31,14 +31,14 @@ html.px-home-promo-open body {
 
 .px-home-promo-panel {
   position: relative;
-  width: min(820px, 100%);
-  max-height: min(92dvh, 1040px);
+  width: min(520px, 92vw);
+  max-height: calc(100dvh - 36px);
   border: 1px solid rgba(255, 170, 0, 0.72);
   background: #020711;
   box-shadow:
     0 30px 90px rgba(0, 0, 0, 0.7),
     0 0 38px rgba(255, 170, 0, 0.18);
-  overflow: auto;
+  overflow: hidden;
   transform: translateY(12px) scale(0.985);
   transition: transform 180ms ease;
 }
@@ -50,7 +50,9 @@ html.px-home-promo-open body {
 .px-home-promo-image {
   display: block;
   width: 100%;
+  max-height: calc(100dvh - 36px);
   height: auto;
+  object-fit: contain;
 }
 
 .px-home-promo-close {
@@ -86,6 +88,11 @@ html.px-home-promo-open body {
   }
 
   .px-home-promo-panel {
+    width: min(430px, 94vw);
+    max-height: calc(100dvh - 20px);
+  }
+
+  .px-home-promo-image {
     max-height: calc(100dvh - 20px);
   }
 
