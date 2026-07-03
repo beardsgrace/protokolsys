@@ -1,9 +1,16 @@
 {
-  "updatedAt": "2026-07-02T15:31:19.256Z",
-  "updatedLabel": "Updated Jul 2, 2026",
+  "updatedAt": "2026-07-03T15:26:07.017Z",
+  "updatedLabel": "Updated Jul 3, 2026",
   "source": "PubMed",
   "query": "peptide[Title] OR peptides[Title] OR GLP-1[Title] OR tirzepatide[Title] OR retatrutide[Title] OR semaglutide[Title]",
   "items": [
+    {
+      "pmid": "42390481",
+      "title": "Effective treatment of human breast tumors by chimeric CCL2 and CCL8 diphtheria toxin cytotoxic peptides",
+      "source": "Cancer biology & therapy",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42390481/"
+    },
     {
       "pmid": "42343233",
       "title": "Effect of pasteurized Akkermansia muciniphila MucT on insulin sensitivity, body composition, and GLP-1 production in subjects with metabolic syndrome: impact of low baseline gut Akkermansia levels",
@@ -17,13 +24,6 @@
       "source": "Plant signaling & behavior",
       "date": "2026 Dec 31",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42271191/"
-    },
-    {
-      "pmid": "42189047",
-      "title": "Self-assembled non-steroidal anti-inflammatory drug-peptide hydrogel to effectively mitigate ocular inflammation",
-      "source": "Drug delivery",
-      "date": "2026 Dec 31",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42189047/"
     }
   ]
 }
