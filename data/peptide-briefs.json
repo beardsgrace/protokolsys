@@ -1,29 +1,29 @@
 {
-  "updatedAt": "2026-07-05T14:53:27.068Z",
-  "updatedLabel": "Updated Jul 5, 2026",
+  "updatedAt": "2026-07-06T16:30:34.472Z",
+  "updatedLabel": "Updated Jul 6, 2026",
   "source": "PubMed",
   "query": "peptide[Title] OR peptides[Title] OR GLP-1[Title] OR tirzepatide[Title] OR retatrutide[Title] OR semaglutide[Title]",
   "items": [
+    {
+      "pmid": "42402813",
+      "title": "Preclinical proof of concept for a personalized SNAP™-TIL (Specific Neo-Antigen Peptides-TIL) therapy platform",
+      "source": "Oncoimmunology",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42402813/"
+    },
+    {
+      "pmid": "42402043",
+      "title": "Identification and profiling of HLA-A*02:01-restricted Toxoplasma gondii peptides through immunopeptidomics in HLA-A2.1 transgenic mice",
+      "source": "Virulence",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42402043/"
+    },
     {
       "pmid": "42390481",
       "title": "Effective treatment of human breast tumors by chimeric CCL2 and CCL8 diphtheria toxin cytotoxic peptides",
       "source": "Cancer biology & therapy",
       "date": "2026 Dec 31",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42390481/"
-    },
-    {
-      "pmid": "42343233",
-      "title": "Effect of pasteurized Akkermansia muciniphila MucT on insulin sensitivity, body composition, and GLP-1 production in subjects with metabolic syndrome: impact of low baseline gut Akkermansia levels",
-      "source": "Gut microbes",
-      "date": "2026 Dec 31",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42343233/"
-    },
-    {
-      "pmid": "42271191",
-      "title": "Membrane vesicles associated antimicrobial peptides from PGPR Priestia megaterium VIT-2021 confer in silico efficacy against Pseudomonas syringae virulence protein",
-      "source": "Plant signaling & behavior",
-      "date": "2026 Dec 31",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42271191/"
     }
   ]
 }
