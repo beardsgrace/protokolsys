@@ -83,7 +83,8 @@
 }
 
 .px-subscribe .input:focus,
-.px-subscribe .sib-form-block__button:focus-visible {
+.px-subscribe .sib-form-block__button:focus-visible,
+.px-subscribe-popup button:focus-visible {
   outline: 2px solid var(--gold, #f0b429);
   outline-offset: 3px;
 }
@@ -108,7 +109,8 @@
   text-align: left;
 }
 
-.px-subscribe .sib-form-block__button {
+.px-subscribe .sib-form-block__button,
+.px-subscribe-popup__primary {
   display: inline-flex;
   min-height: 48px;
   align-items: center;
@@ -130,7 +132,8 @@
   transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
-.px-subscribe .sib-form-block__button:hover {
+.px-subscribe .sib-form-block__button:hover,
+.px-subscribe-popup__primary:hover {
   border-color: rgba(240, 180, 41, 0.75);
   background: rgba(240, 180, 41, 0.22);
   color: #ffffff;
@@ -190,6 +193,75 @@
   fill: currentColor;
 }
 
+.px-subscribe-popup {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 90;
+  width: min(390px, calc(100vw - 28px));
+  border: 1px solid rgba(0, 174, 255, 0.28);
+  border-radius: 6px;
+  background:
+    linear-gradient(145deg, rgba(0, 174, 255, 0.1), rgba(5, 10, 16, 0.96) 46%, rgba(2, 8, 13, 0.99)),
+    #071520;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+  color: var(--text, #c8d8e8);
+}
+
+.px-subscribe-popup[hidden] {
+  display: none;
+}
+
+.px-subscribe-popup__inner {
+  padding: 22px;
+}
+
+.px-subscribe-popup__eyebrow {
+  margin: 0 0 8px;
+  color: var(--blue, #00aeff);
+  font-family: var(--mono, "Share Tech Mono", monospace);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.px-subscribe-popup__title {
+  margin: 0 34px 8px 0;
+  color: #ffffff;
+  font-family: var(--display, "Barlow Condensed", "Segoe UI", Arial, sans-serif);
+  font-size: 26px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.px-subscribe-popup__copy {
+  margin: 0;
+  color: var(--text, #c8d8e8);
+  font-family: var(--body, "Barlow", "Segoe UI", Arial, sans-serif);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.px-subscribe-popup__dismiss {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(0, 174, 255, 0.22);
+  border-radius: 4px;
+  background: rgba(2, 11, 18, 0.75);
+  color: var(--text-muted, #8899aa);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.px-subscribe-popup__dismiss:hover {
+  color: #ffffff;
+  border-color: rgba(0, 174, 255, 0.52);
+}
+
 @media (max-width: 640px) {
   .px-subscribe {
     margin: 32px auto;
@@ -199,7 +271,13 @@
     padding: 20px 16px;
   }
 
-  .px-subscribe .sib-form-block__button {
+  .px-subscribe .sib-form-block__button,
+  .px-subscribe-popup__primary {
     width: 100%;
+  }
+
+  .px-subscribe-popup {
+    right: 14px;
+    bottom: 14px;
   }
 }
