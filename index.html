@@ -94,6 +94,7 @@
     .hero-title{margin:0;font-size:clamp(70px,11vw,156px);font-weight:900;line-height:.82;text-shadow:0 0 28px rgba(0,168,255,.18)}.hero-title span{color:var(--blue)}.hero-subtitle{margin:18px auto 0;max-width:620px;color:var(--dim);font-size:clamp(17px,2vw,22px)}.hero-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:28px}
     .button{display:inline-flex;justify-content:center;align-items:center;min-height:44px;padding:12px 16px;border:1px solid rgba(0,168,255,.45);color:var(--hi);background:rgba(0,168,255,.09);text-decoration:none;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.button.primary{background:var(--blue);color:#00111c;border-color:var(--blue);font-weight:700}.button.gold{border-color:rgba(255,170,0,.5);color:var(--gold);background:rgba(255,170,0,.08)}.button:hover,.button:focus-visible{transform:translateY(-1px);box-shadow:0 0 24px rgba(0,168,255,.18);outline:none}
     .briefs-panel{border:1px solid rgba(0,168,255,.24);background:linear-gradient(180deg,rgba(5,10,16,.92),rgba(2,4,6,.98));padding:14px 16px;position:relative;overflow:hidden}.briefs-panel:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,168,255,.12),transparent 28%,rgba(255,170,0,.08));opacity:.55}.briefs-head,.briefs-list,.briefs-note{position:relative;z-index:1}.briefs-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:8px}.briefs-head h2{margin:0;font-size:clamp(22px,3vw,32px);line-height:.95}.briefs-date{font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}.briefs-list{display:grid;gap:0}.brief-item{display:grid;gap:3px;padding:8px 0;border-top:1px solid rgba(0,168,255,.16)}.brief-item:first-child{border-top:0}.brief-item a{color:var(--hi);font-family:var(--cond);font-size:clamp(17px,2.2vw,22px);font-weight:700;letter-spacing:.04em;line-height:1.02;text-decoration:none;text-transform:uppercase;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.brief-item a:hover{color:var(--blue2)}.brief-meta{color:var(--dim);font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase}.briefs-note{margin-top:7px;color:var(--dim);font-size:11px;line-height:1.3}
+    .ulta-labs-card{height:350px;padding:0;display:block;background:#020b12;text-decoration:none;isolation:isolate}.ulta-labs-card:before{display:none}.ulta-labs-card img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}.ulta-labs-card:hover,.ulta-labs-card:focus-visible{border-color:rgba(255,170,0,.68);box-shadow:0 0 28px rgba(0,168,255,.16);outline:none}.ulta-labs-disclosure{position:absolute;top:8px;right:8px;z-index:2;padding:3px 6px;border:1px solid rgba(255,255,255,.34);background:rgba(2,4,6,.82);color:var(--hi);font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase}
     .vendor-card{position:relative;overflow:hidden;border:1px solid rgba(0,168,255,.22);background:rgba(5,10,16,.92);display:grid;grid-template-rows:138px auto;isolation:isolate}.vendor-card:before{inset:0 0 auto;height:138px;z-index:1;opacity:.08}.vendor-card img{display:block;width:100%;height:138px;object-fit:cover;object-position:center;filter:saturate(.98) contrast(1.05) brightness(.94);transition:transform .3s,filter .3s}.vendor-card:hover img{transform:scale(1.025);filter:saturate(1.08) contrast(1.08) brightness(1)}.vendor-card:hover{border-color:var(--accent,var(--blue));box-shadow:0 0 30px rgba(0,168,255,.16)}
     .vendor-card.ion-card img{object-position:30% center}.vendor-card.swiss-card img{object-position:center}.vendor-card.petratide-card img{object-position:center}.vendor-card.peptipura-card img{object-fit:contain;object-position:center;background:#f7f7f4}.vendor-card.ramp-card img{object-position:54% center}.vendor-card.kraken-card img{object-position:center}
     .vendor-body{padding:13px;background:linear-gradient(180deg,rgba(3,8,13,.97),rgba(2,4,6,.99));border-top:1px solid rgba(0,168,255,.14);position:relative;z-index:2}.rank-line{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px;font-family:var(--mono);color:var(--accent,var(--blue2));font-size:10px;letter-spacing:.12em;text-transform:uppercase}.vendor-name{margin:0;font-family:var(--cond);font-size:26px;line-height:.95;letter-spacing:.06em;color:var(--hi);text-transform:uppercase}.vendor-note{margin:7px 0 11px;color:var(--text);font-size:13px}.vendor-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.mini-button{min-height:36px;display:inline-flex;align-items:center;justify-content:center;padding:8px;border:1px solid rgba(255,255,255,.16);background:rgba(2,4,6,.72);color:var(--hi);text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;text-align:center}.mini-button.profile{border-color:var(--accent,var(--blue));color:var(--accent,var(--blue))}
@@ -104,6 +105,7 @@
     @media (max-width:1100px){.header-inner{grid-template-columns:1fr auto}.tabs{grid-column:1/-1;order:3}.vendor-layout{grid-template-columns:minmax(0,1fr)}.vendor-rail{grid-template-columns:repeat(3,minmax(0,1fr))}.center-stack{order:-1}.hero{order:-1}}
     @media (max-width:1100px){.top-tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media (max-width:760px){.header-inner{gap:8px;padding:8px 10px}.brand-mark{width:32px;height:32px;font-size:21px}.brand-name{font-size:18px;letter-spacing:.12em}.status{display:none}main{padding:10px}.top-tools,.info-grid,.pathway{grid-template-columns:1fr}.tool-card{min-height:96px;padding:14px}.axon-feature-strip{height:160px;margin-bottom:10px;display:flex;align-items:center;justify-content:center}.axon-strip-art{width:100%;height:auto;aspect-ratio:1024/199;flex:0 0 auto}.axon-strip-img{height:auto}.axon-profile-link{inset:0;width:auto;height:auto;min-height:0;z-index:4}.axon-visit-link{top:55%;left:72%;width:26%;height:44px;z-index:6}.vendor-rail{grid-template-columns:1fr}.vendor-card{grid-template-rows:150px auto}.vendor-card:before{height:150px}.vendor-card img{height:150px}.hero{min-height:360px;padding:30px 14px}.hero-title{font-size:clamp(58px,18vw,92px)}.hero-subtitle{font-size:16px}.pathway .button{width:100%}.vendor-actions{grid-template-columns:1fr}.tab{font-size:10px;padding:8px}.modal{padding:8px}.checks label{width:100%}}
+    @media (max-width:760px){.ulta-labs-card{height:345px}}
   </style>
 </head>
 <body>
@@ -145,13 +147,10 @@
         <section class="hero" aria-label="PROTOKOL X overview">
           <div><div class="hero-kicker">Peptide & Wellness Savings</div><h1 class="hero-title">PROTOKOL <span>X</span></h1><p class="hero-subtitle">Vetted vendor profiles, real discount paths, lab supply links, and research tools, organized into one mobile-first command center.</p><div class="hero-actions"><a class="button primary" href="https://protokolx-tracker2.netlify.app/" target="_blank" rel="noopener">Launch Tracker</a><button class="button" type="button" data-open-finder>Research Pathway</button></div></div>
         </section>
-        <section class="briefs-panel" aria-labelledby="briefsTitle">
-          <div class="briefs-head"><h2 id="briefsTitle">Peptide Research Briefs</h2><span class="briefs-date" id="briefsUpdated">Updating Daily</span></div>
-          <div class="briefs-list" id="briefsList">
-            <article class="brief-item"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=peptide+research" target="_blank" rel="noopener">Loading current PubMed research briefs...</a><div class="brief-meta">PubMed</div></article>
-          </div>
-          <p class="briefs-note">Third-party research links are informational only and are not medical advice, dosing guidance, treatment recommendations, or vendor endorsements.</p>
-        </section>
+        <a class="briefs-panel ulta-labs-card" href="https://www.ultalabtests.com/partners/pxulta" target="_blank" rel="noopener noreferrer sponsored" aria-label="Visit Ulta Lab Tests through the Protokol X affiliate partner link">
+          <img src="assets/promos/ulta-labs-card.png" alt="Ulta Lab Tests — affordable online lab testing and secure results." />
+          <span class="ulta-labs-disclosure">Affiliate</span>
+        </a>
       </div>
 
       <div class="vendor-rail">
@@ -180,24 +179,6 @@
 
   <footer>PROTOKOL X - Building a higher standard in research navigation - Updated May 9, 2026</footer>
   <script src="/js/homepage-promo.js" defer></script>
-  <script>
-    async function loadPeptideBriefs(){
-      const list=document.getElementById('briefsList'),updated=document.getElementById('briefsUpdated');
-      if(!list)return;
-      try{
-        const response=await fetch('/data/peptide-briefs.json',{cache:'no-store'});
-        if(!response.ok)throw new Error('Briefs unavailable');
-        const data=await response.json();
-        const items=(data.items||[]).slice(0,3);
-        if(data.updatedLabel&&updated)updated.textContent=data.updatedLabel;
-        if(!items.length)throw new Error('No briefs found');
-        list.innerHTML=items.map(item=>'<article class="brief-item"><a href="'+item.url+'" target="_blank" rel="noopener">'+item.title+'</a><div class="brief-meta">'+[item.source,item.date].filter(Boolean).join(' / ')+'</div></article>').join('');
-      }catch(error){
-        list.innerHTML='<article class="brief-item"><a href="https://pubmed.ncbi.nlm.nih.gov/?term=peptide+research" target="_blank" rel="noopener">View current peptide research on PubMed</a><div class="brief-meta">PubMed / Live Search</div></article>';
-      }
-    }
-    loadPeptideBriefs();
-  </script>
   <script>
     const modal=document.getElementById('researchPathwayModal'),result=document.getElementById('finderResult'),openers=document.querySelectorAll('[data-open-finder]'),closer=document.querySelector('[data-close-finder]'),checks=document.querySelectorAll('.checks input');
     const matches={ion:['ION Peptide','/vendors/ion-peptide-discount.html','Best fit when savings, Tier 1 trust, curated presentation, and primary PROTOKOL X value matter most.'],swiss:['SwissChems','/vendors/swisschems-vendor-profile.html','Best fit for advanced users who want a larger institutional catalog, nootropics, and broad research-compound coverage.'],petratide:['Petratide Science','/vendors/petratide-science-vendor-profile.html','Best fit for budget-conscious users who still want strong COA coverage and a value/transparency profile.'],peptipura:['Peptipura','/vendors/peptipura-vendor-profile.html','Best fit for users who prefer an approachable, community-oriented, quality-first vendor feel.'],ramp:['Ramp Peptides','/vendors/ramp-peptides-vendor-profile.html','Best fit for newer researchers, GLP-focused exploration, education/support, and beginner-friendly accessibility.'],kraken:['The Kraken Pep','/vendors/kraken-pep-vendor-profile.html','Best fit for niche exploration and emerging vendor discovery with bold identity and developing transparency.']};
