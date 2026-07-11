@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Semax Research Brief: BDNF, Neuroprotection, and the Evidence | PROTOKOL X</title>
+  <meta name="description" content="Semax is one of the most researched nootropic peptides -- and one of the most misunderstood. A Protokol X intelligence brief on BDNF findings, stroke-rehabilitation evidence, delivery mechanisms, and the limits of the available data." />
+  <meta name="author" content="PROTOKOL X" />
+  <link rel="canonical" href="https://protokolx.com/blog/semax-research-brief.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Semax Research Brief: BDNF, Neuroprotection, and the Evidence | PROTOKOL X" />
+  <meta property="og:description" content="Russian clinical use, preclinical BDNF findings, and limited human stroke-rehabilitation evidence. A Protokol X brief on what the Semax literature actually supports." />
+  <meta property="og:url" content="https://protokolx.com/blog/semax-research-brief.html" />
+  <meta property="og:site_name" content="PROTOKOL X" />
+  <meta property="article:published_time" content="2026-07-11T00:00:00-07:00" />
+  <meta property="article:section" content="Peptide Intelligence" />
+  <meta property="article:tag" content="Semax" />
+  <meta property="article:tag" content="BDNF" />
+  <meta property="article:tag" content="neuroplasticity" />
+  <meta property="article:tag" content="neuroprotection" />
+  <meta property="article:tag" content="nootropic research" />
+  <meta property="article:tag" content="cognitive resilience" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Semax Research Brief | PROTOKOL X" />
+  <meta name="twitter:description" content="Russian clinical use, preclinical BDNF findings, and a clear evidence boundary. What the cited Semax literature supports -- and where claims outrun the data." />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Semax Research Brief: BDNF, Neuroprotection, and the Evidence",
+    "description": "Semax is a synthetic ACTH(4-10) analog studied in preclinical neurotrophin research and limited Russian stroke-rehabilitation literature. A Protokol X intelligence brief separating supported findings from speculative claims.",
+    "author": {"@type": "Organization", "name": "PROTOKOL X"},
+    "publisher": {"@type": "Organization", "name": "PROTOKOL X", "url": "https://protokolx.com"},
+    "datePublished": "2026-07-11",
+    "url": "https://protokolx.com/blog/semax-research-brief.html",
+    "keywords": "Semax, Semax research, Semax peptide, BDNF, neuroplasticity, neuroprotection, nootropic research, cognitive resilience, Semax cognitive research"
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #020b12;
+      --bg-card:     #071520;
+      --bg-card-alt: #040f1a;
+      --blue:        #00aeff;
+      --gold:        #f0b429;
+      --green:       #00c878;
+      --text:        #c8d8e8;
+      --text-muted:  #8899aa;
+      --text-dim:    #4a6a8a;
+      --border:      rgba(0,174,255,0.2);
+      --border-dim:  rgba(0,174,255,0.1);
+      --border-gold: rgba(240,180,41,0.35);
+      --glow:        rgba(0,174,255,0.07);
+    }
+
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; line-height: 1.75; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header { background: var(--bg); border-bottom: 1px solid var(--border); padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .brand { font-size: 18px; font-weight: 700; letter-spacing: 0.15em; color: var(--blue); }
+    .brand span { color: var(--text); font-weight: 400; }
+    .header-nav { display: flex; gap: 18px; flex-wrap: wrap; }
+    .header-nav a { font-size: 12px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; }
+    .header-nav a:hover { color: var(--blue); text-decoration: none; }
+
+    .article-wrap { max-width: 800px; margin: 0 auto; padding: 52px 24px 96px; }
+
+    .hero-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+    .hero-series { display: inline-flex; align-items: center; gap: 8px; background: rgba(240,180,41,0.08); border: 1px solid var(--border-gold); border-radius: 3px; padding: 4px 12px; margin-bottom: 18px; }
+    .hero-series span { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+    h1 { font-size: clamp(26px, 5.5vw, 44px); font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 10px; }
+    .hero-sub { font-size: clamp(14px, 3vw, 18px); color: var(--blue); font-weight: 600; letter-spacing: 0.04em; margin-bottom: 14px; }
+    .hero-subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; font-style: italic; line-height: 1.55; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 20px; padding-bottom: 36px; border-bottom: 1px solid var(--border-dim); }
+    .hero-meta-item { font-size: 12px; color: var(--text-dim); }
+    .hero-meta-item span { color: var(--text-muted); }
+
+    .bluf { background: var(--glow); border-left: 3px solid var(--blue); border-radius: 0 4px 4px 0; padding: 22px 26px; margin: 36px 0; }
+    .bluf-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); font-weight: 700; margin-bottom: 12px; }
+    .bluf p { font-size: 15px; color: var(--text); margin-bottom: 13px; line-height: 1.7; }
+    .bluf p:last-child { margin-bottom: 0; }
+    .bluf .key-line { font-size: 15px; color: #fff; font-weight: 600; padding: 8px 14px; border-left: 2px solid var(--border); margin: 10px 0; background: rgba(0,174,255,0.04); }
+
+    .section-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; margin-top: 52px; }
+    h2 { font-size: 19px; font-weight: 700; color: var(--blue); letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 18px; }
+
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 28px; margin: 18px 0; }
+    .card h3 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 12px; margin-top: 22px; }
+    .card h3:first-child { margin-top: 0; }
+    .card p { font-size: 15px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.7; }
+    .card p:last-child { margin-bottom: 0; }
+    .card ul { padding-left: 20px; margin: 6px 0 14px; }
+    .card ul li { font-size: 15px; color: var(--text-muted); margin-bottom: 7px; line-height: 1.65; }
+    .card strong { color: var(--text); }
+
+    .stat-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0; }
+    .stat-pill { background: var(--bg-card-alt); border: 1px solid var(--border); border-radius: 5px; padding: 12px 18px; flex: 1; min-width: 140px; }
+    .stat-pill .sp-val { font-size: 22px; font-weight: 800; color: var(--blue); line-height: 1; margin-bottom: 4px; }
+    .stat-pill .sp-label { font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em; }
+
+    .cite { display: block; font-size: 12px; color: var(--text-dim); font-style: italic; border-left: 2px solid var(--border-dim); padding-left: 10px; margin: 14px 0 0; line-height: 1.55; }
+    .cite a { color: var(--text-dim); }
+    .cite a:hover { color: var(--blue); }
+
+    .doctrine { background: rgba(240,180,41,0.05); border: 1px solid var(--border-gold); border-radius: 6px; padding: 20px 24px; margin: 22px 0; }
+    .doctrine .doc-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 10px; }
+    .doctrine p { font-size: 15px; color: #e8d8b8; margin: 0; font-style: italic; line-height: 1.7; }
+
+    .warning-box { background: rgba(240,180,41,0.04); border: 1px solid var(--border-gold); border-left: 3px solid var(--gold); border-radius: 0 4px 4px 0; padding: 16px 20px; margin: 20px 0; }
+    .warning-box .w-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 6px; }
+    .warning-box p { font-size: 14px; color: #c8b870; margin: 0; line-height: 1.6; }
+
+    .finding { background: rgba(0,174,255,0.04); border: 1px solid rgba(0,174,255,0.25); border-radius: 5px; padding: 18px 22px; margin: 18px 0; }
+    .finding .f-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); font-weight: 700; margin-bottom: 10px; }
+    .finding p { font-size: 14px; color: var(--text); margin-bottom: 8px; line-height: 1.65; }
+    .finding p:last-child { margin-bottom: 0; }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 13px; }
+    .data-table th { background: rgba(0,174,255,0.08); color: var(--blue); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(0,174,255,0.2); }
+    .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border-dim); color: var(--text-muted); vertical-align: top; line-height: 1.55; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { color: var(--text); font-weight: 600; }
+    .data-table .tag-human { color: var(--green); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; }
+    .data-table .tag-animal { color: var(--blue); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; }
+    .data-table .tag-speculative { color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; }
+
+    .assessment-card { background: var(--bg-card); border: 1px solid rgba(240,180,41,0.3); border-radius: 6px; overflow: hidden; margin: 18px 0; }
+    .assessment-card .ac-header { background: rgba(240,180,41,0.07); border-bottom: 1px solid rgba(240,180,41,0.2); padding: 14px 24px; }
+    .assessment-card .ac-header-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+    .assessment-card .ac-body { padding: 24px; }
+    .assessment-row { display: grid; grid-template-columns: 160px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-dim); align-items: start; }
+    .assessment-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .ar-label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); padding-top: 2px; }
+    .ar-value { font-size: 14px; color: var(--text); line-height: 1.6; }
+
+    .evidence-card { background: rgba(0,174,255,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 24px 28px; margin: 20px 0; }
+    .evidence-card .ec-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 14px; }
+    .evidence-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+    .evidence-item { display: flex; align-items: flex-start; gap: 10px; }
+    .ev-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 7px; }
+    .ev-dot.gold { background: var(--gold); }
+    .ev-dot.green { background: var(--green); }
+    .evidence-item span { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    .references { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: 6px; padding: 24px 28px; margin: 32px 0; }
+    .ref-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px; }
+    .ref-item { display: flex; gap: 12px; margin-bottom: 12px; font-size: 13px; line-height: 1.6; }
+    .ref-item:last-child { margin-bottom: 0; }
+    .ref-num { color: var(--blue); font-weight: 700; flex-shrink: 0; width: 20px; }
+    .ref-text { color: var(--text-dim); }
+    .ref-text em { font-style: italic; color: var(--text-muted); }
+    .ref-text a { color: var(--text-dim); font-size: 11px; }
+    .ref-text a:hover { color: var(--blue); }
+
+    .bottom-line { border-top: 2px solid rgba(240,180,41,0.3); padding-top: 32px; margin-top: 52px; }
+    .bl-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 18px; }
+    .bottom-line p { font-size: 15px; color: var(--text-muted); margin-bottom: 13px; line-height: 1.7; }
+    .bottom-line .bl-close { font-size: 13px; color: var(--text-dim); margin-top: 24px; font-style: italic; }
+    .bottom-line .clarity { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 0.08em; margin-top: 6px; }
+
+    .internal-links { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: 6px; padding: 20px 24px; margin: 32px 0; }
+    .il-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+    .il-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .il-grid a { font-size: 13px; background: var(--glow); border: 1px solid var(--border); border-radius: 4px; padding: 7px 13px; color: var(--blue); }
+    .il-grid a:hover { background: rgba(0,174,255,0.12); text-decoration: none; }
+
+    .clarity-footer { border-top: 1px solid var(--border-dim); margin-top: 40px; padding-top: 20px; }
+    .clarity-footer .cf-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+    .clarity-footer p { font-size: 13px; color: var(--text-dim); margin: 0; line-height: 1.6; }
+
+    footer { border-top: 1px solid var(--border-dim); padding: 24px; text-align: center; font-size: 12px; color: #2a3a4a; margin-top: 48px; }
+
+    @media (max-width: 600px) {
+      .article-wrap { padding: 28px 16px 64px; }
+      .header-nav { display: none; }
+      .stat-row { flex-direction: column; }
+      .assessment-row { grid-template-columns: 1fr; gap: 4px; }
+      .evidence-grid { grid-template-columns: 1fr; }
+      .data-table { font-size: 12px; }
+      .data-table th, .data-table td { padding: 9px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">PROTOKOL <span>X</span></div>
+  <nav class="header-nav">
+    <a href="/blog/">Education</a>
+    <a href="/systems.html">Systems</a>
+    <a href="/calculator.html">Calculator</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
+
+<div class="article-wrap">
+
+  <!-- HERO -->
+  <div class="hero-label">PROTOKOL X &nbsp;&middot;&nbsp; Research Brief &nbsp;&middot;&nbsp; Peptide Intelligence</div>
+  <div class="hero-series"><span>Neurotrophin Series &nbsp;&middot;&nbsp; Semax Deep Dive</span></div>
+  <h1>Semax Research Brief</h1>
+  <p class="hero-sub">BDNF, Neuroprotection, and the Evidence Boundary</p>
+  <p class="hero-subtitle">A Protokol X Intelligence Brief on the Mechanisms, Clinical Research, and Honest Limitations of the Most Discussed Nootropic Peptide</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">Published: <span>July 2026</span></div>
+    <div class="hero-meta-item">Category: <span>Peptide Intelligence</span></div>
+    <div class="hero-meta-item">Reading Time: <span>10&ndash;12 Minutes</span></div>
+    <div class="hero-meta-item">Citations: <span>8 Peer-Reviewed Sources</span></div>
+  </div>
+
+  <!-- BLUF -->
+  <div class="bluf">
+    <div class="bluf-label">BLUF &mdash; Bottom Line Up Front</div>
+    <p>Semax has more credible research behind it than most compounds discussed in the nootropic space. It also has more claims made about it than the evidence supports.</p>
+    <div class="key-line">Semax has been used clinically in Russia, including in ischemic-stroke care; the cited human evidence in this brief is limited and geographically concentrated.</div>
+    <div class="key-line">Its strongest mechanistic signal is BDNF upregulation: a 1.4 to 1.7-fold increase in basal forebrain and hippocampus in rodent models.</div>
+    <div class="key-line">Almost all direct mechanistic data is preclinical. Human trials are real but narrow, mostly Russian-language literature, and have not been replicated by Western institutions.</div>
+    <p>The compound warrants serious attention. The claims circulating in most online discussions do not accurately represent the evidence base. This brief separates what the research actually supports from what people want it to support.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section-label">Section 1</div>
+  <h2>What Is Semax?</h2>
+
+  <div class="card">
+    <p>Semax is a synthetic heptapeptide developed from a fragment of adrenocorticotropic hormone, ACTH(4-10). The natural fragment has the sequence Met-Glu-His-Phe-Arg-Trp-Gly. Semax retains the core active portion, ACTH(4-7), and adds a stabilizing tripeptide, Pro-Gly-Pro, at the C-terminus. The result is a molecule designed to carry the neurological activity of the parent fragment without triggering the peripheral endocrine effects of full ACTH.</p>
+    <p>Semax has been registered and used clinically in Russia, including as an intranasal treatment studied in ischemic-stroke care. The eight peer-reviewed sources cited in this brief do not independently establish the full indication list, current Vital and Essential Drugs list status, registration date, or concentration-specific indications; those details are therefore not asserted here.</p>
+    <p>Semax has no FDA-approved indication in the United States. Regulatory status and availability outside Russia vary by jurisdiction.</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-pill"><div class="sp-val">RUSSIA</div><div class="sp-label">DOCUMENTED CLINICAL USE</div></div>
+    <div class="stat-pill"><div class="sp-val">MULTI-DECADE</div><div class="sp-label">RESEARCH LITERATURE</div></div>
+    <div class="stat-pill"><div class="sp-val">0</div><div class="sp-label">FDA-APPROVED INDICATIONS</div></div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-label">Section 2</div>
+  <h2>Structure and Stability: The Pro-Gly-Pro Modification</h2>
+
+  <div class="card">
+    <p>The Pro-Gly-Pro (PGP) addition distinguishes Semax from the parent ACTH fragment. Experimental degradation work in rat blood found Semax more resistant than ACTH(4-10) to some enzymatic degradation pathways, but the cited research base does not establish a human pharmacokinetic half-life or a several-hour duration in human tissues.</p>
+    <p>Experimental biodegradation research has identified peptide fragments, including PGP, after Semax degradation. Those findings do not by themselves establish the magnitude, duration, or clinical importance of fragment activity in humans.</p>
+    <cite class="cite">Kost NV, et al. Semax and Selank inhibit the enkephalin-degrading enzymes from human serum. <em>Bioorganicheskaia Khimiia.</em> 2001;27(3):180-183. <a href="https://doi.org/10.1023/A:1011373002885" target="_blank" rel="noopener">doi:10.1023/A:1011373002885</a></cite>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section-label">Section 3</div>
+  <h2>Mechanisms Under Investigation</h2>
+
+  <div class="card">
+    <h3>BDNF Upregulation</h3>
+    <p>Brain-derived neurotrophic factor is the most important signal in the Semax research profile, and it is the mechanism most often cited in discussions of its cognitive effects. The evidence here is real. The caveats matter.</p>
+    <p>A 2006 study by Dolotov et al. demonstrated that a single intranasal administration of Semax in rats produced a 1.4 to 1.7-fold increase in BDNF protein levels in the basal forebrain and hippocampus within 2 to 3 hours, alongside increased expression of the high-affinity BDNF receptor TrkB. A companion study in the same year confirmed similar effects in the hippocampus and extended the findings to TrkB receptor regulation. A 2024 study confirmed that both Semax and its cleaved PGP tripeptide activate neurotrophic transcription in ischemia-affected rat cortex.</p>
+    <p>The limitation is direct: this neurotrophin upregulation is documented exclusively in rodent models. The cited human studies do not directly measure CNS BDNF levels. Some clinical stroke trials have noted increases in peripheral blood plasma BDNF during recovery with Semax treatment, but plasma BDNF and CNS BDNF are different measurements and should not be treated as equivalent.</p>
+    <cite class="cite">Dolotov OV, et al. Semax, an analogue of adrenocorticotropin (4-10), binds specifically and increases levels of BDNF protein in rat basal forebrain. <em>Journal of Neurochemistry.</em> 2006;97(s1):10-17. <a href="https://doi.org/10.1111/j.1471-4159.2006.03658.x" target="_blank" rel="noopener">doi:10.1111/j.1471-4159.2006.03658.x</a></cite>
+
+    <h3>NGF and Temporal Dynamics</h3>
+    <p>Semax also alters nerve growth factor expression, but on a faster and more transient timeline than BDNF. A 2007 study by Seredenina et al. showed that within 1 hour of intranasal administration in rats, Semax induced a sharp, short-duration spike in NGF gene expression in both the hippocampus and frontal cortex. This NGF response supports cholinergic neuron survival and phenotypic maintenance, which is mechanistically relevant to learning and memory consolidation, but again the data is rodent-only.</p>
+    <cite class="cite">Seredenina TS, et al. Comparison of the temporal dynamics of NGF and BDNF gene expression in the rat brain after administration of Semax. <em>Bulletin of Experimental Biology and Medicine.</em> 2007;144(1):60-63. <a href="https://doi.org/10.1007/s10517-007-0255-0" target="_blank" rel="noopener">doi:10.1007/s10517-007-0255-0</a></cite>
+
+    <h3>Dopamine and Serotonin Modulation</h3>
+    <p>A 2005 rodent study reported activation of dopaminergic and serotonergic brain systems after Semax administration. The cited paper does not establish MC4R as the receptor mediating that effect, nor does it establish attention or motivation benefits in humans.</p>
+    <cite class="cite">Eremin KO, et al. Semax, an ACTH(4-10) analogue with nootropic properties, activates dopaminergic and serotonergic brain systems in rodents. <em>Neurochemical Research.</em> 2005;30(12):1493-1500. <a href="https://doi.org/10.1007/s11064-005-8826-8" target="_blank" rel="noopener">doi:10.1007/s11064-005-8826-8</a></cite>
+
+    <h3>Enkephalin Preservation and Stress Modulation</h3>
+    <p>In vitro work found dose-dependent inhibition by Semax of enkephalin-degrading enzymes in human serum. The study proposed this enzyme inhibition as one possible mechanism of biological activity; it did not demonstrate anxiolytic, analgesic, or stress-limiting clinical outcomes.</p>
+
+    <h3>Neuroprotection</h3>
+    <p>In a rat focal-cerebral-ischemia model, a 2014 transcriptomic study found Semax-associated changes in expression of genes related to immune and vascular processes. These gene-expression findings are preclinical and do not by themselves demonstrate clinical neuroprotection.</p>
+    <cite class="cite">Filippenkov IB, et al. The peptide semax affects the expression of genes related to the immune response in the rat brain focal ischemia model. <em>BMC Genomics.</em> 2014;15(1):228. <a href="https://doi.org/10.1186/1471-2164-15-228" target="_blank" rel="noopener">doi:10.1186/1471-2164-15-228</a></cite>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section-label">Section 4</div>
+  <h2>Current Research</h2>
+
+  <div class="card">
+    <h3>Stroke Recovery</h3>
+    <p>The clearest human evidence cited here comes from Russian ischemic-stroke rehabilitation research. The 2018 study followed 110 patients and evaluated plasma BDNF, motor performance, and Barthel Index scores in relation to Semax treatment and rehabilitation timing. Its abstract does not describe a randomized, double-blind, placebo-controlled design, so this brief does not characterize it that way.</p>
+    <p>The study reported a relationship among Semax treatment, plasma BDNF measurements, and rehabilitation outcomes. Plasma BDNF is a peripheral measure and is not equivalent to brain BDNF. The cited source does not support a mortality claim.</p>
+    <cite class="cite">Gusev EI, Martynov MY, Kostenko EV, et al. The efficacy of Semax in the treatment of patients at different stages of ischemic stroke. <em>Zhurnal Nevrologii i Psikhiatrii imeni S.S. Korsakova.</em> 2018;118(3, issue 2):61-68. <a href="https://doi.org/10.17116/jnevro20181183261-68" target="_blank" rel="noopener">doi:10.17116/jnevro20181183261-68</a></cite>
+
+    <h3>ADHD</h3>
+    <p>The eight cited sources do not provide traceable support for pediatric ADHD pilot claims or establish Semax as an ADHD treatment. Any ADHD application remains unestablished and is not presented here as a clinical finding.</p>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section-label">Section 5</div>
+  <h2>Delivery: Why Intranasal Matters</h2>
+
+  <div class="card">
+    <p>Intranasal administration is the established clinical route used in the Semax literature cited here.</p>
+    <p>More generally, intranasal drug-delivery research describes possible nose-to-brain transport along olfactory- and trigeminal-associated pathways. That general biology should not be confused with Semax-specific pharmacokinetic proof: the cited Semax studies do not quantify the fraction reaching the human brain or show complete circumvention of the blood-brain barrier.</p>
+    <p>No subcutaneous comparison is made because the cited research base does not establish Semax-specific systemic bioavailability, degradation, or comparative CNS delivery by that route.</p>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section-label">Section 6</div>
+  <h2>Evidence Boundary</h2>
+
+  <div class="warning-box">
+    <div class="w-label">Protokol X Evidence Classification</div>
+    <p>The following table reflects the current state of the evidence, not the current state of online claims. These are different things. The evidence boundary is the most important section in this brief.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Claim or Finding</th>
+        <th>Evidence Level</th>
+        <th>What the Data Actually Shows</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Stroke recovery efficacy</td>
+        <td><span class="tag-human">HUMAN CLINICAL</span></td>
+        <td>Limited Russian human research reports changes in motor performance, Barthel Index scores, and plasma BDNF during rehabilitation. The cited 2018 abstract does not establish a randomized, double-blind, placebo-controlled design or a mortality benefit.</td>
+      </tr>
+      <tr>
+        <td>BDNF upregulation (1.4-1.7x)</td>
+        <td><span class="tag-animal">PRECLINICAL</span></td>
+        <td>Demonstrated in rodent basal forebrain and hippocampus. Plasma BDNF increases in human stroke trials are correlated but are not equivalent measurements.</td>
+      </tr>
+      <tr>
+        <td>NGF gene expression changes</td>
+        <td><span class="tag-animal">PRECLINICAL</span></td>
+        <td>Rapid transient spike in hippocampus and frontal cortex in rats within 1 hour. No direct human CNS measurement exists.</td>
+      </tr>
+      <tr>
+        <td>Dopaminergic modulation</td>
+        <td><span class="tag-animal">PRECLINICAL</span></td>
+        <td>Dopaminergic and serotonergic system effects reported in rodents. The cited source does not establish MC4R mediation or a corresponding human cognitive benefit.</td>
+      </tr>
+      <tr>
+        <td>Enkephalin preservation</td>
+        <td><span class="tag-human">HUMAN SERUM</span></td>
+        <td>Inhibits enkephalin-degrading enzymes documented in human serum in vitro. Closest mechanistic data to human biology.</td>
+      </tr>
+      <tr>
+        <td>ADHD treatment</td>
+        <td><span class="tag-speculative">EARLY / SPECULATIVE</span></td>
+        <td>The cited research set does not traceably support pediatric pilot claims or establish clinical efficacy for ADHD.</td>
+      </tr>
+      <tr>
+        <td>Depression / anxiety treatment</td>
+        <td><span class="tag-speculative">SPECULATIVE</span></td>
+        <td>Mechanistically plausible through BDNF and enkephalin pathways. No large-scale clinical trials for MDD or GAD. Common online claim well ahead of evidence.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 7 -->
+  <div class="section-label">Section 7</div>
+  <h2>Protokol X Assessment</h2>
+
+  <div class="assessment-card">
+    <div class="ac-header">
+      <div class="ac-header-label">Intelligence Assessment &mdash; Semax</div>
+    </div>
+    <div class="ac-body">
+      <div class="assessment-row">
+        <div class="ar-label">Research Maturity</div>
+        <div class="ar-value">Mixed. The evidence base includes multiple preclinical studies and limited Russian human stroke-rehabilitation research. It is geographically concentrated, and strong claims require study-design details that are not supplied by the cited abstracts.</div>
+      </div>
+      <div class="assessment-row">
+        <div class="ar-label">Strongest Signal</div>
+        <div class="ar-value">BDNF/TrkB findings in rodent neural tissue and the narrower relationship reported in the 2018 human study among Semax treatment, plasma BDNF measurements, and rehabilitation outcomes.</div>
+      </div>
+      <div class="assessment-row">
+        <div class="ar-label">Key Limitation</div>
+        <div class="ar-value">The mechanistic data cited here is largely rodent or in vitro evidence. The human evidence is narrow and mostly published in Russian-language journals. This source set does not establish long-term safety or an evidence-based cognitive-enhancement regimen in healthy people.</div>
+      </div>
+      <div class="assessment-row">
+        <div class="ar-label">What Gets Overstated</div>
+        <div class="ar-value">Online discussions routinely present Semax as an equivalent or superior alternative to pharmaceutical stimulants for ADHD, a depression treatment, and a broad cognitive enhancer. None of these claims have a corresponding evidence base. The compound is interesting and the mechanisms are coherent. That is different from being demonstrated in humans at scale.</div>
+      </div>
+      <div class="assessment-row">
+        <div class="ar-label">Protokol X View</div>
+        <div class="ar-value">Semax warrants continued research. The cited literature supports preclinical neurotrophin findings and limited human stroke-rehabilitation observations, but it does not establish Semax as a proven cognitive enhancer for healthy adults.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFERENCES -->
+  <div class="references">
+    <div class="ref-label">Research Sources</div>
+    <div class="ref-item">
+      <div class="ref-num">[1]</div>
+      <div class="ref-text">Dolotov OV, et al. Semax, an analogue of adrenocorticotropin (4-10), binds specifically and increases levels of brain-derived neurotrophic factor protein in rat basal forebrain. <em>Journal of Neurochemistry.</em> 2006;97(s1):10-17. <a href="https://doi.org/10.1111/j.1471-4159.2006.03658.x" target="_blank" rel="noopener">doi:10.1111/j.1471-4159.2006.03658.x</a></div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">[2]</div>
+      <div class="ref-text">Dolotov OV, et al. Semax, an analog of ACTH(4-10) with cognitive effects, regulates BDNF and trkB expression in the rat hippocampus. <em>Brain Research.</em> 2006;1117(1):54-60. <a href="https://doi.org/10.1016/j.brainres.2006.07.108" target="_blank" rel="noopener">doi:10.1016/j.brainres.2006.07.108</a></div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">[3]</div>
+      <div class="ref-text">Seredenina TS, et al. Comparison of the temporal dynamics of NGF and BDNF gene expression in the rat brain after administration of Semax. <em>Bulletin of Experimental Biology and Medicine.</em> 2007;144(1):60-63. <a href="https://doi.org/10.1007/s10517-007-0255-0" target="_blank" rel="noopener">doi:10.1007/s10517-007-0255-0</a></div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">[4]</div>
+      <div class="ref-text">Eremin KO, et al. Semax, an ACTH(4-10) analogue with nootropic properties, activates dopaminergic and serotonergic brain systems in rodents. <em>Neurochemical Research.</em> 2005;30(12):1493-1500. <a href="https://doi.org/10.1007/s11064-005-8826-8" target="_blank" rel="noopener">doi:10.1007/s11064-005-8826-8</a></div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">[5]</div>
+      <div class="ref-text">Filippenkov IB, et al. The peptide semax affects the expression of genes related to the immune response in the rat brain focal ischemia model. <em>BMC Genomics.</em> 2014;15(1):228. <a href="https://doi.org/10.1186/1471-2164-15-228" target="_blank" rel="noopener">doi:10.1186/1471-2164-15-228</a></div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">[6]</div>
+      <div class="ref-text">Gusev EI, Martynov MY, Kostenko EV, et al. The efficacy of Semax in the treatment of patients at different stages of ischemic stroke. <em>Zhurnal Nevrologii i Psikhiatrii imeni S.S. Korsakova.</em> 2018;118(3, issue 2):61-68. <a href="https://doi.org/10.17116/jnevro20181183261-68" target="_blank" rel="noopener">doi:10.17116/jnevro20181183261-68</a></div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">[7]</div>
+      <div class="ref-text">Kost NV, et al. Semax and Selank inhibit the enkephalin-degrading enzymes from human serum. <em>Bioorganicheskaia Khimiia.</em> 2001;27(3):180-183. <a href="https://doi.org/10.1023/A:1011373002885" target="_blank" rel="noopener">doi:10.1023/A:1011373002885</a></div>
+    </div>
+    <div class="ref-item">
+      <div class="ref-num">[8]</div>
+      <div class="ref-text">Filippenkov IB, et al. Semax and Pro-Gly-Pro Activate the Transcription of Neurotrophins and Their Receptors in the Rat Cortex under Conditions of Ischemic Stroke. <em>International Journal of Molecular Sciences.</em> 2024;25(6):3120. <a href="https://doi.org/10.3390/ijms25063120" target="_blank" rel="noopener">doi:10.3390/ijms25063120</a></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM LINE -->
+  <div class="bottom-line">
+    <div class="bl-label">Bottom Line</div>
+    <p>Semax has a substantive but uneven research record. The cited studies document rodent BDNF and NGF findings, rodent monoaminergic effects, in vitro inhibition of enkephalin-degrading enzymes in human serum, gene-expression changes in ischemic rat brain, and limited human stroke-rehabilitation observations.</p>
+    <p>The problem is the gap between those narrow findings and what circulates online. The cited source set does not establish cognitive enhancement in healthy adults, pediatric ADHD efficacy, dramatic performance effects in extreme operators, or guaranteed direct delivery to the human brain.</p>
+    <p>The compound warrants continued research. It does not warrant the certainty with which it is usually discussed.</p>
+    <div class="bl-close">Architecture before conclusions.</div>
+    <div class="clarity">Clarity Over Noise.</div>
+  </div>
+
+  <!-- INTERNAL LINKS -->
+  <div class="internal-links">
+    <div class="il-label">Continue the Research</div>
+    <div class="il-grid">
+      <a href="/blog/how-to-read-peptide-coa.html">How to Read a Peptide CoA</a>
+      <a href="/blog/ghk-cu-longevity-signal-brief.html">GHK-Cu: Longevity Signal Brief</a>
+      <a href="/blog/grey-market-blind-trust.html">The Grey Market Brief</a>
+      <a href="/trust-index.html">Protokol X Trust Index</a>
+      <a href="/calculator.html">Protokol X Calculator</a>
+      <a href="/blog/">All Education</a>
+    </div>
+  </div>
+
+  <!-- CLARITY FOOTER -->
+  <div class="clarity-footer">
+    <div class="cf-label">Clarity Over Noise</div>
+    <p>This article is educational research content only. Semax is not FDA-approved. Nothing in this article constitutes medical advice, a clinical recommendation, or guidance on obtaining or using any compound or pharmaceutical product. Consult a licensed clinician for any clinical application. Regulatory status and availability vary by jurisdiction.</p>
+  </div>
+
+</div>
+
+<footer>
+  PROTOKOL X &mdash; U.S.-Based Research Resource. International visitors should verify local laws, availability, and medical guidance.
+</footer>
+
+</body>
+</html>
