@@ -2,12 +2,12 @@
   "use strict";
 
   var PROMO = {
-    id: "homepage-freedom-research-2026-07-01",
+    id: "homepage-freedom-research-2026-09-18",
     paths: ["/", "/index.html"],
     imageSrc: "/assets/promos/lexi-freedom.png",
     imageAlt: "PROTOKOL X Independence Day sales notice: check vendor pages for current sales information.",
     startDateTime: "2026-07-01T00:00:00-07:00",
-    endDateTime: "2026-07-07T23:59:00-05:00"
+    endDateTime: "2026-09-18T23:59:59-07:00"
   };
 
   function normalizePath(pathname) {
