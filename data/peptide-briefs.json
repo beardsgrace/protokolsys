@@ -1,9 +1,16 @@
 {
-  "updatedAt": "2026-07-19T14:34:49.133Z",
-  "updatedLabel": "Updated Jul 19, 2026",
+  "updatedAt": "2026-07-20T15:21:03.012Z",
+  "updatedLabel": "Updated Jul 20, 2026",
   "source": "PubMed",
   "query": "peptide[Title] OR peptides[Title] OR GLP-1[Title] OR tirzepatide[Title] OR retatrutide[Title] OR semaglutide[Title]",
   "items": [
+    {
+      "pmid": "42473065",
+      "title": "Peptide LKLKLL is a more effective component of Akkermansia muciniphila which regulate glucolipid metabolism through GLP-1/GIP dual modulation",
+      "source": "Gut microbes",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42473065/"
+    },
     {
       "pmid": "42402813",
       "title": "Preclinical proof of concept for a personalized SNAP™-TIL (Specific Neo-Antigen Peptides-TIL) therapy platform",
@@ -17,13 +24,6 @@
       "source": "Virulence",
       "date": "2026 Dec 31",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42402043/"
-    },
-    {
-      "pmid": "42390481",
-      "title": "Effective treatment of human breast tumors by chimeric CCL2 and CCL8 diphtheria toxin cytotoxic peptides",
-      "source": "Cancer biology & therapy",
-      "date": "2026 Dec 31",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42390481/"
     }
   ]
 }
