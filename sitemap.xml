@@ -20,9 +20,15 @@
   </url>
   <url>
     <loc>https://www.protokolx.com/blog/</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-08-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/blog/selank-research-brief.html</loc>
+    <lastmod>2026-08-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
   </url>
   <url>
     <loc>https://www.protokolx.com/blog/selank-vs-semax-comparison-brief.html</loc>
@@ -307,4 +313,3 @@
     <priority>0.86</priority>
   </url>
 </urlset>
-
