@@ -1,9 +1,16 @@
 {
-  "updatedAt": "2026-08-18T13:57:45.313Z",
-  "updatedLabel": "Updated Aug 18, 2026",
+  "updatedAt": "2026-08-19T13:58:01.536Z",
+  "updatedLabel": "Updated Aug 19, 2026",
   "source": "PubMed",
   "query": "peptide[Title] OR peptides[Title] OR GLP-1[Title] OR tirzepatide[Title] OR retatrutide[Title] OR semaglutide[Title]",
   "items": [
+    {
+      "pmid": "42610532",
+      "title": "Hunger pain and its reduction; qualitative insight from people with schizophrenia on semaglutide",
+      "source": "International journal of qualitative studies on health and well-being",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42610532/"
+    },
     {
       "pmid": "42473065",
       "title": "Peptide LKLKLL is a more effective component of Akkermansia muciniphila which regulate glucolipid metabolism through GLP-1/GIP dual modulation",
@@ -17,13 +24,6 @@
       "source": "Oncoimmunology",
       "date": "2026 Dec 31",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42402813/"
-    },
-    {
-      "pmid": "42402043",
-      "title": "Identification and profiling of HLA-A*02:01-restricted Toxoplasma gondii peptides through immunopeptidomics in HLA-A2.1 transgenic mice",
-      "source": "Virulence",
-      "date": "2026 Dec 31",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42402043/"
     }
   ]
 }
