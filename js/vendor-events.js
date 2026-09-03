@@ -35,25 +35,19 @@
   var VENDOR_EVENTS = [
     {
       vendor: "ion",
-      eventId: "ion-july-event-2026-07-03",
+      eventId: "ion-labor-day-2026-09-03",
       active: true,
-      title: "ION Vendor Event",
-      label: "Current Vendor Event",
-      description: "July 3, 8:00 AM EST \u2013 July 6, 11:59 AM EST",
-      lines: [
-        "All products \u2014 20% Off",
-        "ION 1-3 (Sema, Tirz, Reta) \u2014 22% Off",
-        "GHK / SS31 / Gluta / NAD / BPC \u2014 35% Off",
-        "Cosmetics \u2014 40% Off",
-        "Oral Drops \u2014 50% Off",
-        "Code mikeyb7189 stacks for an extra 17% Off",
-        "ACH at checkout for 5% Off"
-      ],
-      emphasizedLines: [3, 4, 5, 6],
-      startDateTime: "2026-07-03T08:00:00-05:00",
-      endDateTime: "2026-07-06T11:59:00-05:00",
-      ctaText: "View ION",
-      ctaUrl: "/ion/"
+      theme: "ion-labor-day",
+      storageScope: "session",
+      oncePerSession: true,
+      title: "ION LABOR DAY SALE",
+      label: "September 4–7",
+      description: "Ends September 7 at 11:59 PM ET",
+      lines: [],
+      startDateTime: "2026-09-03T00:00:00-04:00",
+      endDateTime: "2026-09-07T23:59:59.999-04:00",
+      ctaText: "SHOP ION & SAVE",
+      ctaUrl: "https://ionpeptide.com/?ref=mikeyb7189"
     },
     {
       vendor: "axon",
@@ -132,6 +126,7 @@
     }
   ];
 
+  var expirationTimer = null;
   var STORAGE_PREFIX = "px_vendor_event_";
   var state = {
     vendor: null,
@@ -284,7 +279,8 @@
         event.active === true &&
         doesEventMatchPath(event) &&
         isEventInDateRange(event, now) &&
-        !isDismissed(event)
+        !isDismissed(event) &&
+        !(event.oncePerSession && readStorage(event, "seen"))
       );
     });
   }
@@ -439,6 +435,23 @@
     description.textContent = event.description;
     list.replaceChildren();
 
+    var previousPromotion = state.modal.querySelector(".px-ion-promotion");
+    if (previousPromotion) previousPromotion.remove();
+    if (event.theme === "ion-labor-day") {
+      var promotion = createElement("div", "px-ion-promotion");
+      promotion.innerHTML = '<div class="px-ion-logo" role="img" aria-label="ION Peptide"><img src="/assets/vendors/ion-banner.png" alt=""></div>' +
+        '<div class="px-ion-main"><strong>20% OFF</strong><span>SITEWIDE</span></div>' +
+        '<div class="px-ion-stack"><p>Stack your savings:</p><p>• Code <strong>MIKEYB7189</strong> <span>— Extra 17% Off</span></p><p>• ACH Payment — Extra 5% Off</p></div>' +
+        '<div class="px-ion-total"><span>SAVE </span><strong>UP TO 42%</strong><span> SITEWIDE</span></div>' +
+        '<p class="px-ion-select">Select items up to 72% off</p>' +
+        '<p class="px-ion-shipping"><strong>FREE SHIPPING</strong> on orders over $250</p>' +
+        '<p class="px-ion-prize">Spend $250 or more for a chance to be one of 20 winners receiving $250 in ION store credit.</p>';
+      state.modal.insertBefore(promotion, description);
+      cta.rel = "noopener sponsored";
+    } else {
+      cta.removeAttribute("rel");
+    }
+
     event.lines.forEach(function addLine(line, index) {
       var item = createElement("li", "px-event-line", line);
       if ((event.emphasizedLines || []).indexOf(index) !== -1) {
@@ -467,6 +480,7 @@
     state.currentEvent = event;
     state.previouslyFocused = trigger || document.activeElement;
     renderEvent(event);
+    if (event.oncePerSession) writeStorage(event, "seen", true);
     writeStorage(event, "minimized", false);
     state.badge.hidden = true;
     state.overlay.setAttribute("aria-hidden", "false");
@@ -474,12 +488,19 @@
 
     global.requestAnimationFrame(function revealModal() {
       state.overlay.classList.add("is-visible");
-      var focusTarget = state.modal.querySelector("[data-px-event-minimize]");
+      var focusTarget = state.modal.querySelector(event.oncePerSession ? "[data-px-event-close]" : "[data-px-event-minimize]");
       if (focusTarget) {
         focusTarget.focus();
       }
     });
 
+    if (event.oncePerSession && event.endDateTime) {
+      global.clearTimeout(expirationTimer);
+      expirationTimer = global.setTimeout(function expirePromotion() {
+        hideModal({ showBadge: false, restoreFocus: true });
+        state.badge.hidden = true;
+      }, Math.max(0, new Date(event.endDateTime).getTime() - Date.now() + 1));
+    }
     track("shown", event);
   }
 
@@ -488,6 +509,10 @@
       return;
     }
 
+    if (state.currentEvent.oncePerSession) {
+      dismissCurrentEvent();
+      return;
+    }
     writeStorage(state.currentEvent, "minimized", true);
     track("minimized", state.currentEvent);
     hideModal({ showBadge: true, restoreFocus: true });
@@ -635,6 +660,7 @@
   }
 
   function refresh(options) {
+    global.clearTimeout(expirationTimer);
     if (state.root) {
       state.root.remove();
     }

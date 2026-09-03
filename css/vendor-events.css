@@ -427,3 +427,74 @@ html.px-event-open body {
     border: 1px solid CanvasText;
   }
 }
+
+/* ION Labor Day campaign: scoped to this event only. */
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-overlay { place-items: center; padding: 10px; }
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-modal { width: min(540px,100%); padding: 24px 30px 22px; text-align: center; border-color: var(--px-event-gold); max-height: calc(100dvh - 20px); background: repeating-linear-gradient(135deg, transparent 0 28px,rgba(0,168,255,.025) 28px 30px),linear-gradient(155deg,#071422,#050d18 65%,#102237); }
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-modal::before { border: 0; height: 4px; background: linear-gradient(90deg,var(--px-event-blue) 0 33%,#eef8ff 33% 66%,var(--px-event-gold) 66%); }
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-topline { margin: 0 56px 12px 0; justify-content: flex-start; }
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-affiliate { display: none; }
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-title { font-size: 28px; letter-spacing: .07em; line-height: 1.05; }
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-description { margin: 12px 0 0; font-size: 13px; color: var(--px-event-text-strong); }
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-lines,
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-minimize { display: none; }
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-close { position: absolute; top: 10px; right: 10px; width: auto; min-width: 56px; min-height: 44px; padding: 10px; font-size: 11px; }
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-actions { display: flex; margin-top: 12px; padding-top: 0; border: 0; }
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-cta { min-height: 46px; background: var(--px-event-gold); border-color: var(--px-event-gold); color: #050d18; font-weight: 700; font-size: 14px; }
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-cta:hover,
+.px-event-system[data-px-event-theme="ion-labor-day"] .px-event-cta:focus-visible { background: #ffca60; outline: 2px solid var(--px-event-text-strong); outline-offset: 3px; }
+.px-ion-logo { position: relative; overflow: hidden; width: 156px; height: 62px; margin: 10px auto 0; }
+.px-ion-logo img { position: absolute; width: 710px; max-width: none; height: 355px; left: -20px; top: -67px; }
+.px-ion-main { display: flex; flex-direction: column; line-height: .95; margin: 10px 0 16px; }
+.px-ion-main strong { color: var(--px-event-blue); font-family: var(--px-event-condensed); font-size: 82px; font-weight: 900; }
+.px-ion-main span { color: var(--px-event-text-strong); letter-spacing: .32em; font: 14px var(--px-event-mono); margin-top: 6px; }
+.px-ion-stack { padding: 12px 8px; border: 1px solid var(--px-event-border); background: rgba(0,168,255,.05); }
+.px-ion-stack p { margin: 0; font-size: 15px; line-height: 1.6; }
+.px-ion-stack p:first-child { font-size: 13px; }
+.px-ion-stack strong { color: var(--px-event-gold); font: bold 25px var(--px-event-mono); }
+.px-ion-total { margin-top: 12px; color: var(--px-event-text-strong); font: 15px var(--px-event-condensed); }
+.px-ion-total strong { color: var(--px-event-gold); font-size: 40px; font-weight: 900; }
+.px-ion-select { margin: 0; font-size: 14px; }
+.px-ion-shipping { margin: 12px 0 0; font-size: 14px; color: var(--px-event-text-strong); }
+.px-ion-prize { margin: 6px auto 0; max-width: 400px; font-size: 13px; line-height: 1.4; }
+@media (max-width: 540px), (max-height: 740px) {
+  .px-event-system[data-px-event-theme="ion-labor-day"] .px-event-modal { padding: 16px 16px 14px; }
+  .px-event-system[data-px-event-theme="ion-labor-day"] .px-event-title { font-size: 24px; }
+  .px-event-system[data-px-event-theme="ion-labor-day"] .px-event-topline { margin-bottom: 12px; min-height: 28px; }
+  .px-ion-logo { margin-top: 6px; height: 54px; width: 140px; }
+  .px-ion-logo img { width: 639px; height: 319.5px; left: -18px; top: -61px; }
+  .px-ion-main { margin: 6px 0 10px; }
+  .px-ion-main strong { font-size: 64px; }
+  .px-ion-stack { padding: 7px 4px; }
+  .px-ion-stack p { font-size: 13px; }
+  .px-ion-stack strong { font-size: 22px; }
+  .px-ion-total { margin-top: 8px; font-size: 13px; }
+  .px-ion-total strong { font-size: 34px; }
+  .px-ion-shipping { margin-top: 8px; font-size: 13px; }
+  .px-ion-prize { font-size: 12px; }
+  .px-event-system[data-px-event-theme="ion-labor-day"] .px-event-description { margin-top: 8px; font-size: 12px; }
+}
+@media (max-width: 360px) {
+  .px-ion-stack p:nth-child(2) span { display: block; }
+  .px-ion-main strong { font-size: 56px; }
+  .px-ion-logo { display: none; }
+}
+@media (max-height: 500px) and (min-width: 600px) {
+  .px-event-system[data-px-event-theme="ion-labor-day"] .px-event-modal { width: min(740px,100%); }
+  .px-ion-promotion { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; align-items: center; }
+  .px-ion-logo { display: none; }
+  .px-ion-main { grid-row: span 2; }
+  .px-ion-total { margin: 0; }
+  .px-ion-shipping,.px-ion-prize { margin: 0; }
+}
+@media (max-width: 360px) {
+  .px-ion-main strong { font-size: 48px; white-space: nowrap; }
+  .px-ion-total strong { font-size: 28px; }
+  .px-ion-total { font-size: 11px; white-space: nowrap; }
+  .px-event-system[data-px-event-theme="ion-labor-day"] .px-event-title { font-size: 22px; }
+}
+@media (max-height: 500px) and (min-width: 600px) {
+  .px-event-system[data-px-event-theme="ion-labor-day"] .px-event-modal { padding-top: 10px; padding-bottom: 10px; }
+  .px-event-system[data-px-event-theme="ion-labor-day"] .px-event-topline { margin-bottom: 4px; }
+  .px-ion-stack { padding: 3px; }
+}
