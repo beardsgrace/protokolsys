@@ -69,21 +69,21 @@
     },
     {
       vendor: "ramp",
-      eventId: "ramp-july-sale-2026-07-01",
+      eventId: "ramp-labor-day-2026-09-03",
       active: true,
+      theme: "ramp-labor-day",
+      storageScope: "session",
+      oncePerSession: true,
+      dismissOnBackdrop: true,
       paths: ["/vendors/ramp-peptides-vendor-profile.html"],
-      title: "Ramp Peptides Sale",
-      label: "Current Vendor Event",
-      description: "Live now \u2013 July 5, 8:00 AM MT",
-      lines: [
-        "35% Off (25% Sitewide + 10% mikeyb7189)",
-        "Orders over $300 get free Hospira"
-      ],
-      emphasizedLines: [0, 1],
-      startDateTime: "2026-07-01T00:00:00-06:00",
-      endDateTime: "2026-07-05T08:00:00-06:00",
-      ctaText: "View Ramp",
-      ctaUrl: "/vendors/ramp-peptides-vendor-profile.html"
+      title: "RAMP LABOR DAY SALE",
+      label: "Protokol X",
+      description: "Ends Monday at 12:00 PM MST.",
+      lines: [],
+      startDateTime: "2026-09-03T00:00:00-07:00",
+      endDateTime: "2026-09-07T11:59:59.999-07:00",
+      ctaText: "SHOP THE RAMP SALE",
+      ctaSelector: 'a[data-ga-event="vendor_click_ramp"]'
     },
     {
       vendor: "kraken",
@@ -127,6 +127,7 @@
   ];
 
   var expirationTimer = null;
+  var rampBackground = [];
   var STORAGE_PREFIX = "px_vendor_event_";
   var state = {
     vendor: null,
@@ -408,6 +409,11 @@
       return;
     }
 
+    if (state.currentEvent && state.currentEvent.theme === "ramp-labor-day") {
+      global.clearTimeout(expirationTimer);
+      rampBackground.forEach(function restoreBackground(entry) { entry.element.inert = entry.inert; });
+      rampBackground = [];
+    }
     state.overlay.classList.remove("is-visible");
     state.overlay.setAttribute("aria-hidden", "true");
     setPageLocked(false);
@@ -435,7 +441,7 @@
     description.textContent = event.description;
     list.replaceChildren();
 
-    var previousPromotion = state.modal.querySelector(".px-ion-promotion");
+    var previousPromotion = state.modal.querySelector(".px-ion-promotion, .px-ramp-promotion");
     if (previousPromotion) previousPromotion.remove();
     if (event.theme === "ion-labor-day") {
       var promotion = createElement("div", "px-ion-promotion");
@@ -460,10 +466,28 @@
       list.appendChild(item);
     });
 
-    if (event.ctaText && event.ctaUrl) {
+    if (event.theme === "ramp-labor-day") {
+      var rampPromotion = createElement("div", "px-ramp-promotion");
+      rampPromotion.innerHTML = '<div class="px-ramp-logo" role="img" aria-label="RAMP"><img src="/assets/vendors/ramp-banner.png" alt=""></div>' +
+        '<div class="px-ramp-offer"><strong>25% OFF</strong><span>SITEWIDE</span></div>' +
+        '<div class="px-ramp-ticket"><p>Stack with Golden Ticket Code</p><strong>MIKEYB7189</strong><p>for up to <b>35% total savings.</b></p></div>' +
+        '<p class="px-ramp-exclusion">Excludes R10.</p>';
+      rampPromotion.id = "px-ramp-details";
+      state.modal.insertBefore(rampPromotion, description);
+      state.modal.setAttribute("aria-describedby", "px-ramp-details px-event-description");
+    }
+    // Read the existing page CTA so its destination stays the source of truth.
+    var sourceCta = event.ctaSelector ? document.querySelector(event.ctaSelector) : null;
+    var ctaUrl = sourceCta ? sourceCta.getAttribute("href") : event.ctaUrl;
+    if (sourceCta) {
+      ["target", "rel", "data-ga-event", "data-ga-vendor"].forEach(function copyCtaAttribute(name) {
+        if (sourceCta.hasAttribute(name)) cta.setAttribute(name, sourceCta.getAttribute(name));
+      });
+    }
+    if (event.ctaText && ctaUrl) {
       cta.hidden = false;
       cta.textContent = event.ctaText;
-      cta.href = event.ctaUrl;
+      cta.href = ctaUrl;
       cta.setAttribute("data-event-id", event.eventId);
     } else {
       cta.hidden = true;
@@ -480,6 +504,18 @@
     state.currentEvent = event;
     state.previouslyFocused = trigger || document.activeElement;
     renderEvent(event);
+    if (event.theme === "ramp-labor-day") {
+      if (state.previouslyFocused === document.body) {
+        state.previouslyFocused = document.querySelector(event.ctaSelector);
+      }
+      rampBackground = Array.prototype.filter.call(document.body.children, function background(element) {
+        return element !== state.root && element.tagName !== "SCRIPT" && element.tagName !== "STYLE";
+      }).map(function disableBackground(element) {
+        var entry = { element: element, inert: element.inert };
+        element.inert = true;
+        return entry;
+      });
+    }
     if (event.oncePerSession) writeStorage(event, "seen", true);
     writeStorage(event, "minimized", false);
     state.badge.hidden = true;
@@ -609,6 +645,11 @@
     state.modal = modal;
     state.badge = badge;
 
+    overlay.addEventListener("click", function dismissBackdrop(clickEvent) {
+      if (clickEvent.target === overlay && state.currentEvent && state.currentEvent.dismissOnBackdrop) {
+        dismissCurrentEvent();
+      }
+    });
     modal.addEventListener("keydown", handleModalKeydown);
     minimize.addEventListener("click", minimizeCurrentEvent);
     close.addEventListener("click", dismissCurrentEvent);
@@ -660,6 +701,7 @@
   }
 
   function refresh(options) {
+    if (state.currentEvent && state.currentEvent.theme === "ramp-labor-day") hideModal({ restoreFocus: true });
     global.clearTimeout(expirationTimer);
     if (state.root) {
       state.root.remove();
