@@ -1,9 +1,16 @@
 {
-  "updatedAt": "2026-09-12T16:19:41.133Z",
-  "updatedLabel": "Updated Sep 12, 2026",
+  "updatedAt": "2026-09-13T16:58:02.169Z",
+  "updatedLabel": "Updated Sep 13, 2026",
   "source": "PubMed",
   "query": "peptide[Title] OR peptides[Title] OR GLP-1[Title] OR tirzepatide[Title] OR retatrutide[Title] OR semaglutide[Title]",
   "items": [
+    {
+      "pmid": "42728851",
+      "title": "Strain-resolved metabolomic chemotyping identifies tryptophan and γ-glutamyl peptides as MGO-AGEs breaking postbiotic compounds for carbonyl stress mitigation",
+      "source": "Gut microbes",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42728851/"
+    },
     {
       "pmid": "42610532",
       "title": "Hunger pain and its reduction; qualitative insight from people with schizophrenia on semaglutide",
@@ -17,13 +24,6 @@
       "source": "Gut microbes",
       "date": "2026 Dec 31",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42473065/"
-    },
-    {
-      "pmid": "42402813",
-      "title": "Preclinical proof of concept for a personalized SNAP™-TIL (Specific Neo-Antigen Peptides-TIL) therapy platform",
-      "source": "Oncoimmunology",
-      "date": "2026 Dec 31",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42402813/"
     }
   ]
 }
