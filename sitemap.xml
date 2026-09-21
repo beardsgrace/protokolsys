@@ -20,7 +20,7 @@
   </url>
   <url>
     <loc>https://www.protokolx.com/blog/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
@@ -335,5 +335,11 @@
     <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/blog/tofa-metabolic-research-brief.html</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
   </url>
 </urlset>
