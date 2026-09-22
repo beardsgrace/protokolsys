@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-21T18:43:38.842Z",
-  "updatedLabel": "Updated Sep 21, 2026",
+  "updatedAt": "2026-09-22T17:38:45.969Z",
+  "updatedLabel": "Updated Sep 22, 2026",
   "source": "PubMed",
   "query": "peptide[Title] OR peptides[Title] OR GLP-1[Title] OR tirzepatide[Title] OR retatrutide[Title] OR semaglutide[Title]",
   "items": [
