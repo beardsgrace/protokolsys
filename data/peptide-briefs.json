@@ -1,9 +1,16 @@
 {
-  "updatedAt": "2026-10-01T18:53:52.980Z",
-  "updatedLabel": "Updated Oct 1, 2026",
+  "updatedAt": "2026-10-02T18:25:50.970Z",
+  "updatedLabel": "Updated Oct 2, 2026",
   "source": "PubMed",
   "query": "peptide[Title] OR peptides[Title] OR GLP-1[Title] OR tirzepatide[Title] OR retatrutide[Title] OR semaglutide[Title]",
   "items": [
+    {
+      "pmid": "42822007",
+      "title": "A novel oncolytic peptide synergizing with immunotherapy",
+      "source": "Oncoimmunology",
+      "date": "2026 Dec 31",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42822007/"
+    },
     {
       "pmid": "42728851",
       "title": "Strain-resolved metabolomic chemotyping identifies tryptophan and γ-glutamyl peptides as MGO-AGEs breaking postbiotic compounds for carbonyl stress mitigation",
@@ -17,13 +24,6 @@
       "source": "International journal of qualitative studies on health and well-being",
       "date": "2026 Dec 31",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42610532/"
-    },
-    {
-      "pmid": "42473065",
-      "title": "Peptide LKLKLL is a more effective component of Akkermansia muciniphila which regulate glucolipid metabolism through GLP-1/GIP dual modulation",
-      "source": "Gut microbes",
-      "date": "2026 Dec 31",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42473065/"
     }
   ]
 }
