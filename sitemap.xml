@@ -20,7 +20,7 @@
   </url>
   <url>
     <loc>https://www.protokolx.com/blog/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
@@ -345,6 +345,12 @@
   <url>
     <loc>https://www.protokolx.com/blog/atx-304-o304-metabolic-intelligence-brief.html</loc>
     <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/blog/atx-304-retatrutide-intelligence-brief.html</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
