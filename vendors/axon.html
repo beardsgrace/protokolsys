@@ -77,6 +77,292 @@
   </style>
   <link rel="stylesheet" href="/css/vendor-events.css">
   <link rel="canonical" href="https://www.protokolx.com/vendors/axon.html" />
+<style>
+
+  .axon-decoder-overlay, .axon-decoder-trigger {
+    --px-navy: #071426;
+    --px-navy-2: #0b1d33;
+    --px-blue: var(--blue, #168cff);
+    --px-gold: var(--gold, #d6ad55);
+    --px-text: #f4f7fb;
+    --px-muted: #9eacbd;
+    --px-border: rgba(255, 255, 255, 0.11);
+  }
+
+  /* Optional trigger button */
+  .axon-decoder-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border: 1px solid rgba(22, 140, 255, 0.45);
+    border-radius: 8px;
+    background: #0b1d33;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+
+  .axon-decoder-trigger:hover {
+    border-color: var(--px-blue);
+    background: #102944;
+  }
+
+  /* Modal overlay */
+  .axon-decoder-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(2, 8, 18, 0.82);
+    backdrop-filter: blur(6px);
+  }
+
+  .axon-decoder-overlay.active {
+    display: flex;
+  }
+
+  /* Modal */
+  .axon-decoder-modal {
+    width: min(1500px, 94vw);
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #0b1d33 0%, #071426 100%);
+    border: 1px solid rgba(22, 140, 255, 0.28);
+    border-radius: 14px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    color: var(--px-text);
+  }
+
+  /* Header */
+  .axon-decoder-header {
+    position: relative;
+    padding: 24px 60px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--px-border);
+  }
+
+  .axon-decoder-header h2 {
+    margin: 0 0 7px;
+    font-size: clamp(22px, 2.2vw, 32px);
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    color: #fff;
+  }
+
+  .axon-decoder-header h2 span {
+    color: var(--px-blue);
+  }
+
+  .axon-decoder-header p {
+    max-width: 850px;
+    margin: 0 auto;
+    color: var(--px-muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .axon-decoder-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--px-border);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .axon-decoder-close:hover {
+    border-color: var(--px-blue);
+    color: var(--px-blue);
+  }
+
+  /* Search */
+  .axon-decoder-search-wrap {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--px-border);
+  }
+
+  .axon-decoder-search {
+    display: block;
+    width: min(700px, 100%);
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    border: 1px solid rgba(22, 140, 255, 0.35);
+    border-radius: 8px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.055);
+    color: #fff;
+    font-size: 15px;
+  }
+
+  .axon-decoder-search::placeholder {
+    color: #8292a5;
+  }
+
+  .axon-decoder-search:focus {
+    border-color: var(--px-blue);
+    box-shadow: 0 0 0 2px rgba(22, 140, 255, 0.12);
+  }
+
+  /* Scrollable content */
+  .axon-decoder-content {
+    overflow-y: auto;
+    padding: 18px 20px 22px;
+  }
+
+  /* Three equal columns */
+  .axon-decoder-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px 14px;
+  }
+
+  /* Individual entry */
+  .axon-decoder-item {
+    display: grid;
+    grid-template-columns: minmax(145px, 1.05fr) minmax(120px, 1fr);
+    min-height: 52px;
+    border: 1px solid var(--px-border);
+    border-radius: 7px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .axon-decoder-code,
+  .axon-decoder-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 10px;
+    line-height: 1.25;
+  }
+
+  .axon-decoder-code {
+    border-right: 1px solid var(--px-border);
+    color: #7fc0ff;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", monospace;
+    font-size: 12px;
+    font-weight: 700;
+    word-break: break-word;
+  }
+
+  .axon-decoder-code small {
+    margin-top: 3px;
+    color: #7e8da0;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .axon-decoder-name {
+    color: #f5f7fa;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .axon-decoder-item:hover {
+    border-color: rgba(22, 140, 255, 0.5);
+    background: rgba(22, 140, 255, 0.055);
+  }
+
+  /* Footer */
+  .axon-decoder-footer {
+    padding: 12px 20px 14px;
+    text-align: center;
+    border-top: 1px solid var(--px-border);
+    color: #7e8da0;
+    font-size: 11px;
+  }
+
+  .axon-decoder-footer strong {
+    color: var(--px-gold);
+    font-weight: 700;
+  }
+
+  .axon-decoder-empty {
+    display: none;
+    padding: 35px 10px;
+    text-align: center;
+    color: var(--px-muted);
+  }
+
+  /* Tablet */
+  @media (max-width: 1050px) {
+    .axon-decoder-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .axon-decoder-overlay {
+      padding: 8px;
+    }
+
+    .axon-decoder-modal {
+      width: 100%;
+      max-height: 94vh;
+      border-radius: 10px;
+    }
+
+    .axon-decoder-header {
+      padding: 20px 48px 14px 16px;
+      text-align: left;
+    }
+
+    .axon-decoder-header p {
+      font-size: 12px;
+    }
+
+    .axon-decoder-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .axon-decoder-content {
+      padding: 12px;
+    }
+
+    .axon-decoder-item {
+      grid-template-columns: minmax(135px, 0.9fr) 1fr;
+    }
+  }
+
+  .axon-decoder-trigger { font: inherit; cursor: pointer; }
+  .axon-decoder-overlay { font-family: inherit; letter-spacing: normal; }
+  .axon-decoder-header, .axon-decoder-search-wrap, .axon-decoder-footer { flex-shrink: 0; }
+  .axon-decoder-header h2 { font-family: inherit; font-weight: 900; }
+  .axon-decoder-search, .axon-decoder-close { font-family: inherit; }
+  .axon-decoder-modal { max-height: 90dvh; }
+  .axon-decoder-content { min-height: 0; overscroll-behavior: contain; }
+  .axon-decoder-item { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+  .axon-decoder-code, .axon-decoder-name { min-width: 0; overflow-wrap: anywhere; }
+  .axon-decoder-close:focus-visible, .axon-decoder-trigger:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+  @media (max-width: 700px) {
+    .axon-decoder-modal { max-height: 94dvh; }
+    .axon-decoder-search { font-size: 16px; }
+    .axon-decoder-item { grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); }
+  }
+
+
+.axon-decoder-footer { width: auto; margin: 0; font-family: inherit; letter-spacing: normal; text-transform: none; }
+.axon-decoder-header h2 { text-transform: uppercase; }
+.axon-decoder-trigger { margin-top: 18px; }
+</style>
 </head>
 <body data-vendor="axon">
   <header class="site-header">
@@ -102,6 +388,7 @@
         <h1 id="profile-title">AXON Vendor Intelligence Profile</h1>
         <p>AXON is a physician-led research vendor focused on documentation, verification architecture, analytical transparency, and batch-level traceability.</p>
         <p>This profile summarizes publicly observable verification signals and applies the Protocol X assessment framework.</p>
+        <button type="button" class="button primary axon-decoder-trigger" data-axon-decoder-open aria-haspopup="dialog" aria-controls="axonDecoderOverlay" aria-expanded="false">AXON Product Name Decoder</button>
       </section>
 
       <section class="section" aria-labelledby="brief-title">
@@ -224,5 +511,485 @@
 
   <footer>PROTOKOL X Vendor Intelligence Network / AXON profile / Research-use-only vendor intelligence</footer>
   <script src="/js/vendor-events.js" defer></script>
+<div
+  id="axonDecoderOverlay"
+  class="axon-decoder-overlay"
+  role="dialog"
+  aria-hidden="true"
+  aria-modal="true"
+  aria-labelledby="axonDecoderTitle"
+>
+  <div class="axon-decoder-modal">
+
+    <header class="axon-decoder-header">
+      <button
+        type="button"
+        class="axon-decoder-close"
+        data-axon-decoder-close
+        aria-label="Close AXON Name Decoder"
+      >
+        &times;
+      </button>
+
+      <h2 id="axonDecoderTitle">
+        AXON <span>PRODUCT NAME DECODER</span>
+      </h2>
+
+      <p>
+        AXON uses abbreviated website identifiers for its research catalog.
+        Use this reference guide to match an AXON website listing with its
+        corresponding research name.
+      </p>
+    </header>
+
+    <div class="axon-decoder-search-wrap">
+      <input
+        id="axonDecoderSearch"
+        class="axon-decoder-search"
+        type="search"
+        aria-label="Search AXON code or research name"
+        placeholder="Search AXON code or research name..."
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="axon-decoder-content">
+
+      <div id="axonDecoderGrid" class="axon-decoder-grid">
+
+        <div class="axon-decoder-item" data-search="axp-5a1mq 5-amino-1mq">
+          <div class="axon-decoder-code">
+            AXP-5A1MQ
+            <small>5 / 10 / 20 / 50 MG</small>
+          </div>
+          <div class="axon-decoder-name">5-Amino-1MQ</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-aa06 acetic acid 0.6">
+          <div class="axon-decoder-code">
+            AXP-AA06
+            <small>10 ML</small>
+          </div>
+          <div class="axon-decoder-name">Acetic Acid 0.6%</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-adamax adamax">
+          <div class="axon-decoder-code">AXP-ADAMAX <small>10 MG</small></div>
+          <div class="axon-decoder-name">Adamax</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axon-axp-aicar aicar">
+          <div class="axon-decoder-code">AXON-AXP-AICAR</div>
+          <div class="axon-decoder-name">AICAR</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-aod9604 aod-9604">
+          <div class="axon-decoder-code">AXP-AOD9604 <small>10 MG</small></div>
+          <div class="axon-decoder-name">AOD-9604</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-ara290 ara 290">
+          <div class="axon-decoder-code">AXP-ARA290 <small>10 MG</small></div>
+          <div class="axon-decoder-name">ARA 290</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-baw bacteriostatic water">
+          <div class="axon-decoder-code">
+            AXP-B A W
+            <small>3 / 10 ML</small>
+          </div>
+          <div class="axon-decoder-name">Bacteriostatic Water</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-baw-h bacteriostatic water hospira">
+          <div class="axon-decoder-code">AXP-B A W-H</div>
+          <div class="axon-decoder-name">Bacteriostatic Water (Hospira)</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-wolverine bpc tb">
+          <div class="axon-decoder-code">
+            AXP-WOLVERINE
+            <small>10 / 20 MG</small>
+          </div>
+          <div class="axon-decoder-name">BPC / TB Blend</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-bpc157 bpc-157">
+          <div class="axon-decoder-code">
+            AXP-BPC157
+            <small>5 / 10 MG</small>
+          </div>
+          <div class="axon-decoder-name">BPC-157</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp c series cag cagrilintide">
+          <div class="axon-decoder-code">
+            AXP C SERIES-CAG
+            <small>5 / 10 MG</small>
+          </div>
+          <div class="axon-decoder-name">Cagrilintide</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp cs series cagrilintide semaglutide">
+          <div class="axon-decoder-code">AXP CS SERIES <small>10 MG</small></div>
+          <div class="axon-decoder-name">Cagrilintide / Semaglutide</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axon-cartalax cartalax">
+          <div class="axon-decoder-code">AXON-CARTALAX</div>
+          <div class="axon-decoder-name">Cartalax</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-crb60 cerebrolysin">
+          <div class="axon-decoder-code">AXP-CRB60</div>
+          <div class="axon-decoder-name">Cerebrolysin</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-cjc1295nd cjc-1295 no dac">
+          <div class="axon-decoder-code">
+            AXP-CJC1295ND
+            <small>5 / 10 MG</small>
+          </div>
+          <div class="axon-decoder-name">CJC-1295 (No DAC)</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-cjc-ipa cjc 1295 no dac ipamorelin ipa">
+          <div class="axon-decoder-code">AXP-CJC-IPA <small>10 MG</small></div>
+          <div class="axon-decoder-name">CJC-1295 (No DAC) + Ipa</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axon-cortagen cortagen">
+          <div class="axon-decoder-code">AXON-CORTAGEN</div>
+          <div class="axon-decoder-name">Cortagen</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-dsip dsip">
+          <div class="axon-decoder-code">AXP-DSIP <small>10 MG</small></div>
+          <div class="axon-decoder-name">DSIP</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-epithalon epithalon">
+          <div class="axon-decoder-code">
+            AXP-EPITHALON
+            <small>10 / 50 MG</small>
+          </div>
+          <div class="axon-decoder-name">Epithalon</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axon-foxo4-dri-parent foxo4-dri">
+          <div class="axon-decoder-code">AXON-FOXO4-DRI-PARENT</div>
+          <div class="axon-decoder-name">FOXO4-DRI</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-ghkcu ghk-cu">
+          <div class="axon-decoder-code">
+            AXP-GHKCU
+            <small>50 / 100 MG</small>
+          </div>
+          <div class="axon-decoder-name">GHK-Cu</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-ghkcu-kpv ghkcu kpv">
+          <div class="axon-decoder-code">AXP-GHKCU-KPV <small>50 / 10 MG</small></div>
+          <div class="axon-decoder-name">GHKCu / KPV</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-ghrp2 ghrp-2">
+          <div class="axon-decoder-code">AXP-GHRP2 <small>5 MG</small></div>
+          <div class="axon-decoder-name">GHRP-2</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-ghrp6 ghrp-6">
+          <div class="axon-decoder-code">AXP-GHRP6 <small>5 MG</small></div>
+          <div class="axon-decoder-name">GHRP-6</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-glow glow">
+          <div class="axon-decoder-code">AXP-GLOW <small>70 MG</small></div>
+          <div class="axon-decoder-name">GLOW</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-gsh glutathione">
+          <div class="axon-decoder-code">
+            AXP-GSH
+            <small>500 / 600 / 750 / 1500 MG</small>
+          </div>
+          <div class="axon-decoder-name">Glutathione</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-hexar hexarelin">
+          <div class="axon-decoder-code">AXP-HEXAR</div>
+          <div class="axon-decoder-name">Hexarelin</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-igflr3 igf-1 lr3">
+          <div class="axon-decoder-code">AXP-IGFLR3 <small>1 MG</small></div>
+          <div class="axon-decoder-name">IGF-1 LR3</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-i-series ipamorelin">
+          <div class="axon-decoder-code">AXP-I-SERIES <small>10 MG</small></div>
+          <div class="axon-decoder-name">Ipamorelin</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-ksptn kisspeptin">
+          <div class="axon-decoder-code">
+            AXP-KSPTN
+            <small>5 / 10 MG</small>
+          </div>
+          <div class="axon-decoder-name">Kisspeptin</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-klow klow">
+          <div class="axon-decoder-code">AXP-KLOW <small>80 MG</small></div>
+          <div class="axon-decoder-name">KLOW</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-kpv kpv">
+          <div class="axon-decoder-code">AXP-KPV <small>10 MG</small></div>
+          <div class="axon-decoder-name">KPV</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-lcarnitine l-carnitine">
+          <div class="axon-decoder-code">AXP-LCARNITINE-600</div>
+          <div class="axon-decoder-name">L-Carnitine</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-lipoc lipotropin c b12 mic blend">
+          <div class="axon-decoder-code">AXP-LIPOC</div>
+          <div class="axon-decoder-name">Lipotropin C + B12 (MIC Blend)</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axon-cathelicidin-ll-37 ll-37">
+          <div class="axon-decoder-code">AXON-CATHELICIDIN-LL-37</div>
+          <div class="axon-decoder-name">LL-37</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axon-lemon-blend lemon bottle">
+          <div class="axon-decoder-code">AXON-LEMON-BLEND</div>
+          <div class="axon-decoder-name">Lemon Bottle</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-mlt1 melanotan i mlt-1">
+          <div class="axon-decoder-code">AXP-MLT1 <small>10 MG</small></div>
+          <div class="axon-decoder-name">Melanotan I (MLT-1)</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-mlt2 melanotan ii mlt-2">
+          <div class="axon-decoder-code">AXP-MLT2 <small>10 MG</small></div>
+          <div class="axon-decoder-name">Melanotan II (MLT-2)</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-motsc mots-c">
+          <div class="axon-decoder-code">
+            AXP-MOTSC
+            <small>10 / 20 / 40 MG</small>
+          </div>
+          <div class="axon-decoder-name">MOTS-c</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-nad nad+">
+          <div class="axon-decoder-code">
+            AXP-NAD
+            <small>500 / 1000 MG</small>
+          </div>
+          <div class="axon-decoder-name">NAD+</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-solution-pbs pbs">
+          <div class="axon-decoder-code">AXP-SOLUTION-PBS <small>100 ML</small></div>
+          <div class="axon-decoder-name">PBS</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axon-peg-mgf peg-mgf">
+          <div class="axon-decoder-code">AXON-PEG-MGF</div>
+          <div class="axon-decoder-name">PEG-MGF</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-pinealon pinealon">
+          <div class="axon-decoder-code">AXP-PINEALON <small>10 MG</small></div>
+          <div class="axon-decoder-name">Pinealon</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-141p pt-141">
+          <div class="axon-decoder-code">AXP-141P <small>10 MG</small></div>
+          <div class="axon-decoder-name">PT-141</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp 3 r retatrutide reta">
+          <div class="axon-decoder-code">
+            AXP-3 R
+            <small>5 / 10 / 20 / 30 / 50 / 60 MG</small>
+          </div>
+          <div class="axon-decoder-name">Retatrutide</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-sb1 bundle 1r klow motsc baw10">
+          <div class="axon-decoder-code">AXP-SB1-10</div>
+          <div class="axon-decoder-name">Bundle: 1R, KLOW, MOTS-c, BAW10</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-selank selank">
+          <div class="axon-decoder-code">
+            AXP-SELANK
+            <small>5 / 10 MG</small>
+          </div>
+          <div class="axon-decoder-name">Selank</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp 1 s semaglutide">
+          <div class="axon-decoder-code">
+            AXP-1 S
+            <small>5 / 10 MG</small>
+          </div>
+          <div class="axon-decoder-name">Semaglutide</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-semax semax">
+          <div class="axon-decoder-code">AXP-SEMAX <small>10 MG</small></div>
+          <div class="axon-decoder-name">Semax</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-sermo sermorelin">
+          <div class="axon-decoder-code">AXP-SERMO <small>10 MG</small></div>
+          <div class="axon-decoder-name">Sermorelin</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-semsel sese semax selank blend">
+          <div class="axon-decoder-code">
+            AXP-SEMSEL
+            <small>10 / 20 MG</small>
+          </div>
+          <div class="axon-decoder-name">SeSe-Semax-Selank Blend</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-s31 ss-31">
+          <div class="axon-decoder-code">
+            AXP-S31
+            <small>10 / 50 MG</small>
+          </div>
+          <div class="axon-decoder-name">SS-31</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp s t w h sterile water">
+          <div class="axon-decoder-code">AXP-S T W-H</div>
+          <div class="axon-decoder-name">Sterile Water</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-tb500 tb-500">
+          <div class="axon-decoder-code">
+            AXP-TB500
+            <small>5 / 10 MG</small>
+          </div>
+          <div class="axon-decoder-name">TB-500</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-tes tesamorelin">
+          <div class="axon-decoder-code">
+            AXP-TES
+            <small>5 / 10 / 20 MG</small>
+          </div>
+          <div class="axon-decoder-name">Tesamorelin</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-thymalin thymalin">
+          <div class="axon-decoder-code">AXP-THYMALIN <small>10 MG</small></div>
+          <div class="axon-decoder-name">Thymalin</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp-ta1 thymosin alpha-1">
+          <div class="axon-decoder-code">
+            AXP-TA1
+            <small>5 / 10 MG</small>
+          </div>
+          <div class="axon-decoder-name">Thymosin Alpha-1</div>
+        </div>
+
+        <div class="axon-decoder-item" data-search="axp 2 t tirzepatide tirz">
+          <div class="axon-decoder-code">
+            AXP-2 T
+            <small>5 / 10 / 20 / 30 / 40 / 60 MG</small>
+          </div>
+          <div class="axon-decoder-name">Tirzepatide</div>
+        </div>
+
+      </div>
+
+      <div id="axonDecoderEmpty" class="axon-decoder-empty" role="status" aria-live="polite">
+        No matching AXON listing found.
+      </div>
+
+    </div>
+
+    <footer class="axon-decoder-footer">
+      Reference guide • <strong>ProtokolX.com</strong>
+    </footer>
+
+  </div>
+</div>
+
+
+
+<script>(function () {
+  "use strict";
+  const overlay = document.getElementById("axonDecoderOverlay");
+  const search = document.getElementById("axonDecoderSearch");
+  const grid = document.getElementById("axonDecoderGrid");
+  const empty = document.getElementById("axonDecoderEmpty");
+  const trigger = document.querySelector("[data-axon-decoder-open]");
+  const close = overlay.querySelector("[data-axon-decoder-close]");
+  const items = Array.from(grid.querySelectorAll(".axon-decoder-item"));
+  let previousFocus, previousOverflow;
+  const normalize = value => value.toLowerCase().replace(/[^a-z0-9+]/g, "");
+  function openDecoder() {
+    if (overlay.classList.contains("active")) return;
+    previousFocus = document.activeElement;
+    previousOverflow = document.body.style.overflow;
+    overlay.classList.add("active");
+    overlay.setAttribute("aria-hidden", "false");
+    trigger.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+    search.focus();
+  }
+  function closeDecoder() {
+    if (!overlay.classList.contains("active")) return;
+    overlay.classList.remove("active");
+    overlay.setAttribute("aria-hidden", "true");
+    trigger.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = previousOverflow;
+    if (previousFocus && previousFocus.isConnected) previousFocus.focus();
+  }
+  trigger.addEventListener("click", openDecoder);
+  close.addEventListener("click", closeDecoder);
+  search.addEventListener("input", function () {
+    const query = normalize(search.value.trim());
+    let visible = 0;
+    items.forEach(function (item) {
+      const searchable = (item.getAttribute("data-search") || "") + " " + item.textContent;
+      const match = normalize(searchable).includes(query);
+      item.style.display = match ? "" : "none";
+      if (match) visible++;
+    });
+    empty.style.display = visible === 0 ? "block" : "none";
+  });
+  overlay.addEventListener("click", function (event) {
+    if (event.target === overlay) closeDecoder();
+  });
+  document.addEventListener("keydown", function (event) {
+    if (!overlay.classList.contains("active")) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeDecoder();
+    } else if (event.key === "Tab") {
+      if (event.shiftKey && document.activeElement === close) {
+        event.preventDefault();
+        search.focus();
+      } else if (!event.shiftKey && document.activeElement === search) {
+        event.preventDefault();
+        close.focus();
+      }
+    }
+  });
+})();</script>
 </body>
 </html>
