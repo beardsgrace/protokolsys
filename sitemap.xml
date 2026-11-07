@@ -20,7 +20,7 @@
   </url>
   <url>
     <loc>https://www.protokolx.com/blog/</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
@@ -357,6 +357,12 @@
   <url>
     <loc>https://www.protokolx.com/blog/j147-research-brief.html</loc>
     <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.78</priority>
+  </url>
+  <url>
+    <loc>https://www.protokolx.com/blog/cbl-514-research-brief.html</loc>
+    <lastmod>2026-11-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
   </url>
