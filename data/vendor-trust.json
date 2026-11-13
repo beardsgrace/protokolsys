@@ -61,13 +61,13 @@
       },
       "calculated_total": 8.8,
       "published_totals": {
-        "trust_index": 9.3,
-        "brief": 9.3,
+        "trust_index": 8.8,
+        "brief": 8.8,
         "profiles": [
-          9.3
+          8.8
         ]
       },
-      "validation_status": "FAIL",
+      "validation_status": "PASS",
       "score_conflict": false,
       "tier": {
         "trust_index": "Tier 1",
@@ -77,8 +77,8 @@
       },
       "tier_conflict": false,
       "rank": {
-        "trust_index": 1,
-        "brief": 1,
+        "trust_index": 3,
+        "brief": 3,
         "homepage": 2
       },
       "last_review_date": "June 2026",
@@ -96,7 +96,7 @@
         "coa": 9.4,
         "third_party_testing": 9.5,
         "batch_verification": 9.2,
-        "catalog_consistency": 9.0,
+        "catalog_consistency": 9.5,
         "consumer_accessibility": 8.8,
         "fulfillment_support": 9.2,
         "transparency": 8.5,
@@ -112,15 +112,15 @@
         "transparency": 0.1,
         "operational_reliability": 0.05
       },
-      "calculated_total": 9.1,
+      "calculated_total": 9.2,
       "published_totals": {
-        "trust_index": 8.8,
-        "brief": 8.8,
+        "trust_index": 9.2,
+        "brief": 9.2,
         "profiles": [
-          8.8
+          9.2
         ]
       },
-      "validation_status": "FAIL",
+      "validation_status": "PASS",
       "score_conflict": false,
       "tier": {
         "trust_index": "Tier 1",
@@ -130,8 +130,8 @@
       },
       "tier_conflict": false,
       "rank": {
-        "trust_index": 2,
-        "brief": 2,
+        "trust_index": 1,
+        "brief": 1,
         "homepage": 1
       },
       "last_review_date": "June 2026",
@@ -167,15 +167,14 @@
       },
       "calculated_total": 9.0,
       "published_totals": {
-        "trust_index": 8.6,
-        "brief": 8.6,
+        "trust_index": 9.0,
+        "brief": 9.0,
         "profiles": [
-          8.8,
-          8.8
+          9.0
         ]
       },
-      "validation_status": "FAIL",
-      "score_conflict": true,
+      "validation_status": "PASS",
+      "score_conflict": false,
       "tier": {
         "trust_index": "Tier 1",
         "brief": "Tier 1",
@@ -184,8 +183,8 @@
       },
       "tier_conflict": false,
       "rank": {
-        "trust_index": 3,
-        "brief": 3,
+        "trust_index": 2,
+        "brief": 2,
         "homepage": null
       },
       "last_review_date": "June 2026",
@@ -222,24 +221,24 @@
       },
       "calculated_total": 8.1,
       "published_totals": {
-        "trust_index": 8.2,
-        "brief": 8.2,
+        "trust_index": 8.1,
+        "brief": 8.1,
         "profiles": [
-          8.2
+          8.1
         ]
       },
-      "validation_status": "FAIL",
+      "validation_status": "PASS",
       "score_conflict": false,
       "tier": {
-        "trust_index": "Tier 1",
-        "brief": "Tier 1",
+        "trust_index": "Tier 2",
+        "brief": "Tier 2",
         "profile": "Tier 2",
         "homepage": "Tier 2"
       },
-      "tier_conflict": true,
+      "tier_conflict": false,
       "rank": {
-        "trust_index": 4,
-        "brief": 4,
+        "trust_index": 5,
+        "brief": 5,
         "homepage": 3
       },
       "last_review_date": "June 2026",
@@ -275,13 +274,13 @@
       },
       "calculated_total": 8.3,
       "published_totals": {
-        "trust_index": 8.1,
-        "brief": 8.1,
+        "trust_index": 8.3,
+        "brief": 8.3,
         "profiles": [
-          8.1
+          8.3
         ]
       },
-      "validation_status": "FAIL",
+      "validation_status": "PASS",
       "score_conflict": false,
       "tier": {
         "trust_index": "Tier 2",
@@ -291,8 +290,8 @@
       },
       "tier_conflict": false,
       "rank": {
-        "trust_index": 5,
-        "brief": 5,
+        "trust_index": 4,
+        "brief": 4,
         "homepage": 4
       },
       "last_review_date": "June 2026",
@@ -301,7 +300,8 @@
         "vendors/peptipura-intelligence-brief.html",
         "trust-index.html",
         "vendors/peptipura-vendor-profile.html"
-      ]
+      ],
+      "tier_rationale": "Editorial Tier 2: smaller inventory, with excellent customer service, COA library, and transparency (Michael, 2026-11-13)."
     },
     {
       "id": "ramp",
@@ -328,13 +328,13 @@
       },
       "calculated_total": 7.2,
       "published_totals": {
-        "trust_index": 7.6,
-        "brief": 7.6,
+        "trust_index": 7.2,
+        "brief": 7.2,
         "profiles": [
-          7.6
+          7.2
         ]
       },
-      "validation_status": "FAIL",
+      "validation_status": "PASS",
       "score_conflict": false,
       "tier": {
         "trust_index": "Tier 2",
@@ -408,6 +408,12 @@
         "trust-index.html",
         "vendors/kraken-pep-vendor-profile.html"
       ]
+    }
+  ],
+  "correction_history": [
+    {
+      "date": "2026-11-13",
+      "change": "Published totals corrected to recalculated weighted totals per methodology v1.0; ION Catalog Consistency raised 9.0 to 9.5 per editorial review; Petratide tier unified to Tier 2; ranks reordered; classification scale gap closed (Developing 6.0-7.4)."
     }
   ]
 }

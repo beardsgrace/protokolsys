@@ -35,7 +35,7 @@ const INDEX_NAMES = {
   swisschems: 'SwissChems',
   ion: 'ION Peptide',
   axon: 'AXON',
-  petratide: 'Petratide',
+  petratide: 'Petratide Science',
   peptipura: 'Peptipura',
   ramp: 'Ramp',
   kraken: 'The Kraken Pep',
@@ -76,7 +76,7 @@ function roundToTenths(thousandths) {
 
 function parseIndexRows(html) {
   const rows = {};
-  const re = /<article class="vendor-row (t\d)">([\s\S]*?)<\/article>/g;
+  const re = /<article[^>]*class="vendor-row (t\d)"[^>]*>([\s\S]*?)<\/article>/g;
   let m;
   while ((m = re.exec(html)) !== null) {
     const body = m[2];
