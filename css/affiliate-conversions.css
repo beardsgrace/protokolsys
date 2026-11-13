@@ -1,0 +1,15 @@
+/* Scoped additions preserve existing brand and desktop layout. */
+.px-offer{padding:12px 0;color:var(--text,#b8ccd8);font-size:14px;min-width:0}
+.px-offer p{margin:0 0 8px}.px-code-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.px-code-row code{font-family:var(--mono,monospace);font-size:18px;color:var(--gold,#ffaa00);overflow-wrap:anywhere;user-select:all}
+.px-copy,.px-profile-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 12px;border:1px solid #00a8ff;background:#071018;color:#eef8ff;font:14px var(--mono,monospace);cursor:pointer;text-decoration:none}
+.px-copy:disabled{opacity:.65;cursor:wait}.px-copy-status{min-height:1.5em;font-size:14px;color:#67caff}
+.px-copy:focus-visible,.px-profile-link:focus-visible,.vendor-actions a:focus-visible,.px-strip-offer a:focus-visible{outline:2px solid #ffaa00;outline-offset:3px}
+.vendor-card,.vendor-body,.vendor-rail{min-width:0}.vendor-actions .mini-button{min-height:44px}
+.vendor-actions a:not(.profile),.px-visit{background:#00a8ff;color:#00111c;border-color:#00a8ff;font-weight:700}
+.axon-feature-strip{height:auto;overflow:visible}.axon-strip-art{height:220px}
+.px-strip-offer{padding:0 16px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}.px-strip-offer .px-offer{flex:1 1 260px}
+.px-education-link{margin:24px 0;padding:16px;border:1px solid #162638;background:#071018;color:#b8ccd8}.px-education-link a{color:#67caff}
+@media(max-width:980px){.matrix{overflow:visible}.matrix-head{display:none}.vendor-row{min-width:0;grid-template-columns:120px minmax(0,1fr)}.attributes-cell{grid-column:1/-1}.score-cell{grid-column:1/-1;display:block;text-align:left}.vendor-cell{min-width:0}.vendor-site,.vendor-copy{overflow-wrap:anywhere}}
+@media(max-width:760px){.axon-feature-strip{height:auto;display:block}.axon-strip-art{height:auto}.px-strip-offer{display:grid;grid-template-columns:minmax(0,1fr)}.px-strip-offer .mini-button{min-height:44px;font-size:13px}.vendor-actions .mini-button{font-size:13px}}
+@media(max-width:480px){.vendor-row{grid-template-columns:minmax(0,1fr)}.tier-cell,.vendor-cell,.attributes-cell,.score-cell{grid-column:1;border-left:0}.tier-cell>div{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%}.shield{display:none}.attributes{grid-template-columns:repeat(2,minmax(0,1fr))}.vendor-name{overflow-wrap:anywhere}}
