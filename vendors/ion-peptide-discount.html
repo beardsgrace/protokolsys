@@ -580,6 +580,13 @@
       }
       .product-card { min-height: auto; }
     }
+      .ion-sale { width: min(570px, calc(100% - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 1px solid #287aab; border-radius: 12px; background: #071018; color: #f2f7ff; overflow: auto; }
+    .ion-sale::backdrop { background: rgba(2, 4, 6, .82); backdrop-filter: blur(8px); }
+    .ion-sale-head { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 16px; background: #071018; }
+    .ion-sale-head h2 { margin: 0; font-size: 1.15rem; }
+    .ion-sale-head button { min-width: 44px; min-height: 44px; border: 1px solid #287aab; border-radius: 6px; background: transparent; color: inherit; font-size: 1.5rem; cursor: pointer; }
+    .ion-sale img { display: block; width: 100%; height: auto; }
+    .ion-sale-details { padding: 16px; text-align: center; }
   </style>
   <link rel="stylesheet" href="/css/affiliate-conversions.css" />
   <script src="/js/affiliate-conversions.js" defer></script>
@@ -753,6 +760,47 @@
   </main>
 
   <footer>PROTOKOL X - ION Peptide vendor trust profile - Updated November 13, 2026</footer>
+  <dialog class="ion-sale" id="ion-black-friday" aria-labelledby="ion-sale-title">
+    <div class="ion-sale-head">
+      <h2 id="ion-sale-title">ION Black Friday Deals</h2>
+      <form method="dialog"><button type="submit" aria-label="Close Black Friday offer" autofocus>×</button></form>
+    </div>
+    <img src="/assets/vendors/ion-black-friday-2026.jpg" width="618" height="928" alt="ION’s Black Friday flyer. 40% off sitewide, extra 13% with code BlackFriday, and 5% off with ACH. Bulk discounts cannot be combined. For laboratory research use only.">
+    <div class="ion-sale-details">
+      <p><strong>ION Elite Pass — 17% off with code MikeyB7189</strong></p>
+      <p>Use either the Elite Pass code or the flyer’s BlackFriday code. Confirm the final discount at checkout.</p>
+      <a class="cta" href="https://ionpeptide.com/?ref=mikeyb7189" target="_blank" rel="noopener sponsored" data-ga-event="vendor_click_ion" data-ga-vendor="ION Peptide">Shop ION Black Friday Deals</a>
+      <p class="note">PROTOKOL X may earn a commission through this affiliate link.</p>
+    </div>
+  </dialog>
+  <script>
+    (() => {
+      const dialog = document.getElementById('ion-black-friday');
+      if (typeof dialog.showModal !== 'function') return;
+      const campaignKey = 'px-ion-black-friday-2026-dismissed';
+      try {
+        if (sessionStorage.getItem(campaignKey)) return;
+      } catch {
+        // Show the offer when session storage is unavailable.
+      }
+      dialog.addEventListener('close', () => {
+        try {
+          sessionStorage.setItem(campaignKey, '1');
+        } catch {
+          // The dialog still closes when session storage is unavailable.
+        }
+      });
+      dialog.addEventListener('click', (event) => {
+        if (event.target !== dialog) return;
+        const bounds = dialog.getBoundingClientRect();
+        if (event.clientX < bounds.left || event.clientX > bounds.right ||
+            event.clientY < bounds.top || event.clientY > bounds.bottom) {
+          dialog.close();
+        }
+      });
+      dialog.showModal();
+    })();
+  </script>
   <script>
     document.querySelectorAll('[data-ga-event]').forEach(function(link) {
       link.addEventListener('click', function() {
