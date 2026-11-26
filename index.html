@@ -268,12 +268,13 @@
 
       let timer;
       let dismissed = false;
+      let ready = false;
       const dialogs = new MutationObserver(syncNotice);
 
       function syncNotice() {
         clearTimeout(timer);
         dialogs.disconnect();
-        if (dismissed) return;
+        if (!ready || dismissed) return;
 
         const now = Date.now();
         if (now >= end) {
@@ -284,8 +285,8 @@
         timer = setTimeout(syncNotice, (now < start ? start : end) - now);
         if (now < start || deal.open) return;
 
-        if (document.querySelector('dialog[open], [role="dialog"][open]')) {
-          dialogs.observe(document.body, { subtree: true, attributes: true, attributeFilter: ['open'], childList: true });
+        if (document.querySelector('dialog[open], [role="dialog"][open], [data-px-home-promo].is-visible')) {
+          dialogs.observe(document.body, { subtree: true, attributes: true, attributeFilter: ['open', 'class'], childList: true });
           return;
         }
 
@@ -311,7 +312,13 @@
       });
       window.addEventListener('pageshow', syncNotice);
       document.addEventListener('visibilitychange', syncNotice);
-      syncNotice();
+      document.addEventListener('DOMContentLoaded', () => {
+        // Let the deferred homepage promotion complete its first animation frame.
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          ready = true;
+          syncNotice();
+        }));
+      }, { once: true });
     })();
   </script>
 </body>
