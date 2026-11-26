@@ -232,7 +232,6 @@
   </div>
 
   <footer>PROTOKOL X - Building a higher standard in research navigation - Updated November 13, 2026</footer>
-  <script src="/js/homepage-promo.js" defer></script>
   <script>
     const modal=document.getElementById('researchPathwayModal'),result=document.getElementById('finderResult'),openers=document.querySelectorAll('[data-open-finder]'),closer=document.querySelector('[data-close-finder]'),checks=document.querySelectorAll('.checks input');
     const matches={ion:['ION Peptide','/vendors/ion-peptide-discount.html','Best fit when savings, Tier 1 trust, curated presentation, and primary PROTOKOL X value matter most.'],swiss:['SwissChems','/vendors/swisschems-vendor-profile.html','Best fit for advanced users who want a larger institutional catalog, nootropics, and broad research-compound coverage.'],petratide:['Petratide Science','/vendors/petratide-science-vendor-profile.html','Best fit for budget-conscious users who still want strong COA coverage and a value/transparency profile.'],peptipura:['Peptipura','/vendors/peptipura-vendor-profile.html','Best fit for users who prefer an approachable, community-oriented, quality-first vendor feel.'],ramp:['Ramp Peptides','/vendors/ramp-peptides-vendor-profile.html','Best fit for newer researchers, GLP-focused exploration, education/support, and beginner-friendly accessibility.'],kraken:['The Kraken Pep','/vendors/kraken-pep-vendor-profile.html','Best fit for niche exploration and emerging vendor discovery with bold identity and developing transparency.']};
@@ -257,36 +256,40 @@
     (() => {
       if (!['/', '/index.html'].includes(location.pathname)) return;
       const deal = document.getElementById('peptideTestDeal');
-      const [start, end] = Array.from(deal.querySelectorAll('time'), time => Date.parse(time.dateTime));
+      const end = Date.parse(deal.querySelector('.deal-window p:last-child time').dateTime);
       const dismissalKey = 'protokolx:peptidetest:2026-11:dismissed';
+      let dismissed = false;
+      let promoRestored = false;
+      let timer;
+      const dialogs = new MutationObserver(syncNotice);
 
       try {
-        if (sessionStorage.getItem(dismissalKey)) return;
+        dismissed = Boolean(sessionStorage.getItem(dismissalKey));
       } catch {
         // The notice still works when browser storage is disabled.
       }
 
-      let timer;
-      let dismissed = false;
-      let ready = false;
-      const dialogs = new MutationObserver(syncNotice);
-
       function syncNotice() {
         clearTimeout(timer);
         dialogs.disconnect();
-        if (!ready || dismissed) return;
 
-        const now = Date.now();
-        if (now >= end) {
+        const remaining = end - Date.now();
+        if (remaining <= 0) {
           if (deal.open) deal.close();
+          if (!promoRestored) {
+            promoRestored = true;
+            const promo = document.createElement('script');
+            promo.src = '/js/homepage-promo.js';
+            document.head.append(promo);
+          }
           return;
         }
 
-        timer = setTimeout(syncNotice, (now < start ? start : end) - now);
-        if (now < start || deal.open) return;
+        timer = setTimeout(syncNotice, remaining);
+        if (dismissed || deal.open) return;
 
-        if (document.querySelector('dialog[open], [role="dialog"][open], [data-px-home-promo].is-visible')) {
-          dialogs.observe(document.body, { subtree: true, attributes: true, attributeFilter: ['open', 'class'], childList: true });
+        if (document.querySelector('dialog[open], [role="dialog"][open]')) {
+          dialogs.observe(document.body, { subtree: true, attributes: true, attributeFilter: ['open'], childList: true });
           return;
         }
 
@@ -295,7 +298,6 @@
 
       function dismissNotice() {
         dismissed = true;
-        clearTimeout(timer);
         dialogs.disconnect();
         try {
           sessionStorage.setItem(dismissalKey, '1');
@@ -312,13 +314,7 @@
       });
       window.addEventListener('pageshow', syncNotice);
       document.addEventListener('visibilitychange', syncNotice);
-      document.addEventListener('DOMContentLoaded', () => {
-        // Let the deferred homepage promotion complete its first animation frame.
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          ready = true;
-          syncNotice();
-        }));
-      }, { once: true });
+      syncNotice();
     })();
   </script>
 </body>
