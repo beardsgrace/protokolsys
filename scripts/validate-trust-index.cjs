@@ -38,7 +38,6 @@ const INDEX_NAMES = {
   petratide: 'Petratide Science',
   peptipura: 'Peptipura',
   ramp: 'Ramp',
-  kraken: 'The Kraken Pep',
 };
 
 const errors = [];

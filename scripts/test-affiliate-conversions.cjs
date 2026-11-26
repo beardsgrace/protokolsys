@@ -26,7 +26,7 @@ function setup({secure=true, reject=false, fallback=true, ga=true}={}) {
 }
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
 (async()=>{
-  assert.deepEqual(codes.sort(),['AXONMB','SWISSMB','krakenmb','mikeyb7189','mikeyb7189'].sort());
+  assert.deepEqual(codes.sort(),['AXONMB','SWISSMB','mikeyb7189','mikeyb7189'].sort());
   for(const code of codes){
     const s=setup();s.button.dataset.pxCopy=code;s.clickButton();s.clickButton();await flush();
     assert.deepEqual(s.copied,[code]);assert.equal(s.status.textContent,'Code copied!');
@@ -41,7 +41,7 @@ const flush=()=>new Promise(resolve=>setImmediate(resolve));
   const failed=setup({reject:true,fallback:false});failed.clickButton();await flush();
   assert.equal(failed.events.length,0);assert.match(failed.status.textContent,/Unable to copy/);
   const noGA=setup({ga:false});noGA.clickButton();await flush();assert.equal(noGA.status.textContent,'Code copied!');
-  for(const [href,vendor] of [['https://ionpeptide.com/?ref=mikeyb7189','ion'],['https://www.axonpeptide.com/?sca_ref=11311207.TWZhDavjKf','axon'],['https://thekrakenpep.com/?coupon=krakenmb','kraken']]){
+  for(const [href,vendor] of [['https://ionpeptide.com/?ref=mikeyb7189','ion'],['https://www.axonpeptide.com/?sca_ref=11311207.TWZhDavjKf','axon']]){
     const s=setup();s.clickLink({href,dataset:{},closest:()=>null});
     assert.equal(s.events.length,1);assert.equal(s.events[0][1],'affiliate_click');assert.equal(s.events[0][2].vendor,vendor);
     assert.ok(!JSON.stringify(s.events).includes('mikeyb7189'));assert.ok(!JSON.stringify(s.events).includes('sca_ref'));
@@ -52,5 +52,5 @@ const flush=()=>new Promise(resolve=>setImmediate(resolve));
   }
   const documentation=setup();documentation.clickLink({href:'https://www.axonverified.com',dataset:{},closest:()=>null});
   assert.equal(documentation.events.length,0);
-  console.log('PASS: all 5 copy controls, success/failure/fallback, focus cleanup, rapid click guard, repeated initialization, four event types, vendor matching, payload privacy, absent GA, documentation exclusion.');
+  console.log(`PASS: all ${codes.length} copy controls, success/failure/fallback, focus cleanup, rapid click guard, repeated initialization, four event types, vendor matching, payload privacy, absent GA, documentation exclusion.`);
 })().catch(error=>{console.error(error);process.exitCode=1;});

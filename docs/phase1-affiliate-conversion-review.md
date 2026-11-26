@@ -7,12 +7,12 @@ Status: draft for review; no deployment or merge performed.
 ## Changes
 
 - Preserve existing dark background, cyan/amber palette, fonts, six value-ranked cards, AXON feature strip, and all original outbound URLs.
-- Add five code-copy controls: AXON, SwissChems, Petratide, Ramp, Kraken. Codes come from repository profile/intelligence text, not user memories or inferred referral parameters.
+- Add four code-copy controls: AXON, SwissChems, Petratide, Ramp. Codes come from repository profile/intelligence text, not user memories or inferred referral parameters.
 - Keep ION as referral activation because its profile explicitly says it uses a referral path rather than a typed coupon. Peptipura has no documented offer; retain Visit Vendor without inventing one.
 - Show source-listed savings with checkout qualification. Current vendor acceptance is not independently verified.
 - Expose AXON profile and vendor actions as visible text below its artwork, including on mobile. Preserve original artwork links.
 - Add View Profile & Savings to all seven Trust Index rows without changing editorial scores, tiers, assessments, or rank order.
-- Correct Ramp/Kraken displayed COA weighting from 10% to 20% using the page's explicit shared methodology and legend; all displayed row weights now total 100%. No score recalculation.
+- Correct Ramp displayed COA weighting from 10% to 20% using the page's explicit shared methodology and legend; all displayed row weights now total 100%. No score recalculation.
 - Add neutral methodology links to three verification articles only: how-to-read-peptide-coa, understanding-peptide-testing-beyond-coa, grey-market-blind-trust. Research compound articles receive no new promotions.
 - Add shared conversion script and scoped responsive styles. No CMS, backend, build dependency, or framework.
 - Load the existing GA4 property G-GHVBPQ6KQ4 on relevant pages where it was absent, preserving every existing initialization and legacy event.
@@ -28,7 +28,6 @@ There is no central authoritative vendor registry. Homepage names, tiers, value 
 | Petratide Science | mikeyb7189 | 10% referral savings when available. | vendors/petratide-science-intelligence-brief.html | https://petratidescience.com/?ref=mikeyb7189 |
 | Peptipura | None published as a stable typed offer | See profile for current vendor details. | vendors/peptipura-vendor-profile.html | https://peptipura.net |
 | Ramp Peptides | mikeyb7189 | 10% savings when available; confirm at checkout. | vendors/ramp-peptides-intelligence-brief-v2.html | https://ramppeptides.com/?ref=mikeyb7189 |
-| The Kraken Pep | krakenmb | 10% code savings when accepted at checkout. | vendors/kraken-pep-vendor-profile.html | https://thekrakenpep.com/?coupon=krakenmb |
 | AXON | AXONMB | 20% code savings; confirm at checkout. | vendors/axon-peptide-intelligence-brief-v2.html | https://www.axonpeptide.com/?sca_ref=11311207.TWZhDavjKf |
 
 Each existing profile link is preserved. The added AXON Trust Index action points to /vendors/axon.html, the current homepage profile; the existing legacy /vendors/axon-vendor-profile.html link remains available.
@@ -40,7 +39,6 @@ Each existing profile link is preserved. The added AXON Trust Index action point
 | Petratide Science | Value rank 3, Tier 2 | Petratide, Tier 1 / 8.2 | vendors/petratide-science-vendor-profile.html: Tier 2, 8.2; intelligence brief: Tier 1, 8.2 |
 | Peptipura | Value rank 4, Tier 2 | Tier 2 / 8.1 | vendors/peptipura-vendor-profile.html: Tier 2, 8.1 |
 | Ramp | Value rank 5, Tier 2 | Tier 2 / 7.6 | vendors/ramp-peptides-vendor-profile.html: Tier 2, 7.6 |
-| Kraken | Value rank 6, Tier 3 | Tier 3 / 6.2 | vendors/kraken-pep-vendor-profile.html: Tier 3, 6.2 |
 | AXON | Separate featured strip; no value rank | Tier 1 / 8.6 | legacy axon-vendor-profile.html: Tier 1, 8.8; intelligence brief: Tier 1, 8.6 |
 
 ## Manual verification required
@@ -50,10 +48,9 @@ Each existing profile link is preserved. The added AXON Trust Index action point
 3. ION: profile explicitly describes referral-only use; intelligence brief and expired event content describe typed mikeyb7189. Retain referral activation pending confirmation.
 4. SwissChems and Petratide: profiles emphasize referral savings while intelligence briefs additionally publish SWISSMB and mikeyb7189 respectively. Copy controls expose those already-published codes; existing referral URLs remain intact. Confirm simultaneous code/referral behavior and checkout acceptance.
 5. Ramp: profile emphasizes referral savings and ACH; intelligence brief publishes mikeyb7189. Copy uses the published code while preserving referral URL. Confirm code acceptance and any stacking restrictions.
-6. Kraken: profile uses lowercase krakenmb; intelligence brief uses uppercase KRAKENMB. Preserve the profile/URL casing.
-7. Scoring scale leaves 6.0–6.4 unclassified and does not clearly classify 8.9–9.0 fractional values. Do not invent thresholds. Kraken 6.2 is labeled Developing in its intelligence brief but falls outside the Index's Developing band (6.5–7.4). Resolve editorial scale separately.
-8. Homepage structured ItemList and metadata mention six vendors while AXON appears in a separate feature. Do not assign AXON a value rank without an editorial decision.
-9. Expired sale registries are not used to promise current sale/stacking values. No vendor claim or medical/dosing recommendation added.
+6. Scoring scale leaves 6.0–6.4 unclassified and does not clearly classify 8.9–9.0 fractional values. Do not invent thresholds. Resolve editorial scale separately.
+7. Homepage structured ItemList and metadata mention six vendors while AXON appears in a separate feature. Do not assign AXON a value rank without an editorial decision.
+8. Expired sale registries are not used to promise current sale/stacking values. No vendor claim or medical/dosing recommendation added.
 
 ## Analytics
 
@@ -75,7 +72,7 @@ No coupon values, referral parameters, link URLs, or personal information in the
 
 - PASS: node --check js/affiliate-conversions.js.
 - PASS: node scripts/test-affiliate-conversions.cjs.
-- Tests exercise all five copy controls, Clipboard API success, denied API with successful fallback, insecure-context fallback, complete failure, no success event on failure, focus cleanup, rapid-click suppression, repeated script initialization, all four event names, vendor hostname matching, excluded documentation links, absent GA, and payload privacy.
+- Tests exercise all four copy controls, Clipboard API success, denied API with successful fallback, insecure-context fallback, complete failure, no success event on failure, focus cleanup, rapid-click suppression, repeated script initialization, all four event names, vendor hostname matching, excluded documentation links, absent GA, and payload privacy.
 - PASS: original external anchor destinations retained in every changed HTML page (exact string membership comparison). Added AXON text CTA uses the existing sca_ref URL unchanged.
 - PASS: new internal profile/article links and shared asset paths resolve against the repository tree.
 - PASS: all seven Trust Index score strings remain 9.3, 8.8, 8.6, 8.2, 8.1, 7.6, 6.2 in the same order; all weight rows total 100.
@@ -111,8 +108,6 @@ Browser preview connection failed. Visual and real-browser interaction checks at
 - vendors/axon.html
 - vendors/ion-peptide-discount.html
 - vendors/ion-peptide-intelligence-brief-v2.html
-- vendors/kraken-pep-intelligence-brief-v2.html
-- vendors/kraken-pep-vendor-profile.html
 - vendors/peptipura-intelligence-brief.html
 - vendors/peptipura-vendor-profile.html
 - vendors/petratide-science-intelligence-brief.html

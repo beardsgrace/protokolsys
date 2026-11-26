@@ -22,8 +22,7 @@
     "ramp",
     "swisschems",
     "peptipura",
-    "petratide",
-    "kraken"
+    "petratide"
   ];
 
   /**
@@ -86,23 +85,6 @@
       ctaSelector: 'a[data-ga-event="vendor_click_ramp"]'
     },
     {
-      vendor: "kraken",
-      eventId: "kraken-july-sale-2026-07-01",
-      active: true,
-      paths: ["/vendors/kraken-pep-vendor-profile.html"],
-      title: "Kraken Pep Sale",
-      label: "Current Vendor Event",
-      description: "Live now \u2013 July 6, midnight",
-      lines: [
-        "25% Off Sitewide + 10% krakenmb"
-      ],
-      emphasizedLines: [0],
-      startDateTime: "2026-07-01T00:00:00-07:00",
-      endDateTime: "2026-07-06T00:00:00-07:00",
-      ctaText: "View Kraken",
-      ctaUrl: "/vendors/kraken-pep-vendor-profile.html"
-    },
-    {
       vendor: "petratide",
       eventId: "petratide-july-sale-2026-07-01",
       active: true,
@@ -160,8 +142,7 @@
       ramp: ["ramp", "ramp-peptides-vendor-profile"],
       swisschems: ["swisschems", "swisschems-vendor-profile"],
       peptipura: ["peptipura", "peptipura-vendor-profile"],
-      petratide: ["petratide", "petratide-science-vendor-profile"],
-      kraken: ["kraken", "kraken-pep-vendor-profile"]
+      petratide: ["petratide", "petratide-science-vendor-profile"]
     };
 
     for (var vendorIndex = 0; vendorIndex < SUPPORTED_VENDORS.length; vendorIndex += 1) {

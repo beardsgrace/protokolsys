@@ -7,9 +7,9 @@
     "ionpeptide.com":"ion", "swisschems.is":"swisschems",
     "petratidescience.com":"petratide", "petratide.com":"petratide",
     "peptipura.net":"peptipura", "ramppeptides.com":"ramp",
-    "thekrakenpep.com":"kraken", "axonpeptide.com":"axon"
+    "axonpeptide.com":"axon"
   };
-  var offers = {ion:"referral",swisschems:"coupon",petratide:"coupon",peptipura:"none",ramp:"coupon",kraken:"coupon",axon:"coupon"};
+  var offers = {ion:"referral",swisschems:"coupon",petratide:"coupon",peptipura:"none",ramp:"coupon",axon:"coupon"};
   function pageType() {
     var p = location.pathname;
     return p === "/" || p === "/index.html" ? "homepage" :

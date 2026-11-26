@@ -35,23 +35,22 @@ The formula is implemented in `scripts/validate-trust-index.cjs` and the authori
 | Petratide Science | 8.2 | 8.1 | −0.1 | FAIL |
 | Peptipura | 8.1 | 8.3 | +0.2 | FAIL |
 | Ramp Peptides | 7.6 | 7.2 | −0.4 | FAIL |
-| The Kraken Pep | 6.2 | 6.2 | 0.0 | PASS |
 
 All seven vendors have complete category-level data in their intelligence briefs (eight categories each, weights summing to exactly 100%). Every brief renders its matrix twice with identical values in both copies (verified); the duplication is presentational, not a second assessment.
 
-**Only The Kraken Pep's published total reproduces from its category scores.** The other six published totals cannot be reproduced from the briefs' own factor scores under the official formula.
+At the time of the audit, the six vendors listed above had published totals that could not be reproduced from the briefs' own factor scores under the official formula.
 
-If recalculated scores became the published scores, the ranking order would change: ION 9.1 (#1), AXON 9.0 (#2), SwissChems 8.8 (#3), Peptipura 8.3 (#4), Petratide 8.1 (#5), Ramp 7.2 (#6), Kraken 6.2 (#7). **No such change has been made.** See editorial decision #1.
+If recalculated scores became the published scores, the ranking order would change: ION 9.1 (#1), AXON 9.0 (#2), SwissChems 8.8 (#3), Peptipura 8.3 (#4), Petratide 8.1 (#5), Ramp 7.2 (#6). **No such change has been made.** See editorial decision #1.
 
 ## 3. Mathematical errors found
 
 1. **Six published totals do not reproduce from their category scores** (table above). The largest gaps are SwissChems (−0.5), AXON (+0.4 vs the Index total), and Ramp (−0.4). Either the category scores or the published totals are stale; the audit cannot determine which from the repository alone.
 2. **AXON has two different published totals**: 8.6 on the Trust Index and in the intelligence brief, 8.8 on both profile pages (`vendors/axon.html`, `vendors/axon-vendor-profile.html`). Neither value reproduces from the brief's factor scores (9.0).
-3. **Ramp and Kraken Trust Index rows on `main`** display category weights summing to 90% (COA shown at 10% instead of 20%). See §4 — this is presentation-only; the briefs calculate with 20%.
+3. **The Ramp Trust Index row on `main`** displays category weights summing to 90% (COA shown at 10% instead of 20%). See §4 — this is presentation-only; the briefs calculate with 20%.
 
 ## 4. Presentation-only inconsistencies
 
-1. **Ramp / Kraken COA weight display (10% vs 20%)**: presentation error only. Both vendors' brief matrices use the standard 20% COA weight, and the recomputed totals in §2 already use 20%. The Phase 1 branch already corrects the displayed weight to 20% (PR #1); merging that PR fixes `main`. No score change follows from this correction.
+1. **Ramp COA weight display (10% vs 20%)**: presentation error only. The vendor's brief matrix uses the standard 20% COA weight, and the recomputed totals in §2 already use 20%. The Phase 1 branch already corrects the displayed weight to 20% (PR #1); merging that PR fixes `main`. No score change follows from this correction.
 2. **Duplicated factor matrix in every brief**: each intelligence brief contains the 8-factor matrix twice (same values, different row order). Both copies agree in all seven briefs, so no calculation is affected. Consolidation is optional cleanup, not a correction.
 3. **Petratide naming/domain on the Trust Index**: the Index row reads "Petratide" and links to `https://petratide.com`, which is an unrelated technology company. The vendor's actual domain is `petratidescience.com` (live; matches all affiliate links, the vendor profile, and the brief). Correcting the name and link is a factual fix, not a scoring change. Held with the other corrections pending approval — see editorial decision #3.
 
@@ -73,9 +72,9 @@ Published classification scale (from the Trust Index legend):
 - 6.5–7.4: Developing
 - Below 6.0: Early Stage
 
-**Gap confirmed: 6.0–6.4 is unclassified.** The Kraken Pep (6.2) falls in the gap; its brief labels it "Developing", which contradicts the published band (6.5–7.4).
+**Gap confirmed at the time of the audit: 6.0–6.4 was unclassified.**
 
-**Recommendation (requires approval):** extend Developing to 6.0–7.4, giving a complete, non-overlapping scale: 9.0–10.0 Exceptional, 7.5–8.9 Strong, 6.0–7.4 Developing, below 6.0 Early Stage. This keeps the Kraken "Developing" label valid. Alternative: add a separate 6.0–6.4 band (e.g. "Emerging"). **No boundary has been redefined.**
+**Recommendation (requires approval):** extend Developing to 6.0–7.4, giving a complete, non-overlapping scale: 9.0–10.0 Exceptional, 7.5–8.9 Strong, 6.0–7.4 Developing, below 6.0 Early Stage. Alternative: add a separate 6.0–6.4 band (e.g. "Emerging"). **No boundary has been redefined.**
 
 **Tier 1/2/3 vs score bands:** the Trust Index pattern is consistent with a numerical rule (Tier 1 ≥ 8.2, Tier 2 7.5–8.1, Tier 3 < 7.5), which would make Petratide (8.2) Tier 1. But the homepage and the Petratide vendor profile label it Tier 2 with an explicit editorial rationale (strong emerging vendor; "not yet Tier 1" on long-term maturity). Score classifications and editorial tiers must not be assumed interchangeable. See editorial decision #2.
 
@@ -91,7 +90,7 @@ Published classification scale (from the Trust Index legend):
 - Category validity: PASS (all 56 scores within 0–10, one decimal).
 - Published-vs-calculated: **FAIL — 6 of 7 vendors** (see §2).
 - Cross-page consistency: **FAIL — AXON** (8.6 vs 8.8 across pages).
-- Trust Index row weights: FAIL on `main` for Ramp/Kraken (90%); corrected on this branch by PR #1.
+- Trust Index row weights: FAIL on `main` for Ramp (90%); corrected on this branch by PR #1.
 - **Exit code: 1** (confirmed mathematical errors present). The script will exit 0 once the editorial decisions below are resolved and the data is corrected. It reports incomplete records as warnings and never manufactures scores.
 
 ## 9. Editorial decisions requiring approval

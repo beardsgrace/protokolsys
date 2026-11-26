@@ -355,59 +355,6 @@
         "trust-index.html",
         "vendors/ramp-peptides-vendor-profile.html"
       ]
-    },
-    {
-      "id": "kraken",
-      "display_name": "The Kraken Pep",
-      "category_scores": {
-        "coa": 6.0,
-        "third_party_testing": 5.8,
-        "batch_verification": 5.5,
-        "catalog_consistency": 6.2,
-        "consumer_accessibility": 7.0,
-        "fulfillment_support": 6.8,
-        "transparency": 7.0,
-        "operational_reliability": 6.8
-      },
-      "category_weights": {
-        "coa": 0.2,
-        "third_party_testing": 0.2,
-        "batch_verification": 0.15,
-        "catalog_consistency": 0.1,
-        "consumer_accessibility": 0.1,
-        "fulfillment_support": 0.1,
-        "transparency": 0.1,
-        "operational_reliability": 0.05
-      },
-      "calculated_total": 6.2,
-      "published_totals": {
-        "trust_index": 6.2,
-        "brief": 6.2,
-        "profiles": [
-          6.2
-        ]
-      },
-      "validation_status": "PASS",
-      "score_conflict": false,
-      "tier": {
-        "trust_index": "Tier 3",
-        "brief": "Tier 3",
-        "profile": "Tier 3",
-        "homepage": "Tier 3"
-      },
-      "tier_conflict": false,
-      "rank": {
-        "trust_index": 7,
-        "brief": 7,
-        "homepage": 6
-      },
-      "last_review_date": "June 2026",
-      "brief_revision": "2.0",
-      "evidence": [
-        "vendors/kraken-pep-intelligence-brief-v2.html",
-        "trust-index.html",
-        "vendors/kraken-pep-vendor-profile.html"
-      ]
     }
   ],
   "correction_history": [
