@@ -116,6 +116,50 @@
   </style>
   <link rel="stylesheet" href="/css/affiliate-conversions.css" />
   <script src="/js/affiliate-conversions.js" defer></script>
+  <style>
+    .deal-notice {
+      --deal-cyan: #00f2fa;
+      box-sizing: border-box;
+      width: min(43rem, calc(100% - 1.5rem));
+      max-height: calc(100dvh - 1.5rem);
+      margin: auto;
+      padding: clamp(1rem, 4vw, 2rem);
+      overflow: auto;
+      overscroll-behavior: contain;
+      border: 2px solid var(--deal-cyan);
+      border-radius: 1rem;
+      background: #151719;
+      color: #f7f8fa;
+      font-family: system-ui, sans-serif;
+    }
+    .deal-notice::backdrop { background: rgba(2,4,6,.82); backdrop-filter: blur(12px); }
+    .deal-notice header { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+    .deal-notice .close-button { flex: 0 0 44px; height: 44px; border-color: transparent; color: inherit; }
+    .deal-notice .deal-kicker { margin: 0; font-weight: 800; letter-spacing: .06em; }
+    .deal-notice .deal-kicker span, .deal-notice .deal-price strong { color: var(--deal-cyan); }
+    .deal-notice h2 { margin: .6rem 0; font: 800 clamp(1.5rem, 4.5vw, 2.75rem)/1.12 system-ui, sans-serif; }
+    .deal-notice .deal-price { display: flex; flex-wrap: wrap; align-items: center; gap: 0 .65rem; margin: 0 0 .75rem; }
+    .deal-notice .deal-price strong { font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; line-height: 1; }
+    .deal-notice .deal-price span { font-weight: 650; }
+    .deal-notice .deal-window { border-block: 2px solid var(--deal-cyan); padding: .65rem 0; }
+    .deal-notice .deal-window p { margin: 0; }
+    .deal-notice .deal-window p + p { margin-top: .4rem; }
+    .deal-notice .deal-window strong { display: block; font-size: clamp(1rem, 3vw, 1.3rem); }
+    .deal-notice .deal-disclosure { margin: .8rem 0 1rem; color: #dfe2e6; font-style: italic; }
+    .deal-notice .deal-link {
+      display: grid;
+      place-items: center;
+      min-height: 48px;
+      padding: .65rem;
+      border-radius: .6rem;
+      background: var(--deal-cyan);
+      color: #121719;
+      font-weight: 850;
+      text-align: center;
+      text-decoration: none;
+    }
+    .deal-notice :focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -194,6 +238,81 @@
     const matches={ion:['ION Peptide','/vendors/ion-peptide-discount.html','Best fit when savings, Tier 1 trust, curated presentation, and primary PROTOKOL X value matter most.'],swiss:['SwissChems','/vendors/swisschems-vendor-profile.html','Best fit for advanced users who want a larger institutional catalog, nootropics, and broad research-compound coverage.'],petratide:['Petratide Science','/vendors/petratide-science-vendor-profile.html','Best fit for budget-conscious users who still want strong COA coverage and a value/transparency profile.'],peptipura:['Peptipura','/vendors/peptipura-vendor-profile.html','Best fit for users who prefer an approachable, community-oriented, quality-first vendor feel.'],ramp:['Ramp Peptides','/vendors/ramp-peptides-vendor-profile.html','Best fit for newer researchers, GLP-focused exploration, education/support, and beginner-friendly accessibility.'],kraken:['The Kraken Pep','/vendors/kraken-pep-vendor-profile.html','Best fit for niche exploration and emerging vendor discovery with bold identity and developing transparency.']};
     function openModal(){modal.setAttribute('open','');document.body.style.overflow='hidden'}function closeModal(){modal.removeAttribute('open');document.body.style.overflow=''}function updateResult(){const v=Array.from(checks).filter(c=>c.checked).map(c=>c.value);let k='ion';if(v.includes('catalog')||v.includes('advanced')||v.includes('research-heavy'))k='swiss';if(v.includes('pricing')||v.includes('budget'))k='petratide';if(v.includes('beginner'))k='ramp';if(v.includes('wellness')&&v.includes('curated'))k='peptipura';if(v.includes('performance')&&v.includes('advanced')&&!v.includes('trust'))k='kraken';if(v.includes('trust')||v.includes('premium')||v.includes('coa'))k=v.includes('catalog')?'swiss':'ion';if(v.includes('weight')&&v.includes('budget'))k='petratide';const m=matches[k];result.innerHTML='<p class="result-name">'+m[0]+'</p><p>'+m[2]+'</p><p><a class="button gold" href="'+m[1]+'">View Match</a></p>'}
     openers.forEach(b=>b.addEventListener('click',openModal));closer.addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.hasAttribute('open'))closeModal()});checks.forEach(c=>c.addEventListener('change',updateResult));
+  </script>
+  <dialog class="modal-panel deal-notice" id="peptideTestDeal" aria-labelledby="peptideTestDealTitle" aria-describedby="peptideTestDealWindow">
+    <header>
+      <p class="deal-kicker">PROTOKOLX <span>· DEAL NOTICE</span></p>
+      <button class="close-button" type="button" autofocus aria-label="Close deal notice">×</button>
+    </header>
+    <h2 id="peptideTestDealTitle">Pfizer Hospira Bac Water</h2>
+    <p class="deal-price"><strong>$12</strong> <span>per 30 mL vial (regularly <s>$15</s>)</span></p>
+    <div class="deal-window" id="peptideTestDealWindow">
+      <p><strong>Starts Thursday, November 26</strong><time datetime="2026-11-26T18:00:00-05:00">6 p.m. Eastern Standard Time</time></p>
+      <p><strong>Ends Monday, November 30</strong><time datetime="2026-12-01T00:00:00-05:00">Midnight Eastern Standard Time</time></p>
+    </div>
+    <p class="deal-disclosure">I have no affiliation with PeptideTest and earn no commission. I saw a good price and figured I’d pass it along.</p>
+    <a class="deal-link" href="https://peptidetest.com/product/pfizer-hospira-bacteriostatic-water-30ml-vial/">View deal at PeptideTest ↗</a>
+  </dialog>
+  <script>
+    (() => {
+      if (!['/', '/index.html'].includes(location.pathname)) return;
+      const deal = document.getElementById('peptideTestDeal');
+      const [start, end] = Array.from(deal.querySelectorAll('time'), time => Date.parse(time.dateTime));
+      const dismissalKey = 'protokolx:peptidetest:2026-11:dismissed';
+
+      try {
+        if (sessionStorage.getItem(dismissalKey)) return;
+      } catch {
+        // The notice still works when browser storage is disabled.
+      }
+
+      let timer;
+      let dismissed = false;
+      const dialogs = new MutationObserver(syncNotice);
+
+      function syncNotice() {
+        clearTimeout(timer);
+        dialogs.disconnect();
+        if (dismissed) return;
+
+        const now = Date.now();
+        if (now >= end) {
+          if (deal.open) deal.close();
+          return;
+        }
+
+        timer = setTimeout(syncNotice, (now < start ? start : end) - now);
+        if (now < start || deal.open) return;
+
+        if (document.querySelector('dialog[open], [role="dialog"][open]')) {
+          dialogs.observe(document.body, { subtree: true, attributes: true, attributeFilter: ['open'], childList: true });
+          return;
+        }
+
+        deal.showModal();
+      }
+
+      function dismissNotice() {
+        dismissed = true;
+        clearTimeout(timer);
+        dialogs.disconnect();
+        try {
+          sessionStorage.setItem(dismissalKey, '1');
+        } catch {
+          // Dismissal still applies to the current page.
+        }
+        deal.close();
+      }
+
+      deal.querySelector('button').addEventListener('click', dismissNotice);
+      deal.addEventListener('cancel', event => {
+        event.preventDefault();
+        dismissNotice();
+      });
+      window.addEventListener('pageshow', syncNotice);
+      document.addEventListener('visibilitychange', syncNotice);
+      syncNotice();
+    })();
   </script>
 </body>
 </html>
