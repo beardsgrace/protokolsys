@@ -583,6 +583,21 @@
   <link rel="stylesheet" href="/css/vendor-events.css?v=ramp-labor-day-2026-09-03">
   <link rel="stylesheet" href="/css/affiliate-conversions.css" />
   <script src="/js/affiliate-conversions.js" defer></script>
+  <style>
+    .ramp-sale { box-sizing:border-box; width:min(35rem,calc(100% - 1.5rem)); max-height:calc(100dvh - 1.5rem); margin:auto; padding:clamp(1rem,4vw,2rem); overflow:auto; overscroll-behavior:contain; border:2px solid #a6e93c; border-radius:1rem; background:linear-gradient(155deg,#253f16,#101a0e 66%); color:#f8ffef; text-align:center; }
+    .ramp-sale::backdrop { background:#000b; backdrop-filter:blur(7px); }
+    .ramp-sale form { display:flex; justify-content:flex-end; margin:0; }
+    .ramp-sale button { min-width:44px; min-height:44px; border:1px solid #b8e788; border-radius:.45rem; background:#111e10; color:white; font-size:1.5rem; cursor:pointer; }
+    .ramp-sale .sale-brand { margin:.15rem 0; color:#c9f79b; font-weight:800; letter-spacing:.11em; text-transform:uppercase; }
+    .ramp-sale h2 { margin:.35rem 0 .6rem; font-size:clamp(1.3rem,5vw,2.1rem); line-height:1.1; color:inherit; }
+    .ramp-sale .sale-offer { margin:.85rem 0 .2rem; color:#c2fa66; font-size:clamp(1.8rem,7vw,3rem); font-weight:900; line-height:1.05; }
+    .ramp-sale .sale-terms { margin:.35rem 0; }
+    .ramp-sale .sale-ticket { padding:.75rem; margin:1rem 0 .7rem; border-block:1px dashed #a6e93c; }
+    .ramp-sale .sale-ticket strong { display:block; color:#e4ffae; font-size:1.5rem; user-select:all; }
+    .ramp-sale .sale-disclosure { margin:.55rem 0 0; font-size:.8rem; }
+    .ramp-sale .sale-cta { display:grid; place-items:center; min-height:48px; padding:.5rem 1rem; border-radius:.5rem; background:#b9f349; color:#111b0a; font-weight:900; text-decoration:none; }
+    .ramp-sale :focus-visible { outline:2px solid white; outline-offset:3px; }
+  </style>
 </head>
 <body data-vendor="ramp">
   <header>
@@ -769,6 +784,41 @@
     });
   </script>
   <script src="/js/vendor-events.js?v=ramp-labor-day-2026-09-03" defer></script>
+  <dialog class="ramp-sale" id="ramp-black-friday" aria-labelledby="ramp-sale-title">
+    <form method="dialog"><button type="submit" autofocus aria-label="Close RAMP offer">×</button></form>
+    <p class="sale-brand">Ramp Peptides</p>
+    <h2 id="ramp-sale-title">Thanksgiving Black Friday Mega Sale</h2>
+    <p class="sale-terms">Wed, Nov 25, 8 a.m. – Mon, Nov 30, 8 a.m.</p>
+    <p class="sale-offer">Buy two, get one free</p>
+    <p class="sale-terms">Mix &amp; match. Lowest-priced item free. Excludes RPP3-R 10 mg.</p>
+    <p class="sale-terms">Free shipping over $200. Extra 10% with eligible pay-after-order methods. Confirm terms at checkout.</p>
+    <p class="sale-ticket">Golden Ticket affiliate code <strong>MikeyB7189</strong></p>
+    <a class="sale-cta" href="https://ramppeptides.com/?ref=mikeyb7189" target="_blank" rel="noopener sponsored" data-ga-event="vendor_click_ramp" data-ga-vendor="Ramp Peptides">Shop the RAMP sale ↗</a>
+    <p class="sale-disclosure">ProtokolX may earn a commission through this affiliate link.</p>
+  </dialog>
+  <script>
+    (() => {
+      const dialog = document.getElementById('ramp-black-friday');
+      const dismissKey = 'protokolx:ramp:black-friday-2026:dismissed';
+      const end = Date.parse('2026-11-30T08:00:00-05:00');
+      const remaining = end - Date.now();
+      if (remaining <= 0 || typeof dialog.showModal !== 'function') return;
+
+      try {
+        if (sessionStorage.getItem(dismissKey)) return;
+      } catch {
+        // Session storage can be unavailable in restricted browsing modes.
+      }
+
+      dialog.addEventListener('close', () => {
+        try { sessionStorage.setItem(dismissKey, '1'); } catch {}
+      });
+      dialog.showModal();
+      setTimeout(() => {
+        if (dialog.open) dialog.close();
+      }, remaining);
+    })();
+  </script>
 </body>
 </html>
 
