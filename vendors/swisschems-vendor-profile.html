@@ -582,6 +582,22 @@
   </style>
   <link rel="stylesheet" href="/css/affiliate-conversions.css" />
   <script src="/js/affiliate-conversions.js" defer></script>
+  <style>
+    .swiss-sale { box-sizing:border-box; width:min(39rem,calc(100% - 1.5rem)); max-height:calc(100dvh - 1.5rem); margin:auto; padding:clamp(1.2rem,5vw,2.4rem); overflow:auto; overscroll-behavior:contain; border:1px solid #bddbca; border-radius:1rem; background:#e8f2eb; color:#121917; }
+    .swiss-sale::backdrop { background:#000a; backdrop-filter:blur(6px); }
+    .swiss-sale header { display:flex; align-items:center; justify-content:space-between; gap:.6rem; }
+    .swiss-sale .sale-label { margin:0; color:#156746; font-size:.82rem; font-weight:850; letter-spacing:.08em; }
+    .swiss-sale button { font:inherit; cursor:pointer; }
+    .swiss-sale .sale-close { min-width:44px; min-height:44px; border:1px solid #bddbca; border-radius:.5rem; background:white; color:#122319; font-size:1.45rem; }
+    .swiss-sale h2 { margin:.8rem 0; color:inherit; font:900 clamp(1.65rem,6vw,3rem)/1.08 system-ui,sans-serif; }
+    .swiss-sale h2 span { display:block; color:#19764f; }
+    .swiss-sale .sale-terms { margin:.65rem 0 1rem; color:#364a40; }
+    .swiss-sale .sale-copy { display:grid; gap:.2rem; justify-items:center; min-width:10rem; min-height:48px; padding:.6rem 1rem; border:0; border-radius:.6rem; background:#19764f; color:white; font-weight:800; }
+    .swiss-sale .sale-copy strong { font-size:1.2rem; user-select:all; }
+    .swiss-sale .sale-status { margin:.45rem 0 0; font-size:.85rem; }
+    .swiss-sale .sale-status:empty { display:none; }
+    .swiss-sale :focus-visible { outline:3px solid #123a25; outline-offset:3px; }
+  </style>
 </head>
 <body>
   <header>
@@ -763,6 +779,56 @@
         });
       });
     });
+  </script>
+  <dialog class="swiss-sale" id="swiss-black-friday" aria-labelledby="swiss-sale-title">
+    <header>
+      <p class="sale-label">BLACK FRIDAY 2026 · SALE LIVE</p>
+      <form method="dialog"><button class="sale-close" type="submit" autofocus aria-label="Close SwissChems offer">×</button></form>
+    </header>
+    <h2 id="swiss-sale-title">The BFCM Sale Is Live. <span>Up to 80% Off.</span></h2>
+    <p class="sale-terms">Sale applies to selected items. Ends <time datetime="2026-11-30T23:59:00-05:00">November 30 at 11:59 p.m. Eastern Time</time>.</p>
+    <button class="sale-copy" type="button"><span>Copy code</span><strong>SwissMB</strong></button>
+    <p class="sale-status" role="status"></p>
+  </dialog>
+  <script>
+    (() => {
+      const dialog = document.getElementById('swiss-black-friday');
+      const cutoff = Date.parse(dialog.querySelector('time').dateTime);
+      const remaining = cutoff - Date.now();
+      const key = 'protokolx:swiss:black-friday-2026:dismissed';
+      if (remaining <= 0 || typeof dialog.showModal !== 'function') return;
+
+      try {
+        if (sessionStorage.getItem(key)) return;
+      } catch {}
+
+      const copy = dialog.querySelector('.sale-copy');
+      const code = copy.querySelector('strong');
+      const status = dialog.querySelector('.sale-status');
+
+      copy.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(code.textContent.trim());
+          status.textContent = 'SwissMB copied.';
+        } catch {
+          const selection = window.getSelection();
+          const range = document.createRange();
+          range.selectNodeContents(code);
+          selection.removeAllRanges();
+          selection.addRange(range);
+          status.textContent = 'Copy the highlighted code manually.';
+        }
+      });
+
+      const timer = setTimeout(() => {
+        if (dialog.open) dialog.close();
+      }, remaining);
+      dialog.addEventListener('close', () => {
+        clearTimeout(timer);
+        try { sessionStorage.setItem(key, '1'); } catch {}
+      });
+      dialog.showModal();
+    })();
   </script>
 </body>
 </html>
